@@ -64,7 +64,7 @@ nav
     padding: 0;
 }
 
-.stdNav ul li, #validationBar *
+.navPad ul li
 {
     padding-left: 25px;
     padding-right: 25px;
@@ -153,7 +153,7 @@ footer
     margin-top: 15px;
 }
 
-#introInfo h4
+.inlineHeader
 {
     display: inline;
 }
