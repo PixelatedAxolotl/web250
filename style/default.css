@@ -32,6 +32,11 @@ a, a:visited
     color: #16ffde;
 }
 
+a:hover
+{
+    color: #5949e1;
+}
+
 header
 {
     max-width: 60%;
