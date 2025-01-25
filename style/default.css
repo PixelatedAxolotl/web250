@@ -51,8 +51,16 @@ header, main
     max-width: fit-content;
 }
 
-/*line up page header text with main page content*/
-header h1, main *
+/*Following 2 styles MUST have the SAME HORIZONTAL MARGINS to line up page header text with main page content*/
+h1 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 40px;
+}
+
+main > h2, main > p
 {
     margin: 20px 40px;
 }
@@ -94,7 +102,7 @@ tr td, td p, td a
     max-width: fit-content;
 }
 
-footer > * 
+footer nav, footer table
 {
     padding: 10px;
 }
@@ -113,7 +121,7 @@ footer td:not(:first-child)
 }
 
 /*General classes (frequently used and not associated with any specific elements)*/
-main, header, h1, nav
+main, header, nav
 {
     display: flex;
     flex-direction: column;
