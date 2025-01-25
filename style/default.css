@@ -1,30 +1,33 @@
 /*standard page rules*/
 body
 {
-    font-family: lucida console;
+    font-family: 'lucida console';
+    font-size: 1.12em;
     font-weight: bold;
     color: rgb(217, 255, 247);
     background-color: rgb(7, 1, 24);
-    max-width: 1000px;
+    max-width: 1100px;
     margin: auto;
-    margin-top: 10px;
-    padding-top: 10px;
-
+    margin-top: 40px;
+    padding-top: 20px;
+    box-shadow: 0px 1px 11px 1px #5949e1;
 }
 
 main
 {
-    max-width: 1000px;
     min-height: 400px;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
 }
 
-main p
+p + p
 {
-    margin: 5%;
+    margin-top: 20px;
 }
+
+footer p
+{
+    margin: 0;
+}
+
 
 a, a:visited
 {
@@ -39,37 +42,33 @@ a:hover
 
 header
 {
-    max-width: 60%;
-    min-width: fit-content;
-    margin: auto;
-    margin-top: 20px;
+    box-shadow: inset 0px -4px 12px -4px #5949e1, 0px 4px 12px 2px #5949e1;
 }
 
-header h1
+header, main
 {
-    padding-left: 15px;
-    padding-right: 15px;
+    margin: 20px 10%;
+    max-width: fit-content;
 }
 
-/*General nav bar related rules*/
-nav
+/*line up page header text with main page content*/
+header h1, main *
 {
-    overflow: hidden;
-    border-bottom: solid #5949e1 3px;
+    margin: 20px 40px;
 }
 
-.stdNav ul
+nav ul
 {
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: 3px;
+    margin: 5px auto;
     list-style: none;
     white-space: nowrap;
     justify-content: center;
     padding: 0;
 }
 
-.navPad ul li
+nav ul li
 {
     padding-left: 25px;
     padding-right: 25px;
@@ -84,62 +83,68 @@ footer
     margin-top: 40px;
 }
 
-#validationBar
+footer table
 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    white-space: nowrap;
+    border-top: inset #5949e1 3px;
 }
 
-#validationBar *
+tr td, td p, td a 
 {
-    margin: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
-    font-size: 12px;
+    max-width: fit-content;
+}
+
+footer > * 
+{
+    padding: 10px;
+}
+
+/*validation links in footer*/
+footer tbody tr td:last-child
+{
+    text-align: right;
+}
+
+/*meant to apply to only the validation links*/
+footer td:not(:first-child)
+{
+    width: 0;
+    min-width: fit-content;
 }
 
 /*General classes (frequently used and not associated with any specific elements)*/
-.centerColFlex
+main, header, h1, nav
 {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.shadow 
-{
-    box-shadow: 0px 1px 11px 1px #5949e1;
-}
-
-.btmGlow
-{
-    box-shadow: inset 0px -4px 12px -4px #5949e1, 0px 4px 12px 2px #5949e1;
-}
-
-.imgAttrib *
-{
-    font-size: 8px;
-    display: inline-block;
-    margin: 0 auto;
-}
-
 
 
 /*Introduction page specific rules*/
-#introTopImg
+figure
 {
     text-align: center;
 }
 
-#introTopImg > p
+figure > p
 {
     font-size: 12px;
     font-style: italic;
     margin-top: 5px;
 }
+
+figcaption
+{
+    font-size: 12px;
+    margin: 0 auto;
+}
+
+
+
+
+
 
 #introInfo
 {

@@ -28,17 +28,21 @@
         http://phpfiddle.org        
     -->
 
+    <!--Populate referer for validation links-->
+    <script>
+        document.getElementById("validation_link_html").setAttribute("href", "https://validator.w3.org/check?uri=" + location.href);
+        document.getElementById("validation_link_css").setAttribute("href", "https://jigsaw.w3.org/css-validator/validator?uri=" + location.href);
+    </script>
+
     <!--Required validation script-->
     <script src="https://lint.page/kit/880bd5.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="shadow">
-    <header class="btmGlow">
-        <div class="centerColFlex">
-            <h1>LK Stewart's Lucky Sandfish | WEB250</h1>
-        </div>
+<body>
+    <header>
+        <h1>LK Stewart's Lucky Sandfish | WEB250</h1>
 
-        <nav class="stdNav navPad">
+        <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="introduction.html">Introduction</a></li>
@@ -47,7 +51,7 @@
         </nav>
     </header>
 
-    <main class="centerColFlex">
+    <main>
         <h2>TEMPLATE PAGE - CHANGE TO PAGE NAME</h2>
 
         <p>
@@ -61,7 +65,8 @@
     </main>
 
     <footer>
-        <nav class="stdNav navPad centerColFlex">
+
+        <nav>
             <ul>
                 <li><a href="https://github.com/PixelatedAxolotl">GitHub</a></li>
                 <li><a href="https://pixelatedaxolotl.github.io/">GitHub.io</a></li>
@@ -73,18 +78,31 @@
             </ul>
         </nav>
 
-        <div class="navPad" id="validationBar">
-            <p>Page Built by LK Stewart, &copy;2025</p>
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <p>Page Built by LK Stewart, &copy;2025</p>
+                    </td>
+    
+                    <td>
+                        <a href="https://validator.w3.org/check?uri=referer" 
+                           style="text-decoration: none">
+                            Validate HTML
+                         </a>
+                    </td>
 
-            <div>
-                <a href="https://validator.w3.org/check?uri=https://pixelatedaxolotl.github.io/web250/template.html" style="text-decoration: none">
-                   Validate HTML
-                </a>
-                <a href="https://jigsaw.w3.org/css-validator/validator?uri=https://pixelatedaxolotl.github.io/web250/template.html" style="text-decoration: none">
-                    Validate CSS
-                </a>
-            </div>
-        </div>
+                    <td>|</td>
+                    
+                    <td>
+                         <a href="https://jigsaw.w3.org/css-validator/check/referer"
+                            style="text-decoration: none">
+                             Validate CSS
+                         </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
     </footer>
 </body>
