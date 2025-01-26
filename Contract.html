@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" type="text/css" href="style/default.css" />
+    <link rel="stylesheet" type="text/css" href="style/default.css">
     <title>LK Stewart's Lucky Sandfish | WEB250 | Contract</title>
 
     <!--     
@@ -28,17 +28,21 @@
         http://phpfiddle.org        
     -->
 
+    <!--Populate referer for validation links-->
+    <script>
+        document.getElementById("validation_link_html").setAttribute("href", "https://validator.w3.org/check?uri=" + location.href);
+        document.getElementById("validation_link_css").setAttribute("href", "https://jigsaw.w3.org/css-validator/validator?uri=" + location.href);
+    </script>
+
     <!--Required validation script-->
     <script src="https://lint.page/kit/880bd5.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="shadow">
-    <header class="btmGlow">
-        <div class="centerColFlex">
-            <h1>LK Stewart's Lucky Sandfish | WEB250</h1>
-        </div>
+<body>
+    <header>
+        <h1>LK Stewart's Lucky Sandfish | WEB250</h1>
 
-        <nav class="stdNav">
+        <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="introduction.html">Introduction</a></li>
@@ -47,20 +51,36 @@
         </nav>
     </header>
 
-    <main class="centerColFlex">
-        <h2>PLACEHOLDER :)</h2>
+    <main>
+        <h2>CONTRACT</h2>
+        <p>
+            I, <a href="introduction.html">Lauren K. Stewart</a> agree to abide by the terms of the course contract 
+            in my Spring 2025, Web 250, Database Driven Websites with my instructor, Professor D.I. von Briesen.
+        </p>
+        <p>
+            I understand that all work that I do on publicly available online tools will be available to the
+            world, and will not put information there that is inappropriate for schoolwork, or that I wish 
+            to keep private.
+        </p>
+        <p>
+            I also understand that it is my work that counts for attendance, not logins or showing up for 
+            class. As such, failure to turn in assignments may show as absences.
+        </p>
+        <p>
+            I also understand that given the structure and content of this class it's possible to find many 
+            examples online or even view my classmates' code directly. I swear that I will only use these 
+            resources to learn, and will not cut and paste code except where I have properly given credit 
+            (i.e. external libraries) and never from my classmates.
+        </p>
 
-        <p>This is a Template page. I've built it so that i can easily copy it and then just change the
-            contents to match the page i'm working on
-        </p>
-        <p>This is a 2nd sample paragraph for the template page. I'll change it or delete it depending on
-            the assignment i create from it.
-        </p>
+        <p>Signed: <em>Lauren K. Stewart</em>, 1/25/2025</p> 
+        
+        
     </main>
 
     <footer>
 
-        <nav class="stdNav centerColFlex">
+        <nav>
             <ul>
                 <li><a href="https://github.com/PixelatedAxolotl">GitHub</a></li>
                 <li><a href="https://pixelatedaxolotl.github.io/">GitHub.io</a></li>
@@ -72,23 +92,29 @@
             </ul>
         </nav>
 
-        <div id="validationBar">
-            <p>Page Built by LK Stewart, &copy;2025</p>
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <p>Page Built by LK Stewart, &copy;2025</p>
+                    </td>
+    
+                    <td>
+                        <a href="https://validator.w3.org/check?uri=referer" >
+                            Validate HTML
+                         </a>
+                    </td>
 
-            <div>
-                <a href="http://validator.w3.org/check?uri=referer" style="text-decoration: none">
-                    <img src="images/validation_button_html-blue.png" alt="Validate HTML" />
-                    <!-- you may need to change the name of your image link to match the one you 
-               uploaded -->
-                    <a href="http://jigsaw.w3.org/css-validator/check/referer" style="text-decoration: none">
-                        <img src="images/validation_button_css-blue.png" alt="Validate CSS" />
-                    </a>
-                </a>
-            </div>
+                    <td>|</td>
 
-        </div>
-
-
+                    <td>
+                         <a href="https://jigsaw.w3.org/css-validator/check/referer">
+                             Validate CSS
+                         </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
     </footer>
 </body>
