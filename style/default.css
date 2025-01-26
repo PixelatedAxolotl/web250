@@ -60,7 +60,7 @@ a:hover
 /*DO NOT change the order of the next 3 rules!*/
 header, main
 {
-    margin: 20px 10%;
+    margin: 20px 10% 20px;
     max-width: fit-content;
 }
 
