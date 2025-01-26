@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" type="text/css" href="style/default.css" />
+    <link rel="stylesheet" type="text/css" href="style/default.css">
     <title>LK Stewart's Lucky Sandfish | WEB250 | Introduction</title>
 
     <!--     
@@ -27,17 +27,22 @@
         
         http://phpfiddle.org        
     -->
+
+    <!--Populate referer for validation links-->
+    <script>
+        document.getElementById("validation_link_html").setAttribute("href", "https://validator.w3.org/check?uri=" + location.href);
+        document.getElementById("validation_link_css").setAttribute("href", "https://jigsaw.w3.org/css-validator/validator?uri=" + location.href);
+    </script>
+
     <!--Required validation script-->
     <script src="https://lint.page/kit/880bd5.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="shadow" id="introPg">
-    <header class="btmGlow">
-        <div class="centerColFlex">
-            <h1>LK Stewart's Lucky Sandfish | WEB250</h1>
-        </div>
+<body>
+    <header>
+        <h1>LK Stewart's Lucky Sandfish | WEB250</h1>
 
-        <nav class="stdNav navPad">
+        <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="introduction.html">Introduction</a></li>
@@ -46,91 +51,102 @@
         </nav>
     </header>
 
-    <main class="centerColFlex">
-        <h2>Lauren-Kate "LK" Stewart</h2>
+    <main>
+        <h2>INTRODUCTION</h2>
+        <h3>Lauren-Kate "LK" Stewart</h3>
 
-        <div id="introTopImg">
+        <figure>
             <img src="images/sandfish.jpg" alt="image of a Sandfish Skink">
-            <div class="imgAttrib">
-                <p>Source:
+            <figcaption>
+                <em>I'd rather not use a picture of myself so this is a Sandfish Skink.</em><br>
+                Source:
                     <a href="https://commons.wikimedia.org/wiki/File:Apothekerskink01.jpg">Wilfried Berns</a>,
-                    <a href="https://creativecommons.org/licenses/by-sa/2.0/de/deed.en">CC BY-SA 2.0 DE</a>, via
-                    Wikimedia Commons
+                    <a href="https://creativecommons.org/licenses/by-sa/2.0/de/deed.en">CC BY-SA 2.0 DE</a>, 
+                    via Wikimedia Commons 
+            </figcaption>
+        </figure>
+
+        <ul>
+            <li>
+                <p>
+                    <strong>Personal Background:</strong>
+                    I've lived in NC most of my life and right now
+                    I'm a part time student at UNC Charlotte.
                 </p>
-            </div>
-            <p>I'd rather not use a picture of myself so this is a Sandfish Skink.</p>
-        </div>
+            </li>
+            <li>
+                <p>
+                    <strong>Professional Background:</strong>
+                    Currently I work part time as a programmer/IT help
+                    for a small business and as a TA at UNC Charlotte.
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Academic Background:</strong>
+                    Working on my BA in Computer Science at UNC Charlotte and am
+                    taking classes here on Transient Study since CPCC offers a lot more online classes.</p>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Background in this Subject:</strong>
+                    I've taken some web and database classes at UNC Charlotte.
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Primary Computer Platform:</strong>
+                    Laptop running Windows 11.                
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Courses I'm Taking & Why:</strong>              
+                </p>
+                    <ul>
+                        <li>
+                            <p><strong>REL110 - World Religions:</strong> This was one of my options to fulfill some of the liberal arts
+                            credits I need and it was offered online.</p>
+                        </li>
+        
+                        <li>
+                            <p><strong>WEB250 - Database Driven Websites:</strong> This class looked fun. I like web development,
+                            I like databases, and I need some elective credits.</p>
+                        </li>
+        
+                        <li>
+                            <p><strong>METR 1102 - Introduction to Meteorology:</strong> I'm taking this at UNC Charlotte to fulfill
+                            my science with lab requirement. I picked it because it looked interesting,
+                            wasn't chemistry or biology, and worked with my schedule.</p>
+                        </li>
+        
+                        <li>
+                            <p><strong>METR 1102L - Introduction to Meteorology Lab:</strong> Required lab that goes with METR 1102.</p>
+                        </li>
+                    </ul>
+            </li>
+            <li>
+                <p>
+                    <strong>Funny/Interesting Item to Remember me by:</strong>
+                    I like collecting postage stamps, particularly ones with reptile or space themes.
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>I'd also like to Share:</strong>
+                    The binomial name of the Sandfish Skink is Scincus scincus which I think is funny.
+                    They got their common name from the way they “swim” under the surface of sand.
+                </p>
+            </li>
+        </ul>
 
-        <div id="introInfo">
-            <h3>Personal Background:</h3>
-            <p>
-                I've lived in NC most of my life and right now
-                I'm a part time student at UNC Charlotte.</p>
-
-
-            <h3>Professional Background:</h3>
-            <p>
-                Currently I work part time as a programmer/IT help
-                for a small business and as a TA at UNC Charlotte.</p>
-
-
-            <h3>Academic Background:</h3>
-            <p>
-                Working on my BA in Computer Science at UNC Charlotte and am
-                taking classes here on Transient Study since CPCC offers a lot more online classes.</p>
-
-
-            <h3>Background in this Subject:</h3>
-            <p>
-                I've taken some web and database classes at UNC Charlotte.</p>
-
-
-            <h3>Primary Computer Platform:</h3>
-            <p>
-                Laptop running Windows 11.</p>
-
-
-            <h3>Courses I'm Taking & Why:</h3>
-            <ul>
-                <li>
-                    <h4 class="inlineHeader">REL110 - World Religions:</h4> This was one of my options to fulfill some of the liberal arts
-                    credits I need and it was offered online.
-                </li>
-
-                <li>
-                    <h4 class="inlineHeader">WEB250 - Database Driven Websites:</h4> This class looked fun. I like web development,
-                    I like databases, and I need some elective credits.
-                </li>
-
-                <li>
-                    <h4 class="inlineHeader">METR 1102 - Introduction to Meteorology:</h4> I'm taking this at UNC Charlotte to fulfill
-                    my science with lab requirement. I picked it because it looked interesting,
-                    wasn't chemistry or biology, and worked with my schedule.
-                </li>
-
-                <li>
-                    <h4 class="inlineHeader">METR 1102L - Introduction to Meteorology Lab:</h4> Required lab that goes with METR 1102.
-                </li>
-
-
-            </ul>
-
-            <h3>Funny/Interesting Item to Remember me by:</h3>
-            <p>
-                I like collecting postage stamps, particularly ones with reptile or space themes.</p>
-
-            <h3>I'd also like to Share:</h3>
-            <p>
-                The binomial name of the Sandfish Skink is Scincus scincus which I think is funny.
-                They got their common name from the way they “swim” under the surface of sand.</p>
-
-        </div>
-
+        
     </main>
 
     <footer>
 
-        <nav class="stdNav navPad centerColFlex">
+        <nav>
             <ul>
                 <li><a href="https://github.com/PixelatedAxolotl">GitHub</a></li>
                 <li><a href="https://pixelatedaxolotl.github.io/">GitHub.io</a></li>
@@ -142,23 +158,29 @@
             </ul>
         </nav>
 
-        <div id="validationBar">
-            <p>Page Built by LK Stewart, &copy;2025</p>
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <p>Page Built by LK Stewart, &copy;2025</p>
+                    </td>
+    
+                    <td>
+                        <a href="https://validator.w3.org/check?uri=referer" >
+                            Validate HTML
+                         </a>
+                    </td>
 
-            <div>
-                <a href="http://validator.w3.org/check?uri=referer" style="text-decoration: none">
-                    <img src="images/validation_button_html-blue.png" alt="Validate HTML" />
-                    <!-- you may need to change the name of your image link to match the one you 
-               uploaded -->
-                    <a href="http://jigsaw.w3.org/css-validator/check/referer" style="text-decoration: none">
-                        <img src="images/validation_button_css-blue.png" alt="Validate CSS" />
-                    </a>
-                </a>
-            </div>
+                    <td>|</td>
 
-        </div>
-
-
+                    <td>
+                         <a href="https://jigsaw.w3.org/css-validator/check/referer">
+                             Validate CSS
+                         </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
     </footer>
 </body>

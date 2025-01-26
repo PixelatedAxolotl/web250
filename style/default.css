@@ -18,6 +18,11 @@ main
     min-height: 400px;
 }
 
+main ul
+{
+    list-style: none;
+}
+
 p + p
 {
     margin-top: 20px;
@@ -28,6 +33,18 @@ footer p
     margin: 0;
 }
 
+/*Text Style Rules*/
+strong
+{
+    color: #aa9ffa;
+}
+
+/*change strong for inner nested lists
+  CHANGE THIS IF YOU START USING STRONG FOR THINGS OTHER THAN TITLE EMPHASIS*/
+li ul li strong
+{
+    color: #28d7ff;
+}
 
 a, a:visited
 {
@@ -40,17 +57,27 @@ a:hover
     color: #5949e1;
 }
 
+/*DO NOT change the order of the next 3 rules!*/
+header, main
+{
+    margin: 20px 10%;
+    max-width: fit-content;
+}
+
 /*first shadow only increases shadow on the bottom*/
 header
 {
     box-shadow: inset 0px -12px 12px -12px #5949e1, 0px 4px 12px 2px #5949e1;
     border-radius: 5px;
+    margin-bottom: 50px;
 }
 
-header, main
+
+main, header, nav
 {
-    margin: 20px 10%;
-    max-width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /*Following 2 styles MUST have the SAME HORIZONTAL MARGINS to line up page header text with main page content*/
@@ -62,9 +89,19 @@ h1
     margin: 20px 40px;
 }
 
-h2, main > p
+main > p
 {
     margin: 20px 40px;
+}
+
+h2
+{
+    margin-bottom: 0;
+}
+
+h3
+{
+    margin-top: 10px;
 }
 
 nav ul
@@ -100,11 +137,6 @@ footer table
     border-top: inset #5949e1 3px;
 }
 
-tr td, td p, td a 
-{
-    max-width: fit-content;
-}
-
 footer nav, footer table
 {
     padding: 10px;
@@ -116,6 +148,11 @@ footer tbody tr td:last-child
     text-align: right;
 }
 
+tr td, td p, td a 
+{
+    max-width: fit-content;
+}
+
 /*meant to apply to only the validation links*/
 footer td:not(:first-child)
 {
@@ -123,63 +160,28 @@ footer td:not(:first-child)
     min-width: fit-content;
 }
 
-/*General classes (frequently used and not associated with any specific elements)*/
-main, header, nav
-{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-
-
-/*Introduction page specific rules*/
+/*figure and caption rules*/
 figure
 {
     text-align: center;
 }
 
+figure img
+{
+    box-shadow: 0px 1px 32px 2px #5949e1, 0px 6px 6px 0px #443a9c;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
 figure > p
 {
-    font-size: 12px;
+
     font-style: italic;
     margin-top: 5px;
 }
 
 figcaption
 {
-    font-size: 12px;
+    font-size: 0.8em;
     margin: 0 auto;
-}
-
-
-
-
-
-
-#introInfo
-{
-    max-width: 75%;
-}
-
-#introInfo p
-{
-    margin: 0;
-}
-
-#introInfo h3, #introInfo h4
-{
-    color: #aa9ffa;
-    margin-bottom: 5px;
-    margin-top: 15px;
-}
-
-.inlineHeader
-{
-    display: inline;
-}
-
-#introInfo li
-{
-    margin-bottom: 10px;
 }
