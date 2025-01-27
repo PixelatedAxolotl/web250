@@ -43,8 +43,8 @@ document.addEventListener('DOMContentLoaded', function()
     //Add header and footer content for the page
     Promise.all
     ([
-        loadHTML('header', 'fragments/header.html'),
-        loadHTML('footer', 'fragments/footer.html')
+        loadHTML('header', 'components/header.html'),
+        loadHTML('footer', 'components/footer.html')
     ])
     .then(() => 
     {
