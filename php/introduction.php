@@ -91,29 +91,29 @@
             </li>
             <li>
                 <p>
-                    <strong>Courses I'm Taking &amp Why:</strong>              
+                    <strong>Courses I'm Taking &amp; Why:</strong>              
                 </p>
-                    <ul>
-                        <li>
-                            <p><strong>REL110 - World Religions:</strong> This was one of my options to fulfill some of the liberal arts
-                            credits I need and it was offered online.</p>
-                        </li>
-        
-                        <li>
-                            <p><strong>WEB250 - Database Driven Websites:</strong> This class looked fun. I like web development,
-                            I like databases, and I need some elective credits.</p>
-                        </li>
-        
-                        <li>
-                            <p><strong>METR 1102 - Introduction to Meteorology:</strong> I'm taking this at UNC Charlotte to fulfill
-                            my science with lab requirement. I picked it because it looked interesting,
-                            wasn't chemistry or biology, and worked with my schedule.</p>
-                        </li>
-        
-                        <li>
-                            <p><strong>METR 1102L - Introduction to Meteorology Lab:</strong> Required lab that goes with METR 1102.</p>
-                        </li>
-                    </ul>
+                <ul>
+                    <li>
+                        <p><strong>REL110 - World Religions:</strong> This was one of my options to fulfill some of the liberal arts
+                        credits I need and it was offered online.</p>
+                    </li>
+    
+                    <li>
+                        <p><strong>WEB250 - Database Driven Websites:</strong> This class looked fun. I like web development,
+                        I like databases, and I need some elective credits.</p>
+                    </li>
+    
+                    <li>
+                        <p><strong>METR 1102 - Introduction to Meteorology:</strong> I'm taking this at UNC Charlotte to fulfill
+                        my science with lab requirement. I picked it because it looked interesting,
+                        wasn't chemistry or biology, and worked with my schedule.</p>
+                    </li>
+    
+                    <li>
+                        <p><strong>METR 1102L - Introduction to Meteorology Lab:</strong> Required lab that goes with METR 1102.</p>
+                    </li>
+                </ul>
             </li>
             <li>
                 <p>
