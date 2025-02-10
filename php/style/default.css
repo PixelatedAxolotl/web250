@@ -1,0 +1,188 @@
+/*standard page rules*/
+body
+{
+    font-family: 'lucida console';
+    font-size: 1.12em;
+    font-weight: bold;
+    color: rgb(217, 255, 247);
+    background-color: rgb(7, 1, 24);
+    max-width: 1100px;
+    margin: 40px auto;
+    padding-top: 20px;
+    box-shadow: 0px 1px 11px 1px #5949e1;
+    border-radius: 5px;
+}
+
+main
+{
+    min-height: 400px;
+}
+
+main ul
+{
+    list-style: none;
+}
+
+p + p
+{
+    margin-top: 20px;
+}
+
+footer p
+{
+    margin: 0;
+}
+
+/*Text Style Rules*/
+strong
+{
+    color: #aa9ffa;
+}
+
+/*change strong for inner nested lists
+  CHANGE THIS IF YOU START USING STRONG FOR THINGS OTHER THAN TITLE EMPHASIS*/
+li ul li strong
+{
+    color: #28d7ff;
+}
+
+a, a:visited
+{
+    text-decoration: none;
+    color: #16ffde;
+}
+
+a:hover
+{
+    color: #5949e1;
+}
+
+/*DO NOT change the order of the next 3 rules!*/
+header, main
+{
+    max-width: 1000px;
+    margin: 20px 1% 20px;
+
+}
+
+/*first shadow only increases shadow on the bottom*/
+header
+{
+    box-shadow: inset 0px -12px 12px -12px #5949e1, 0px 4px 12px 2px #5949e1;
+    border-radius: 5px;
+    margin-bottom: 50px;
+}
+
+
+main, header, nav
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/*Following 2 styles MUST have the SAME HORIZONTAL MARGINS to line up page header text with main page content*/
+h1 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 40px;
+}
+
+main > p
+{
+    margin: 20px 40px;
+}
+
+h2
+{
+    margin-bottom: 0;
+}
+
+h3
+{
+    margin-top: 10px;
+}
+
+nav ul
+{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 5px auto;
+    list-style: none;
+    white-space: nowrap;
+    justify-content: center;
+    padding: 0;
+}
+
+nav ul li
+{
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+/*General footer related rules*/
+footer
+{
+    display: flex;
+    flex-direction: column;
+    background: #7232fe2e;
+    border-radius: 5px;
+    margin-top: 40px;
+}
+
+footer table
+{
+    white-space: nowrap;
+    border-top: inset #5949e1 3px;
+}
+
+footer nav, footer table
+{
+    padding: 10px;
+}
+
+/*validation links in footer*/
+footer tbody tr td:last-child
+{
+    text-align: right;
+}
+
+tr td, td p, td a 
+{
+    max-width: fit-content;
+}
+
+/*meant to apply to only the validation links*/
+footer td:not(:first-child)
+{
+    width: 0;
+    min-width: fit-content;
+}
+
+/*figure and caption rules*/
+figure
+{
+    text-align: center;
+}
+
+figure img
+{
+    box-shadow: 0px 1px 32px 2px #5949e1, 0px 6px 6px 0px #443a9c;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+figure > p
+{
+
+    font-style: italic;
+    margin-top: 5px;
+}
+
+figcaption
+{
+    font-size: 0.8em;
+    margin: 0 auto;
+}
