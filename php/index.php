@@ -33,12 +33,9 @@
 </head>
 
 <body>
-    <header>
-        <!--Content loaded in with PHP-->
-        <?php
-            include ('components/header.html');
-        ?>
-    </header>
+
+    <!--Content loaded in with PHP-->
+    <?php include ('components/header.html'); ?>
 
     <main>
         <h2>HOME</h2>
@@ -50,12 +47,8 @@
         </p>
     </main>
 
-    <footer>
         <!--Content loaded in with PHP-->
-        <?php
-            include ('components/footer.php');
-        ?>
-    </footer>
+        <?php include ('components/footer.php'); ?>
 </body>
 
 </html>

@@ -33,12 +33,8 @@
 </head>
 
 <body>
-    <header>
-        <!--Content loaded in with PHP-->
-        <?php
-            include ('components/header.html');
-        ?>
-    </header>
+    <!--Content loaded in with PHP-->
+    <?php include ('components/header.html'); ?>
 
     <main>
         <h2>CONTRACT</h2>
@@ -67,12 +63,8 @@
         
     </main>
 
-    <footer>
-        <!--Content loaded in with PHP-->
-        <?php
-            include ('components/footer.php');
-        ?>
-    </footer>
+    <!--Content loaded in with PHP-->
+    <?php include ('components/footer.php'); ?>
 </body>
 
 </html>
