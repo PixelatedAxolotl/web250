@@ -27,7 +27,8 @@ async function loadHTML(elementName, filePath)
         {
             console.error('Element not found: ' + elementName);
         }
-    } catch (error) 
+    } 
+    catch (error) 
     {
       // Handle any fetch-related errors
       console.error('Error loading ' + filePath + ':', error);
