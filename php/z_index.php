@@ -1,29 +1,10 @@
-<?php
-    // get filename of the page + name of page to append to tile tag
-    if (isset( $_GET["p"])) 
-    {
-        $sPage = $_GET["p"] . ".html";
-        $pageTitle = ucfirst($_GET["p"]);
-    }
-    else
-    {
-        $sPage = "home.html";
-        $pageTitle = 'Home';
-    }
-?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="author" content="LK">
     <link rel="stylesheet" type="text/css" href="../style/default.css">
-    <link rel="icon" href="images/wizard.ico">
-
-    <title>LK Stewart's Lucky Sandfish | WEB250 | <?php echo $pageTitle ?></title>
+    <title>LK Stewart's Lucky Sandfish | WEB250 | HOME</title>
 
     <!--     
         Structure of HTML5 semantic layout swiped from PHP Fiddle and modified
@@ -53,31 +34,22 @@
 
 <body>
 
-<header>
-    <h1>LK Stewart's Lucky Sandfish | WEB250</h1>
-    <nav>
-        <ul>
-            <li><a href="?p=home">Home</a></li>
-            <li><a href="?p=introduction">Introduction</a></li>
-            <li><a href="?p=contract">Contract</a></li>
-            <li><a href="https://pixelatedaxolotl.github.io/web250/">Static Version</a></li>
-            <li>
-                <a href="#">Outside Sites</a>
-                <ul>
-                    <li><a href="http://web250.great-site.net/multipage/superduper_php">Super Duper PHP</a></li>
-                    <li><a href="http://web250.great-site.net/multipage/superduper_static">Super Duper Static</a></li>
-                    <li><a href="http://web250.great-site.net/joy">Joy of PHP</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
-</header>
+    <!--Content loaded in with PHP-->
+    <?php include_once ('components/header.html'); ?>
 
-<main>
-    <!-- Load page content from selected file -->
-    <h2><?php echo strtoupper($pageTitle)?></h2> 
-    <?php include($sPage)?>
-</main>
+    <main>
+        <h2>HOME</h2>
+
+        <p>
+            I'm Lauren-Kate (LK) Stewart and this is my home page for WEB 250.
+            You can learn more about me in my <a href="introduction.html">Introduction</a> and you can
+            see what I'm currently working on by clicking the links at the bottom of the page.
+        </p>
+    </main>
+
+        <!--Content loaded in with PHP-->
+        <?php include_once ('components/footer.php'); ?>
+</body>
 
 <footer>
     <nav>
@@ -128,6 +100,5 @@
         document.getElementById("validation_link_css").setAttribute("href", "https://jigsaw.w3.org/css-validator/validator?uri=" + location.href);
     </script>
 </footer>
-</body>
 
 </html>

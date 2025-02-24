@@ -34,7 +34,7 @@
 
 <body>
     <!--Content loaded in with PHP-->
-    <?php include ('components/header.html'); ?>
+    <?php include_once ('components/header.html'); ?>
 
     <main>
         <h2>CONTRACT</h2>
@@ -64,7 +64,7 @@
     </main>
 
     <!--Content loaded in with PHP-->
-    <?php include ('components/footer.php'); ?>
+    <?php include_once ('components/footer.php'); ?>
 </body>
 
 </html>
