@@ -92,14 +92,11 @@
         </ul>
     </nav>
 
-    <table>
-        <tbody>
-            <tr>
-                <td>
-                    <p>Page Built by LK Stewart, &copy;2025</p>
-                </td>
 
-                <td>
+                    <p>Page Built by LK Stewart, &copy;2025</p>
+
+
+
                     
                     <?php
                         $validation_link = "https://validator.w3.org/check?uri=" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -107,26 +104,11 @@
                     <a href="<?php echo htmlspecialchars($validation_link); ?>" >
                         Validate HTML
                     </a>
-                </td>
 
-                <td>|</td>
-
-                <td>
                     <a href="https://jigsaw.w3.org/css-validator/check/referer">
                         Validate CSS
                     </a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
 
-    <!--Populate referer for validation links 
-        Loaded here to prevent errors when inserting footer with js-->
-    <script>
-        document.getElementById("validation_link_html").setAttribute("href", "https://validator.w3.org/check?uri=" + location.href);
-
-        document.getElementById("validation_link_css").setAttribute("href", "https://jigsaw.w3.org/css-validator/validator?uri=" + location.href);
-    </script>
 </footer>
 </body>
 

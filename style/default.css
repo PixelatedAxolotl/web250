@@ -115,9 +115,8 @@ nav > ul
     white-space: nowrap;
     justify-content: center;
     padding: 0;
-
     max-height: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
 }
 
 nav ul li
@@ -129,41 +128,61 @@ nav ul li
 /*General footer related rules*/
 footer
 {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-column-gap: 20px;
+    grid-row-gap: 0px;
+    grid-template-columns: .7fr .17fr .18fr;
+    grid-template-rows: repeat(2, 40px);
     background: #7232fe2e;
     border-radius: 5px;
     margin-top: 40px;
 }
 
-footer table
+footer nav
 {
+    grid-column: 1/ -1;
+    align-self: auto;
+    width: 100%;
     white-space: nowrap;
-    border-top: inset #5949e1 3px;
+    border-bottom: inset #5949e1 3px;
+    padding-top: 15px;
 }
 
-footer nav, footer table
+footer nav ul
 {
-    padding: 10px;
+    margin: unset;
+    padding: unset;
+    align-content: center;
 }
 
-/*validation links in footer*/
-footer tbody tr td:last-child
+footer p
 {
-    text-align: right;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    align-self: center;
+    padding-left: 42px;
 }
 
-tr td, td p, td a 
+footer > a
 {
-    max-width: fit-content;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 2;
+    justify-self: end;
+    align-self: center;
 }
 
-/*meant to apply to only the validation links*/
-footer td:not(:first-child)
+footer > a + a
 {
-    width: 0;
-    min-width: fit-content;
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 2;
+    padding-right: 42px;
 }
+
+
 
 /*figure and caption rules*/
 figure
