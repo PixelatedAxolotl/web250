@@ -66,6 +66,7 @@
                     <li><a href="http://web250.great-site.net/multipage/superduper_php">Super Duper PHP</a></li>
                     <li><a href="http://web250.great-site.net/multipage/superduper_static">Super Duper Static</a></li>
                     <li><a href="http://web250.great-site.net/joy">Joy of PHP</a></li>
+                    <li><a href="http://web250.great-site.net/joy/samsusedcars.html">Sam's Used Cars</a></li>
                 </ul>
             </li>
         </ul>
