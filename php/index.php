@@ -2,17 +2,16 @@
     // get filename of the page + name of page to append to tile tag
     if (isset( $_GET["p"])) 
     {
-        $sPage = $_GET["p"] . ".html";
+        $pageFileName = $_GET["p"] . ".html";
         $pageTitle = ucfirst($_GET["p"]);
     }
     else
     {
-        $sPage = "home.html";
+        $pageFileName = "home.html";
         $pageTitle = 'Home';
     }
+    $pagePath = "contents/$pageFileName";
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -76,7 +75,7 @@
 <main>
     <!-- Load page content from selected file -->
     <h2><?php echo strtoupper($pageTitle)?></h2> 
-    <?php include($sPage)?>
+    <?php include($pagePath)?>
 </main>
 
 <footer>
