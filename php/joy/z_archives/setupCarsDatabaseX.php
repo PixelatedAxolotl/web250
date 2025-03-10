@@ -1,95 +1,47 @@
-<?php
-/**
- * Joy of PHP sample code
- * Demonstrates how to create a database, create a table, and insert records.
- */
-//mySQL->localhost
-$mysqli = new mysqli('localhost', 'root', '' );
+<?php 
 
+//create database 
+include ('dbConnect.php');
 
-   if (!$mysqli) { 
-      die('Could not connect'); 
-  } 
-  echo 'Connected successfully to mySQL. <BR>'; 
-  
+$inventory = "inventory";
 
-/* Create table doesn't return a resultset */
-if ($mysqli->query("CREATE DATABASE IF NOT EXISTS Cars"))
+//$dropQuery = "DROP TABLE IF EXISTS $inventory";
+
+if ($mysqli->query($dropQuery)) 
 {
-    echo "<p>Database Cars created</P>";
-}
-/*if ($mysqli->query("CREATE DATABASE Cars") === TRUE) {
-    echo "<p>Database Cars created</P>";
+    echo "Database table [$inventory] dropped</P>";
 }
 else
 {
-    echo "Error creating Cars database: " . mysqli_connect_error()."<br>";
-}*/
-//select a database to work with
-$mysqli->select_db("Cars");
-   Echo ("Selected the Cars database");
+    echo "<p>Error: </p>" . $mysqli->error;
+}
 
-
-
-
-$query = "CREATE TABLE IF NOT EXISTS inventory 
+$query = "CREATE TABLE IF NOT EXISTS $inventory 
 ( VIN varchar(17) PRIMARY KEY, YEAR INT, Make varchar(50), Model varchar(100), 
 TRIM varchar(50), EXT_COLOR varchar (50), INT_COLOR varchar (50), ASKING_PRICE DECIMAL (10,2), 
 SALE_PRICE DECIMAL (10,2), PURCHASE_PRICE DECIMAL (10,2), MILEAGE int, TRANSMISSION varchar (50), 
-PURCHASE_DATE DATE, SALE_DATE DATE)";
+PURCHASE_DATE DATE, SALE_DATE DATE)";//, Primary_Image VARCHAR(250) NULL)";
 
 
 
 //echo "<p>***********</p>";
 //echo $query ;
 //echo "<p>***********</p>";
-if ($mysqli->query($query) === TRUE) 
+if ($mysqli->query($query)) 
 {
-    echo "Database table 'INVENTORY' created</P>";
+    echo "Database table [$inventory] created</P>";
 }
 else
 {
     echo "<p>Error: </p>" . $mysqli->error;
 }
+
 // Dates are stored in MySQL as 'YYYY-MM-DD' format
-$query = "INSERT IGNORE INTO `Cars`.`inventory` 
-(`VIN`, `YEAR`, `Make`, `Model`, `TRIM`, `EXT_COLOR`, `INT_COLOR`, `ASKING_PRICE`, `SALE_PRICE`, `PURCHASE_PRICE`, `MILEAGE`, `TRANSMISSION`, `PURCHASE_DATE`, `SALE_DATE`) 
-VALUES 
-('5FNYF4H91CB054036', '2012', 'Honda', 'Pilot', 'Touring', 'White Diamond Pearl', 'Leather', '37807', NULL, '34250', '7076', 'Automatic', '2012-11-08', NULL);";
-
-
-if ($mysqli->query($query) === TRUE) {
-    echo "<p>If it was not already there - Honda Pilot inserted into inventory table. </p>";
-}
-else
-{
-    echo "<p>Error inserting Honda Pilot: </p>" . $mysqli->error;
-    echo "<p>***********</p>";
-    echo $query ;
-    echo "<p>***********</p>";
-}
-
-// Insert a Dodge Durango
-
-$query = "INSERT IGNORE INTO `Cars`.`inventory` (`VIN`, `YEAR`, `Make`, `Model`, `TRIM`, `EXT_COLOR`, `INT_COLOR`, `ASKING_PRICE`, `SALE_PRICE`, `PURCHASE_PRICE`, `MILEAGE`, `TRANSMISSION`, `PURCHASE_DATE`, `SALE_DATE`) 
-VALUES 
-('LAKSDFJ234LASKRF2', '2009', 'Dodge', 'Durango', 'SLT', 'Silver', 'Black', '2700', NULL, '2000', '144000', '4WD Automatic', '2012-12-05', NULL);";
-
-
-if ($mysqli->query($query) === TRUE) {
-    echo "<p>If it was not already there - Dodge Durango inserted into inventory table.</p>";
-}
-else
-{
-    echo "<p>Error Inserting Dodge: </p>" . $mysqli->error;
-    echo "<p>***********</p>";
-    echo $query ;
-    echo "<p>***********</p>";
-}
-
-// Insert 27 other cars
-$query3 = "INSERT IGNORE INTO `Cars`.`inventory` (`VIN`, `YEAR`, `Make`, `Model`, `TRIM`, `EXT_COLOR`, `INT_COLOR`, `ASKING_PRICE`, `SALE_PRICE`, `PURCHASE_PRICE`, `MILEAGE`, `TRANSMISSION`, `PURCHASE_DATE`, `SALE_DATE`)
+// Insert 29 cars
+$query = "INSERT IGNORE INTO `inventory` (`VIN`, `YEAR`, `Make`, `Model`, `TRIM`, `EXT_COLOR`, `INT_COLOR`, `ASKING_PRICE`, `SALE_PRICE`, `PURCHASE_PRICE`, `MILEAGE`, `TRANSMISSION`, `PURCHASE_DATE`, `SALE_DATE`)
  VALUES
+('5FNYF4H91CB054036', '2012', 'Honda', 'Pilot', 'Touring', 'White Diamond Pearl', 'Leather', '37807', NULL, '34250', '7076', 'Automatic', '2012-11-08', NULL),
+('LAKSDFJ234LASKRF2', '2009', 'Dodge', 'Durango', 'SLT', 'Silver', 'Black', '2700', NULL, '2000', '144000', '4WD Automatic', '2012-12-05', NULL),
 ('1FAFP44423F44657', 2003, 'Ford', 'Mustang', 'Base', 'Silver / Black', 'Gray', 8995, NULL, 6746, 75820, 'Automatic', '2013-01-14', NULL),
 ('2G1WD58C47917903', 2007, 'Chevrolet', 'Impala', 'SS', 'Gray', 'Gray', 9995.00, NULL, 7496, 129108, '4-Speed Automatic', '2013-01-14', NULL),
 ('19UUA56682A036203', 2002, 'Acura', 'TL', 'Base', 'Blue', 'Tan', 7995.00, NULL, 5996, 77442, '5-Speed Automatic', '2013-01-14', NULL),
@@ -119,19 +71,76 @@ $query3 = "INSERT IGNORE INTO `Cars`.`inventory` (`VIN`, `YEAR`, `Make`, `Model`
 ('YS3DF75K627015298', 2002, 'Saab', '9-3', 'SE', 'Sand', 'Tan', 8495.00, NULL, 6371, 48499, '5-speed Manual', '2013-01-14', NULL),
 ('YV1MJ682152063198', 2005, 'Volvo', 'V50', 'T5', 'Blue', 'Black', 8995.00, NULL, 6746, 110354, 'Automatic', '2013-01-14', NULL),
 ('YV4SZ592561219696', 2006, 'Volvo', 'XC70', 'AWD', 'Willow Green Metallic', 'Taupe Leather', 14996, NULL, 11247, 83664, '5-Speed Automatic w/ Geartronic', '2013-01-14', NULL);
-";
-if ($mysqli->query($query3) === TRUE) {
-    echo "<p>if they were not already there, 27 cars inserted into inventory table.</p>";
+"; // end insert
+
+//TO DO: MAKE INTO FUNCTION??
+if ($mysqli->query($query))
+{
+    echo "<p>Success!</p>";
+
+    // show any generated warnings
+    echo nl2br (implode("\n", preg_split("/\d\s+/", $mysqli->info)) . "\n\n");
+    
+    $result = $mysqli->query("SHOW WARNINGS");
+    $rows = $result->fetch_all(MYSQLI_NUM);
+    foreach ($rows as $row)
+    {
+        echo nl2br (implode($row) . "\n");
+    }
 }
 else
 {
 echo mysql_error();
-    echo "<p>Error Inserting 27 cars: </p>" . printf("Errormessage: %s\n", $mysqli->error);
+    echo "<p>Error inserting cars: </p>" . printf("Errormessage: %s\n", $mysqli->error);
     echo "<p>***********</p>";
-    echo $query3;
+    echo $query;
     echo "<p>***********</p>";
 }
 
+
+
+//Create image table - MOVED FROM OTHER FILE 
+$query = " CREATE TABLE IF NOT EXISTS images (ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT, VIN varchar(17), ImageFile varchar(250))";
+if ($mysqli->query($query))
+{
+    echo "<p>Success!</p>";
+
+    // show any generated warnings
+    echo nl2br (implode("\n", preg_split("/\d\s+/", $mysqli->info)) . "\n\n");
+    
+    $result = $mysqli->query("SHOW WARNINGS");
+    $rows = $result->fetch_all(MYSQLI_NUM);
+    foreach ($rows as $row)
+    {
+        echo nl2br (implode($row) . "\n");
+    }
+}
+else
+{
+echo mysql_error();
+    echo "<p>Error creating images table: </p>" . printf("Errormessage: %s\n", $mysqli->error);
+    echo "<p>***********</p>";
+    echo $query;
+    echo "<p>***********</p>";
+}
+
+/*
+$query = "ALTER TABLE `inventory` ADD `Primary_Image` VARCHAR(250) NULL AFTER `SALE_DATE`";
+echo "<p>***********</p>";
+echo $query ;
+echo "<p>***********</p>";
+if ($mysqli->query($query) === TRUE) 
+{
+    echo "Database table 'INVENTORY' modified</P>";
+}
+else
+{
+    echo "<p>Error: </p>" . $mysqli->error."<br>";;
+}
+
+*/
+echo "<br><br><a href='../index.php'>Home</a>";
 $mysqli->close();
-include 'footer.php';
+
 ?>
+

@@ -4,7 +4,7 @@
  * Demonstrates how to create a database, create a table, and insert records.
  */
 
-include 'db.php';
+include 'dbConnect.php';
 
    if (!$mysqli) { 
       die('Could not connect: ' . mysqli_error($mysqli));

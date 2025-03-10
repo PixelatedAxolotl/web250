@@ -3,27 +3,7 @@
  * Joy of PHP sample code
  * Demonstrates how to create a database, create a table, and insert records.
  */
-
-$mysqli = new mysqli('localhost', 'root', '' );
-
-
-   if (!$mysqli) { 
-      die('Could not connect: ' . mysql_error()); 
-  } 
-  echo 'Connected successfully to mySQL. <BR>'; 
-  
-
-/* Create table doesn't return a resultset */
-if ($mysqli->query("CREATE DATABASE Cars") === TRUE) {
-    echo "<p>Database Cars created</P>";
-}
-else
-{
-    echo "Error creating Cars database: " . mysql_error()."<br>";
-}
-//select a database to work with
-$mysqli->select_db("Cars");
-   Echo ("Selected the Cars database");
+include ('db.php');
 
 $query = " CREATE TABLE INVENTORY 
 ( VIN varchar(17) PRIMARY KEY, YEAR INT, Make varchar(50), Model varchar(100), 

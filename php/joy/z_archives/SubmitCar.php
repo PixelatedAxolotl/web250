@@ -26,26 +26,19 @@ $query = "INSERT INTO inventory
     )";
 
 // Print the query to the browser so you can see it
-echo ($query. "<br>");
-
-include 'db.php';
-
-  echo 'Connected successfully to mySQL. <BR>'; 
-  
-//select a database to work with
-$mysqli->select_db("Cars");
-   Echo ("Selected the Cars database. <br>");
-
+echo $query;
+include 'db_scripts/dbConnect.php';
 /* Try to insert the new car into the database */
 if ($result = $mysqli->query($query)) {
-    echo "<p>You have successfully entered $Make $Model into the database.</P>";
+    echo "<p>You have successfully entered $Make $Model into the database.</p>";
 }
 else
 {
     echo "Error entering $VIN into database: " . $mysqli->error."<br>";
 }
 $mysqli->close();
-include 'footer.php'
+include 'footer.php';
+header("refresh:2; url=samsusedcars.php"); //TEMP
 ?>
 </body>
 </html>

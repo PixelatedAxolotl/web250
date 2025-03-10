@@ -8,7 +8,7 @@
 <h1>Sam's Used Cars
 </h1>
 <?php
-include 'db.php';
+include 'db_scripts/dbConnect.php';
 $vin = $_GET['VIN'];
 $query = "SELECT * FROM inventory WHERE VIN='$vin'";
 /* Try to query the database */
@@ -19,6 +19,7 @@ else
 {
  echo "Sorry, a vehicle with VIN of $vin cannot be found " .  $mysqli->error."<br>";
 }
+echo "$vin </p>";
 // Loop through all the rows returned by the query, creating a table row for each
 while ($result_ar = mysqli_fetch_assoc($result)) {
  $VIN = $result_ar['VIN'];
@@ -32,26 +33,25 @@ while ($result_ar = mysqli_fetch_assoc($result)) {
  $transmission = $result_ar['TRANSMISSION'];
  $price = $result_ar['ASKING_PRICE'];
 }
-echo "$VIN </p>";
-//echo "$year $make $model </p>";
-//echo "<p>Asking Price: $price </p>";
-//echo "<p>Exterior Color: $color </p>";
-//echo "<p>Interior Color: $interior </p>";
+//echo $VIN;
+//echo $result;
+echo "$year $make $model </p>";
+echo "<p>Asking Price: $price </p>";
+echo "<p>Exterior Color: $color </p>";
+echo "<p>Interior Color: $interior </p>";
 
 $mysqli->close();
 ?>
-
-<form action="EditCar.php"
-method=”post”>
-<input name="VIN" type="hidden" value= "<?php echo "$VIN" ?>" /><br />
+<form action="EditCar.php" method="post">
+<input name="VIN" type="hidden" value=<?= $VIN ?> /><br>
 <br />
-Make: <input name="Make" type="text" value= "<?php echo "$make" ?>" /><br />
+Make: <input name="Make" type="text" value=<?= $make ?> /><br>
 <br />
-Model: <input name="Model" type="text" value= "<?php echo "$model" ?>" /><br />
+Model: <input name="Model" type="text" value=<?= $model ?> /><br>
 <br />
-Price: <input name="Asking_Price" type="text" value= "<?php echo "$price" ?>" /><br />
+Price: <input name="Asking_Price" type="text" value=<?= $price ?> /><br>
 <br />
-<input name="Submit1" type="submit" value="submit" /><br />
+<input name="Submit1" type="submit" value="submit" /><br>
 &nbsp;</form>
 </body>
 </html>
