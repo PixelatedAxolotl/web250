@@ -5,9 +5,9 @@
 <body background="bg.jpg">
 <h1>Sam's Used Cars</h1>
 <h3>Add Image</h3>
-<?php include 'db.php';
+<?php include 'dbConnect.php';
 $vin = $_GET['VIN'];
-$query = "SELECT * FROM INVENTORY WHERE VIN='$vin'";
+$query = "SELECT * FROM inventory WHERE VIN='$vin'";
 /* Try to query the database */
 if ($result = $mysqli->query($query)) {
    // Don't do anything if successful.

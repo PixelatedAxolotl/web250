@@ -52,8 +52,9 @@ machine.&nbsp; Here are the links to get started.&nbsp; </p>
 <p>Is PHP Running on my machine?  What version?  What extensions? &nbsp; Check it here -->
 <a href="phpinfo.php" target="_blank">PHP Info Paget</a></p>
 <p>A really simple PHP page --&gt; <a href="simple.php">simple.php</a></p>
-<h2>Database Related Scripts</h2>
-<p><a href="CreateDB.php">Create the Cars Database</a> (Before you can use this, 
+<a href="db_scripts/setupCarsDatabase.php">SETUP ENTIRE DATABASE - WILL WIPE EXISTING DATA</a>
+<h2>DELETE THESE WHEN READY: Database Related Scripts</h2>
+<p><a href="db_scripts/CreateDB.php">Create the Cars Database</a> (Before you can use this, 
 you'll need to edit line 8 with your username and password)</p>
 
 <p><a href="ModifyDB.php">Modify the Inventory Table</a> (This script adds the

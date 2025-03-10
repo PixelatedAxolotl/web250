@@ -6,7 +6,7 @@
 <body background="bg.jpg">
 
 <h1>Sam's Used Cars</h1>
-<?php include 'db.php';
+<?php include 'db_scripts/dbConnect.php';
 $vin = $_GET['VIN'];
 $query = "SELECT * FROM inventory WHERE VIN='$vin'";
 /* Try to query the database */
