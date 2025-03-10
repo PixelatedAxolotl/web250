@@ -12,5 +12,5 @@ This doctrine was first practically applied to warfare by the Italians and the S
 
 In World War II paratroopers most often used parachutes of a round design. These parachutes could be steered to a small degree by pulling on the risers (four straps connecting the paratrooper's harness to the connectors) and suspension lines which attach to the parachute canopy itself. German paratroopers, whose harnesses had only a single riser attached at the back, could not manipulate their parachutes in such a manner. Today, paratroopers still use round parachutes, or round parachutes modified as to be more fully controlled with toggles. The parachutes are usually deployed by a static line. Mobility of the parachutes is often deliberately limited to prevent scattering of the troops when a large number parachute together. Some military exhibition units and special forces units, use "ram-air" paragliders which offer higher ability to turn and maneuver and are deployed without a static line from high altitude.
 </p>
-<p class = "credits">Article courtesy of <a href  = "http://wikipedia.org">Wikipedia</a>. Image courtesy of <a href = "http://www.flickr.com/photos/usnavy/">Official US Navy</a> on flickr. 
+<p class = "credits">Article and image courtesy of <a href  = "http://wikipedia.org">Wikipedia</a>. 
 </p>

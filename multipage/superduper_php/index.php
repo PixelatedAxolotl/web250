@@ -25,8 +25,8 @@
 
 </header>
 <hr />
-<!-- dynamic content goes here -->
 
+<!-- dynamic content goes here -->
 <?php
     if (isset( $_GET["p"])) 
     {
