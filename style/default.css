@@ -125,6 +125,17 @@ nav ul li
     padding-right: 22px;
 }
 
+nav ul li ul
+{
+    white-space: wrap;
+}
+
+nav ul li ul li a
+{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
 /*General footer related rules*/
 footer
 {
