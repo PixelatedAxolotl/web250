@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <?php
         include 'db_scripts/dbConnect.php';
 
@@ -5,12 +7,11 @@
 <?php
     $visible = 0;
     $success = false;
-    echo "Hello There";
-    var_dump($_POST);
+    $action = htmlspecialchars($_SERVER['PHP_SELF']);
+
     // handle crud operations
     if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
-        echo "Hello There";
         if (isset($_POST['create'])) 
         {
             
@@ -33,7 +34,7 @@
             )";
 
             // DEBUG: Print the query to the browser so you can see it
-            echo $query;
+            //echo $query;
 
             /* Try to insert the new car into the database */
             if ($result = $mysqli->query($query)) 
@@ -68,7 +69,7 @@
                 VIN='$VIN'"; 
         
             // Print the query to the browser so you can see it
-            echo ($query. "<br>");
+            //echo ($query. "<br>");
         
             /* Try to insert the new car into the database */
             if ($result = $mysqli->query($query)) 
@@ -83,13 +84,14 @@
         } 
         elseif (isset($_POST['delete'])) 
         {
-            print_r($_POST);
+            //print_r($_POST);
             $vin = $_POST['VIN'];
             $query = "DELETE FROM inventory WHERE VIN='$vin'";
-            echo "$query <BR>";
+            //echo "$query <BR>";
             /* Try to query the database */
-            if ($result = $mysqli->query($query)) {
-            Echo "The vehicle with VIN $vin has been deleted.";
+            if ($result = $mysqli->query($query)) 
+            {
+                echo "The vehicle with VIN $vin has been deleted.";
             }
             else
             {
@@ -104,110 +106,25 @@
 
 
     } // end POST request if
-    else
-    {
-        echo "whoops: " . $_SERVER["REQUEST_METHOD"];
-    }
-
-
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+
+
+
 
 <head>
-    <meta content="en-us" http-equiv="Content-Language" />
-    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <title>Welcome to Lucky Sandfish's Used Cars</title>
-    <style>
-        body
-        {
-            color:aquamarine;
-            background-color: blueviolet;
-            font-family: Tahoma, Arial, sans-serif;
+    <link rel="stylesheet" href="styles/default.css">
 
-            max-width: 900px;
-            margin: 0 auto;
-            width: 90%;
-        }
-
-        h1, h2, header, footer
-        {
-            text-align: center;
-            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        }
-
-        a, a:visited
-        {
-            color: greenyellow;
-        }
-
-        a:hover
-        {
-            color: aqua;
-        }
-
-        p form
-        {
-            display: none;
-        }
-
-        p form[visibility="1"]
-        {
-            display: inline-block;
-        }
-
-        button
-        {
-            background: none;
-            border: none;
-        }
-
-        input:disabled
-        {
-            background-color: rgba(177, 174, 174, 0.83);
-            border: solid 1px crimson;
-            color: black;
-            cursor: not-allowed;
-        }
-
-        button[name="toggleEdit"] img:hover
-        {
-            cursor: pointer;
-            background: rgb(9, 149, 135);
-            border-radius: 4px;
-            box-shadow: 0 0 3px 3px rgb(0, 213, 153);
-            transform: scale(1.1);
-            transition: 0.25s;
-
-        }
-
-        button[name="delete"] img:hover
-        {
-            cursor: pointer;
-            background: rgb(93, 12, 4);
-            border-radius: 4px;
-            box-shadow: 0 0 3px 3px rgb(236, 51, 27);
-            transform: scale(1.1);
-            transition: 0.25s;
-
-        }
-
-        input[name="update"]
-        {
-            display: none;
-        }
-    </style>
+    <!--Required validation script-->
+    <script src="https://lint.page/kit/880bd5.js" crossorigin="anonymous"></script>
 </head>
-
 <body>
-<header>
-    
-    <a href="index.php"><img style="float: left;" height="120" src="images/usedcars.jpg" width="184" /></a>
-    <h1>Lucky Sandfish's Used Cars</h1>
-    <caption>The companion web site that goes with the <a href="index.html">Joy 
-		of PHP</a> Book</caption>
-    <hr />
-</header>
+    <header>
+        
+        <a href="index.php"><img style="float: left;" height="120" src="images/sandfish.jpg" alt="Sandfish Skink in sand" width="184" /></a>
+        <h1>Lucky Sandfish's Used Cars</h1>
+    </header>
 
 <main>
 
@@ -221,7 +138,7 @@
             }
         ?>
         
-        <form action="" method="POST" name="create">
+        <form action="<?php echo $action?>" method="POST" name="create">
             VIN: <input name="VIN" type="text">
             Make: <input name="Make" type="text">
             Model: <input name="Model" type="text">
@@ -230,14 +147,8 @@
             <input type="reset" value="Reset">
 	    </form>
     </section>
-    <section>
-        <h2>Edit A Car</h2>
-        <p>
 
-
-        </p>
-    </section>
-    <p><a href="ViewCarsAddImage.php">Add Images to Cars</a></p>
+    <p><a href="">Add Images to Cars</a></p>
     <p><a href="db_scripts/setupCarsDatabase.php">Reset Database - USE WITH CAUTION</a></p>
     
 
@@ -255,16 +166,23 @@ else
     echo "Error getting cars from the database: " . mysql_error()."<br>";
 }
 
-// START OF TABLE
+// START OF TABLE - Form wraps entire table (closed in echo)
 // Create the table headers
+
 echo <<<TABLE_HEAD
-    <table id='Grid' style='width: 80%'>
-    <tr>
-    <th style='width: 50px'>Make</th>
-    <th style='width: 50px'>Model</th>
-    <th style='width: 50px'>Asking Price</th>
-    <th style='width: 50px'>Action</th>
-    </tr>
+    <form action="$action" method="POST">
+        <table id='Grid' style='width: 80%'>
+        <thead>
+            <tr>
+                <th style='width: 0px'></th>
+                <th style='width: 50px'>Make</th>
+                <th style='width: 50px'>Model</th>
+                <th style='width: 50px'>Asking Price</th>
+                <th style='width: 50px'>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
 TABLE_HEAD;
 
 // Loop through all the rows returned by the query, creating a table row for each
@@ -272,13 +190,15 @@ $rowNumber = 0;
 while ($result_ar = mysqli_fetch_assoc($result))
 {
     $carForm = <<<HTML
-        <form action="" method="POST">
-            <!-- here but hidden so that form can send vin as request param -->
-            <input name="VIN" type="hidden" value="$result_ar[VIN]">
+
 
             <tr id="$rowNumber">
                 <td>
-                    <input disabled='true' name="Make" type="text" value="$result_ar[Make]">
+                    <!-- here but hidden so that form can send vin as request param -->
+                    <input name="VIN" type="hidden" value="$result_ar[VIN]">
+                </td>
+                <td>
+                    <input disabled name="Make" type="text" value="$result_ar[Make]">
                 </td>
                 <td> 
                     <input disabled name="Model" type="text" value="$result_ar[Model]">
@@ -286,23 +206,23 @@ while ($result_ar = mysqli_fetch_assoc($result))
                 <td> 
                     <input disabled name="Asking_Price" type="text" value="$result_ar[ASKING_PRICE]">
                 </td>
+
                 <td>
                     <button name="toggleEdit" type="button"><img src="images/editIcon.svg" alt="Edit Car Information"></button>
-                </td>
-                <td>
                     <input formaction="?action=UPDATE&VIN=$result_ar[VIN]" name="update" type="submit" value="Update">
-                </td>
-                <td>
                     <button formaction="?action=delete&VIN=$result_ar[VIN]" name="delete" type="submit"><img src="images/deleteIcon.svg" alt="Delete Car"></button>
                 </td>
+
             </tr>
-        </form>
+
+
+
     HTML;
     $rowNumber++;
     echo $carForm;
 }
 
-echo "</table>";    // END OF TABLE
+echo "</tbody></table></form>";    // END OF FORM + TABLE
 
 $mysqli->close(); // Close db object at end of code
 ?>
@@ -314,11 +234,14 @@ $mysqli->close(); // Close db object at end of code
     </footer>
 
 
-    <!-- JS Zone -->
+    <!-- JS Zone 
+         Placed here so that it is parsed after the car list table and all its buttons
+         have been created
+    -->
     <script>
             const editButtons = document.querySelectorAll("button[name=\"toggleEdit\"]");
             
-            editButtons.forEach(button => 
+            editButtons.forEach((button) => 
             {
                 //console.log(button.closest("tr"));
                 button.addEventListener('click', function(event)
@@ -328,20 +251,15 @@ $mysqli->close(); // Close db object at end of code
                     const updateButton = formRow.querySelector('input[name="update"]');
                     console.log(updateButton); 
                     updateButton.setAttribute("style", "display: block;");
-                    editableFields.forEach(field =>
+                    editableFields.forEach((field) =>
                     {
                         field.removeAttribute('disabled');
-                    })
+                    });
                 });
             });
 
             console.log(editButtons);
     </script>
-    <script>
-
-
-    </script>
 
 </body>
-
 </html>

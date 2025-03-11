@@ -1,0 +1,77 @@
+body
+{
+    color:aquamarine;
+    background-color: blueviolet;
+    font-family: Tahoma, Arial, sans-serif;
+
+    max-width: 900px;
+    margin: 0 auto;
+    width: 90%;
+}
+
+h1, h2, header, footer
+{
+    text-align: center;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+a, a:visited
+{
+    color: greenyellow;
+}
+
+a:hover
+{
+    color: aqua;
+}
+
+p form
+{
+    display: none;
+}
+
+p form[visibility="1"]
+{
+    display: inline-block;
+}
+
+button
+{
+    background: none;
+    border: none;
+}
+
+input:disabled
+{
+    background-color: rgba(177, 174, 174, 0.83);
+    border: solid 1px crimson;
+    color: black;
+    cursor: not-allowed;
+}
+
+button[name="toggleEdit"] img:hover
+{
+    cursor: pointer;
+    background: rgb(9, 149, 135);
+    border-radius: 4px;
+    box-shadow: 0 0 3px 3px rgb(0, 213, 153);
+    transform: scale(1.1);
+    transition: 0.25s;
+
+}
+
+button[name="delete"] img:hover
+{
+    cursor: pointer;
+    background: rgb(93, 12, 4);
+    border-radius: 4px;
+    box-shadow: 0 0 3px 3px rgb(236, 51, 27);
+    transform: scale(1.1);
+    transition: 0.25s;
+
+}
+
+input[name="update"]
+{
+    display: none;
+}
