@@ -9,7 +9,7 @@
 <header>
 
 
-	<a href = "index.php"  >
+	<a href = "?p=home"  >
 		<img class = "linkedimage" src = "images/sdp_banner.png" alt = "Super Duper Paratrooper" />
 	</a>
 	<br />
