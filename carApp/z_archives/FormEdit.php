@@ -8,7 +8,7 @@
 <h1>Sam's Used Cars
 </h1>
 <?php
-include 'db_scripts/dbConnect.php';
+include ' dbScripts/dbConnect.php';
 $vin = $_GET['VIN'];
 $query = "SELECT * FROM inventory WHERE VIN='$vin'";
 /* Try to query the database */

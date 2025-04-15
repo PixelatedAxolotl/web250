@@ -30,7 +30,7 @@ echo ($query. "<br>");
 //echo ("EVENTUALLY QUERY WILL READ SOMETHING LIKE: INSERT INTO `inventory` (`VIN`, `YEAR`, `Make`, `Model`, `TRIM`, `EXT_COLOR`, `INT_COLOR`, `ASKING_PRICE`, `SALE_PRICE`, `PURCHASE_PRICE`, `MILEAGE`, `TRANSMISSION`, `PURCHASE_DATE`, `SALE_DATE`) VALUES ('asdf2', NULL, 'assf', 'asf', NULL, NULL, NULL, '333333', NULL, NULL, NULL, NULL, NULL, NULL) <br>");
 //$query = "INSERT INTO `inventory` (`VIN`, `YEAR`, `Make`, `Model`, `TRIM`, `EXT_COLOR`, `INT_COLOR`, `ASKING_PRICE`, `SALE_PRICE`, `PURCHASE_PRICE`, `MILEAGE`, `TRANSMISSION`, `PURCHASE_DATE`, `SALE_DATE`, `Primary_Image`) VALUES ('672', '1966', 'car', 'XX', NULL, NULL, NULL, NULL, 66.33, NULL, NULL, NULL, NULL, NULL, NULL);";
 
-include 'db_scripts/dbConnect.php';
+include ' dbScripts/dbConnect.php';
 
 /* Try to insert the new car into the database */
 if ($result = $mysqli->query($query)) {

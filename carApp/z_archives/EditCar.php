@@ -29,7 +29,7 @@ VIN='$VIN'";
 // Print the query to the browser so you can see it
 echo ($query. "<br>");
 
-include 'db_scripts/dbConnect.php';
+include ' dbScripts/dbConnect.php';
 /* check connection */
 if (mysqli_connect_errno()) {
  echo ("Connection failed: ". $mysqli->error."<br>");

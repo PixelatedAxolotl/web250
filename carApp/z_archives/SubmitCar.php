@@ -27,7 +27,7 @@ $query = "INSERT INTO inventory
 
 // Print the query to the browser so you can see it
 echo $query;
-include 'db_scripts/dbConnect.php';
+include ' dbScripts/dbConnect.php';
 /* Try to insert the new car into the database */
 if ($result = $mysqli->query($query)) {
     echo "<p>You have successfully entered $Make $Model into the database.</p>";

@@ -56,7 +56,7 @@ background-color:teal;
 <h3>Current Inventory</h3>
  <div class="auto-style1">
  <?php
-include 'db_scripts/dbConnect.php';
+include ' dbScripts/dbConnect.php';
 $query = "SELECT * FROM inventory";
 /* Try to query the database */
 if ($result = $mysqli->query($query)) {
