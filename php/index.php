@@ -86,7 +86,7 @@
             <li><a href="https://github.com/PixelatedAxolotl">GitHub</a></li>
             <li><a href="https://pixelatedaxolotl.github.io/">GitHub.io</a></li>
             <li><a href="https://pixelatedaxolotl.github.io/web250/">WEB250.io</a></li>
-            <li><a href="https://www.freecodecamp.org/LK_WS">FreeCodeCamp</a></li>
+            <li><a href="https://www.freecodecamp.org/LK_WS"> freeCodeCamp</a></li>
             <li><a href="https://www.codecademy.com/profiles/LK_WS">Codecademy</a></li>
             <li><a href="https://jsfiddle.net/u/LK_WS/fiddles/">JSFiddle</a></li>
             <li><a href="http://www.linkedin.com/in/Lauren-Kate-Stewart">LinkedIn</a></li>

@@ -146,7 +146,6 @@ footer
     display: grid;
     grid-column-gap: 20px;
     grid-row-gap: 0px;
-    grid-template-columns: .7fr .17fr .18fr;
     grid-template-rows: repeat(2, 40px);
     background: #7232fe2e;
     border-radius: 5px;
@@ -172,31 +171,9 @@ footer nav ul
 
 footer p
 {
-    grid-column-start: 1;
-    grid-column-end: 2;
-    align-self: center;
-    padding-left: 42px;
-}
-
-footer > a
-{
-    grid-column-start: 2;
-    grid-column-end: 3;
-    grid-row-start: 2;
-    grid-row-end: 2;
-    justify-self: end;
+    text-align: center;
     align-self: center;
 }
-
-footer > a + a
-{
-    grid-column-start: 3;
-    grid-column-end: 4;
-    grid-row-start: 2;
-    grid-row-end: 2;
-    padding-right: 42px;
-}
-
 
 
 /*figure and caption rules*/
