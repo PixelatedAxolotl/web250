@@ -18,12 +18,10 @@ else
 }
 
 $query = "CREATE TABLE IF NOT EXISTS $inventory 
-( VIN varchar(17) PRIMARY KEY, YEAR INT, Make varchar(50), Model varchar(100), 
+(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, VIN varchar(17) UNIQUE, YEAR INT, Make varchar(50), Model varchar(100), 
 TRIM varchar(50), EXT_COLOR varchar (50), INT_COLOR varchar (50), ASKING_PRICE DECIMAL (10,2), 
 SALE_PRICE DECIMAL (10,2), PURCHASE_PRICE DECIMAL (10,2), MILEAGE int, TRANSMISSION varchar (50), 
 PURCHASE_DATE DATE, SALE_DATE DATE, Primary_Image VARCHAR(250) NULL)";
-
-
 
 //echo "<p>***********</p>";
 //echo $query ;
@@ -74,6 +72,7 @@ $query = "INSERT IGNORE INTO `inventory` (`VIN`, `YEAR`, `Make`, `Model`, `TRIM`
 ('YV4SZ592561219696', 2006, 'Volvo', 'XC70', 'AWD', 'Willow Green Metallic', 'Taupe Leather', 14996, NULL, 11247, 83664, '5-Speed Automatic w/ Geartronic', '2013-01-14', NULL);
 "; // end insert
 
+
 //TO DO: MAKE INTO FUNCTION??
 if ($mysqli->query($query))
 {
@@ -111,7 +110,7 @@ else
 }
 
 //Create image table - MOVED FROM OTHER FILE 
-$query = " CREATE TABLE IF NOT EXISTS $images (ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT, VIN varchar(17), ImageFile varchar(250))";
+$query = " CREATE TABLE IF NOT EXISTS $images (VIN varchar(17) PRIMARY KEY, ImageFile varchar(250))";
 if ($mysqli->query($query))
 {
     echo nl2br ("Database table [$images] created\n");
@@ -135,7 +134,7 @@ echo mysql_error();
     echo "<p>***********</p>";
 }
 
-echo "<br><br><a href='../samsusedcars.php'>Home</a>";
+echo "<br><br><a href='../index.php'>Home</a>";
 $mysqli->close();
 
 ?>

@@ -4,7 +4,7 @@
 if ($_SERVER['HTTP_HOST'] === 'localhost')
 {
     // info for localhost DB
-    echo ("<script>console.log('THIS IS LOCAL HOST');</script>");
+    //echo ("<script>console.log('THIS IS LOCAL HOST');</script>");
     $serverName = 'localhost';
     $username = 'usedCars';
     $password = 'remoteaxolotl';
@@ -14,7 +14,7 @@ if ($_SERVER['HTTP_HOST'] === 'localhost')
 else
 {
     // info for infinityfree DB
-    echo ("<script>console.log('THIS IS NOT LOCAL HOST');</script>");
+    //echo ("<script>console.log('THIS IS NOT LOCAL HOST');</script>");
     $serverName = 'sql100.infinityfree.com';
     $username = 'if0_38272035';
     $password = 'remoteAxolotl';
