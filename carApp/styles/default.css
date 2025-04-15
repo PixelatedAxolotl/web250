@@ -1,23 +1,51 @@
-body
-{
-    color:aquamarine;
-    background-color: blueviolet;
-    font-family: Tahoma, Arial, sans-serif;
-
-    max-width: 900px;
-    margin: 0 auto;
-    width: 90%;
+@font-face {
+    font-family: 'Heavy Heap Rg';
+    src: url('../fonts/HeavyHeapRg-Regular.eot');
+    src: url('../fonts/HeavyHeapRg-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/HeavyHeapRg-Regular.woff2') format('woff2'),
+        url('../fonts/HeavyHeapRg-Regular.woff') format('woff'),
+        url('../fonts/HeavyHeapRg-Regular.ttf') format('truetype'),
+        url('../fonts/HeavyHeapRg-Regular.svg#HeavyHeapRg-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
-h1, h2, header, footer
+body
+{
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 25px;
+    color: #0F0E06;
+    background-color: #D2C39D;
+    background: linear-gradient(0deg, rgb(255, 253, 214) 72%, rgb(246, 237, 194) 82%, rgb(236, 220, 172) 87%, rgb(212, 172, 112) 92%, rgb(217, 185, 129) 95%);
+    background-attachment: scroll;
+    background-attachment: local;
+}
+
+header
+{
+    height: 200px;
+    font-family: 'Heavy Heap Rg';
+    font-size: 2rem;
+    letter-spacing: .3rem;
+    text-align: center;
+}
+
+h2, h3, footer
 {
     text-align: center;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+main
+{
+    max-width: 1300px;
+    margin: 50px auto;
 }
 
 a, a:visited
 {
-    color: greenyellow;
+    color: rgb(170, 9, 117);
 }
 
 a:hover
@@ -25,31 +53,217 @@ a:hover
     color: aqua;
 }
 
-p form
+
+/* Add car form styles*/
+form[name="create"]
+{
+    max-width: 700px;
+    margin: 50px auto;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+form[name="create"] label,
+form[name="create"] fieldset legend
+{
+    display: flex;
+    flex-direction: column;
+    font-size: 1.2rem;
+    padding-bottom: 2px;
+}
+
+form[name="create"] > label,
+form[name="create"] fieldset
+{
+    display: flex;
+    justify-content: flex-start;
+    align-content: baseline;
+    white-space: nowrap;
+    padding: 0px;
+    margin: 0px;
+}
+
+form[name="create"] > label, 
+form[name="create"] fieldset
+{
+
+    margin: auto 50px auto 70px;
+}
+
+form[name="create"] label input
+{
+    max-width: 220px;
+}
+
+/* restyle file upload*/
+form[name="create"] input[type="file"]
+{
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+form[name="create"] label[for="image"]
+{
+    max-width: 200px;
+    display: inline-block;
+    overflow: clip;
+    text-overflow: ellipsis;
+}
+
+form[name="create"] label[for="image"], 
+form[name="create"] fieldset button,
+form[name="create"] fieldset input
+{
+    cursor: pointer;
+    border: solid black;
+    border-radius: 3px;
+    background-color: aquamarine;
+    font-size: 1.2rem;
+    display: inline-block;
+    align-content: center;
+    text-align: center;
+    padding: 6px 10px;
+    min-width: 95px;
+}
+
+form[name="create"] fieldset > label,
+form[name="create"] fieldset > input
+{
+    margin-right: 20px;
+}
+
+form[name="create"] fieldset[name="imageUpload"] label
+{
+    background-color: #49e188;
+}
+
+form[name="create"] fieldset[name="imageUpload"] button
+{
+    background-color: rgb(94, 135, 248);
+}
+
+form[name="create"] fieldset[name="formControl"] input[type="reset"]
+{
+    background-color: rgb(222, 67, 67);
+}
+
+form[name="create"] fieldset[name="imageUpload"] label,
+form[name="create"] fieldset[name="imageUpload"] button
+{
+    font-size: 0.8rem;
+    height: fit-content;
+}
+
+form[name="create"] fieldset
+{
+    border: none;
+}
+
+
+/*Editable cars list styles*/
+form[name="edit"]
+{
+    max-width: 1000px;
+    text-align: center;
+    margin: auto;
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+form[name="edit"] thead
+{
+    position: sticky;
+    top: 0;
+}
+
+form[name="edit"] th
+{
+    background-color: #5949e1;
+    font-size: 1.1rem;
+}
+
+form[name="edit"] input
+{
+    text-align: center;
+}
+
+/*table images*/
+td:first-child img
+{
+    height: 60px;
+    max-width: 80px;
+    vertical-align: bottom;
+}
+
+table label input[type="file"]
 {
     display: none;
 }
 
-p form[visibility="1"]
+label img
 {
-    display: inline-block;
+    cursor:pointer;
+    object-fit: contain;
+}
+/* end table image styles*/
+
+form table
+{
+    width: 100%;
+    max-width: 1200px;
+    border-collapse: collapse;
+    margin: auto;
 }
 
+form thead th:nth-child(1)
+{
+    width: 10%;
+    min-width: 85px;
+}
+
+form table td, form table th
+{
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+    border-bottom: 1px solid gray;
+}
+
+form table th, form table tr
+{
+    width: 20px;
+}
+
+form table input
+{
+    max-width: fit-content;
+    width: 90%;
+    font-size: 1rem;
+    background: none;
+    border: solid blue 1.5px;
+}
+
+/* table action buttons styles */
 button
 {
     background: none;
     border: none;
 }
 
-input:disabled
+input:disabled, label img 
 {
-    background-color: rgba(177, 174, 174, 0.83);
-    border: solid 1px crimson;
+    background-color: transparent;
+    border: none;
     color: black;
     cursor: not-allowed;
 }
 
-button[name="toggleEdit"] img:hover
+button[name="toggleEdit"] img:hover, 
+button[name="update"] img:hover
 {
     cursor: pointer;
     background: rgb(9, 149, 135);
@@ -58,6 +272,16 @@ button[name="toggleEdit"] img:hover
     transform: scale(1.1);
     transition: 0.25s;
 
+}
+
+button[name="cancelEdit"] img:hover
+{
+    cursor: pointer;
+    background: rgb(20, 87, 222);
+    border-radius: 4px;
+    box-shadow: 0 0 3px 3px rgb(12, 49, 231);
+    transform: scale(1.1);
+    transition: 0.25s;
 }
 
 button[name="delete"] img:hover
@@ -71,7 +295,8 @@ button[name="delete"] img:hover
 
 }
 
-input[name="update"]
+button[name="update"], button[name="cancelEdit"]
 {
     display: none;
 }
+/* end table action buttons styles */

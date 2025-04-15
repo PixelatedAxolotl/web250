@@ -1,0 +1,233 @@
+@font-face {
+    font-family: 'Heavy Heap Rg';
+    src: url('../fonts/HeavyHeapRg-Regular.eot');
+    src: url('../fonts/HeavyHeapRg-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/HeavyHeapRg-Regular.woff2') format('woff2'),
+        url('../fonts/HeavyHeapRg-Regular.woff') format('woff'),
+        url('../fonts/HeavyHeapRg-Regular.ttf') format('truetype'),
+        url('../fonts/HeavyHeapRg-Regular.svg#HeavyHeapRg-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
+body
+{
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 1.5rem;
+    color: #0F0E06;
+    background-color: #D2C39D;
+    max-width: 100%;
+    margin: 40px auto;
+    padding: 20px;
+    box-shadow: 0px 1px 11px 1px #5949e1;
+    border-radius: 5px;
+    width: 90%;
+
+}
+
+/*DO NOT change the order of the next 3 rules!*/
+header
+{
+    margin: 20px 10% 20px;
+    max-width: fit-content;
+    margin: 50px auto;
+    background-image: url("../images/sand.png");
+    background-position: center;
+}
+
+main
+{
+    max-width: 1200px;
+    justify-items: center;
+    margin: 50px auto;
+}
+
+/*first shadow only increases shadow on the bottom*/
+header
+{
+    font-family: 'Heavy Heap Rg';
+    font-size: 2rem;
+    letter-spacing: .3rem;
+
+    box-shadow: inset 0px -12px 12px -12px #5949e1, 0px 4px 12px 2px #5949e1;
+    border-radius: 5px;
+    margin-bottom: 50px;
+}
+
+
+
+
+header img
+{
+    float: left;
+    height: 120px;
+    width: 184px;
+}
+
+h1, h2, h3, header, footer
+{
+    font-weight: normal;
+    text-align: center;
+}
+
+a, a:visited
+{
+    color: greenyellow;
+}
+
+a:hover
+{
+    color: aqua;
+}
+
+
+form[name="create"]
+{
+    width: 100%;
+    max-width: 600px;
+    justify-content: center;
+    margin: 0 auto;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+}
+
+form[name="create"] label, form[name="create"] fieldset
+{
+
+    padding: 10px;
+    height: 20px;
+
+    white-space: nowrap;
+}
+
+form[name="create"] label input
+{
+    max-width: 220px;
+    justify-content: right;
+}
+
+/* matches submit/reset buttons - all others should be in label tags */
+form[name="create"] fieldset input
+{
+    width: 80px;
+    padding: 10px;
+}
+
+form[name="create"] fieldset
+{
+    border: none;
+}
+
+/*Editable cars list styles*/
+form[name="edit"]
+{
+    max-width: 1000px;
+    width: 100%;
+    text-align: center;
+    margin: auto;
+}
+
+form[name="edit"] th
+{
+    background-color: #5949e1;
+}
+
+/*TEMP*/
+
+td:first-child img
+{
+    width: 80px;
+}
+
+table label input[type="file"]
+{
+    display: none;
+}
+
+label img
+{
+    cursor:pointer;
+}
+
+
+/*END TEMP*/
+
+form table
+{
+    width: 100%;
+    max-width: 1200px;
+}
+
+form table th, form table tr
+{
+    width: 50px;
+}
+
+/*for vin number col which is always hidden (...for now)*/
+form table tr td:last-child
+{
+    width: fit-content;
+}
+
+form table input
+{
+    width: 100%;
+}
+
+
+p form
+{
+    display: none;
+}
+
+p form[visibility="1"]
+{
+    display: inline-block;
+}
+
+button
+{
+    background: none;
+    border: none;
+}
+
+input:disabled
+{
+    background-color: rgba(177, 174, 174, 0.83);
+    border: solid 1px crimson;
+    color: black;
+    cursor: not-allowed;
+}
+
+button[name="toggleEdit"] img:hover
+{
+    cursor: pointer;
+    background: rgb(9, 149, 135);
+    border-radius: 4px;
+    box-shadow: 0 0 3px 3px rgb(0, 213, 153);
+    transform: scale(1.1);
+    transition: 0.25s;
+
+}
+
+button[name="delete"] img:hover
+{
+    cursor: pointer;
+    background: rgb(93, 12, 4);
+    border-radius: 4px;
+    box-shadow: 0 0 3px 3px rgb(236, 51, 27);
+    transform: scale(1.1);
+    transition: 0.25s;
+
+}
+
+input[name="update"]
+{
+    display: none;
+}
