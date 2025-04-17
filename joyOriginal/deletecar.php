@@ -10,7 +10,7 @@
 include ('dbConnect.php');
 
 $vin = $_GET['VIN'];
-$query = "DELETE FROM INVENTORY WHERE VIN='$vin'";
+$query = "DELETE FROM inventory WHERE VIN='$vin'";
 echo "$query <BR>";
 /* Try to query the database */
 if ($result = $mysqli->query($query)) {
@@ -24,6 +24,7 @@ else
 $mysqli->close();
    
 ?>
+<p><a href="ViewCarsWithStyle2.php">View Cars with Edit Links</a></p>
 
 </body>
 
