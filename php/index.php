@@ -67,7 +67,8 @@
                     <li><a href="http://web250.great-site.net/multipage/superduper_static">Super Duper Static</a></li>
                     <li><a href="http://web250.great-site.net/joyOriginal">Joy of PHP</a></li>
                     <li><a href="http://web250.great-site.net/joyOriginal/samsusedcars.html">Sam's Used Cars</a></li>
-                    <li><a href="http://web250.great-site.net/carApp">Lucky Sandfish's Used Cars</a></li>
+                    <li><a href="http://web250.great-site.net/carApp">Car App A</a></li>
+                    <li><a href="http://web250.great-site.net/carApp2">Car App B</a></li>
                 </ul>
             </li>
         </ul>
@@ -95,21 +96,6 @@
 
 
                     <p>Page Built by LK Stewart, &copy;2025</p>
-
-
-
-                    
-                    <?php
-                        $validation_link = "https://validator.w3.org/check?uri=" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-                    ?>
-                    <a href="<?php echo htmlspecialchars($validation_link); ?>" >
-                        Validate HTML
-                    </a>
-
-                    <a href="https://jigsaw.w3.org/css-validator/check/referer">
-                        Validate CSS
-                    </a>
-
 </footer>
 </body>
 

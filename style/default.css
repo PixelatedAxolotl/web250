@@ -70,6 +70,11 @@ header, main
     max-width: fit-content;
 }
 
+header, main
+{
+    max-width: 900px;
+}
+
 /*first shadow only increases shadow on the bottom*/
 header
 {
@@ -120,7 +125,7 @@ nav > ul
     justify-content: center;
     padding: 0;
     max-height: 10px;
-    padding-bottom: 5px;
+    padding-bottom: 12px;
 }
 
 nav ul li
