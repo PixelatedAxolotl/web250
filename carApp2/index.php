@@ -195,7 +195,6 @@
         //handle user login
         if (isset($_POST['login']))
         {
-            echo "Hello There!";
             $username = $_REQUEST['username'];
             $password = $_REQUEST['password'];
 
@@ -208,7 +207,6 @@
             {
                 $result = $mysqli->query($userExistQuery);
                 $rowsReturned = mysqli_num_rows($result);
-                echo "ROWS: $rowsReturned";
 
                 if ($rowsReturned)
                 {
