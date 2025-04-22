@@ -2,6 +2,7 @@
 <html lang="en">
 <?php
     include 'dbScripts/dbConnect.php';
+    session_start();
 ?> 
 
 <?php
@@ -168,7 +169,7 @@
             }
 
             //clear header so that update won't resubmit on page reload
-            //header("Location: " . $_SERVER['PHP_SELF']);
+            header("Location: " . $_SERVER['PHP_SELF']);
         } 
         elseif (isset($_POST['delete'])) 
         {
@@ -188,11 +189,53 @@
             {
                 echo "Sorry, a vehicle with VIN of $vin cannot be found " . mysql_error()."<br>";
             }
+        }// end CRUD if
+
+        //print_r ($_SESSION['isLoggedIn']);
+        //handle user login
+        if (isset($_POST['login']))
+        {
+            echo "Hello There!";
+            $username = $_REQUEST['username'];
+            $password = $_REQUEST['password'];
+
+
+            $userExistQuery = "SELECT `firstName`, `lastName` FROM `users` 
+            WHERE `username` = '$username'
+            AND `password` = '$password'";
+
+            try 
+            {
+                $result = $mysqli->query($userExistQuery);
+                $rowsReturned = mysqli_num_rows($result);
+                echo "ROWS: $rowsReturned";
+
+                if ($rowsReturned)
+                {
+                    $_SESSION['isLoggedIn'] = true;
+                    $userInformationArray = mysqli_fetch_assoc($result);
+                    [$_SESSION['firstName'], $_SESSION['lastName']] = [$userInformationArray['firstName'], $userInformationArray[ 'lastName']];
+                }
+            } 
+            catch (mysqli_sql_exception $e) 
+            {
+                echo "Database Error: " . $e->getMessage();
+            }
+            
+        }
+        elseif (isset($_POST['logout']))
+        {
+            session_unset();
+            session_destroy();
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit;
         }
         else
         {
             echo nl2br ("\nINVALID POST REQUEST TYPE\n");
-        } // end CRUD if
+        } 
+
+
     } // end POST request if
 ?>
 
@@ -213,7 +256,43 @@
 
 <main>
 
+
     <h2>Welcome to Lucky Sandfish's Used Car Lot!</h2>
+    <?php
+        if (isset($_SESSION['isLoggedIn']))
+        {
+            echo <<<GREETING
+                        <h3>Hi {$_SESSION['firstName']} {$_SESSION['lastName']}!</h3>
+                    GREETING;
+
+            echo <<<USER_LOGOUT
+                        <form action="$action" method="POST" name="logout">
+                            <button type="submit" name="logout">Logout</button>
+                        </form>
+                        
+                        <form action="dbScripts/setupCarsDatabase.php" method="POST" name="resetDatabase" 
+                            onsubmit="return confirm('You sure about this buddy?');">
+                            <button type="submit" name="resetDatabase">Reset Database</button>
+                        </form>
+                    USER_LOGOUT;
+        }
+    ?>
+    
+    <?php
+      if (!isset($_SESSION['isLoggedIn']))
+      {
+        echo <<<LOGIN_FORM
+                <form action="$action" method="POST" name="login">
+                    <label for="username">Username:</label>
+                    <input id="username" name="username" type="text" placeholder="Enter your Username" required>
+                    <label for="password">Password:</label>
+                    <input id="password" name="password" type="text" placeholder="Enter your Password" required>
+                    <button type="submit" name="login">Login</button>
+                </form>
+            LOGIN_FORM;
+      }
+    ?>
+
     <section>
         <h2>Add A Car:</h2>
         <?php
@@ -221,49 +300,58 @@
             {
                 echo "<h3>$statusMessage</h3>";
             }
+
+            if (isset($_SESSION['isLoggedIn']))
+            {
+
         ?>
-        
-        <form action="<?php echo $action?>" method="POST" name="create" enctype="multipart/form-data">
-            <label for="vin">
-                VIN
-                <input id="vin" name="VIN" type="text" required>
-            </label>
-
-
-            <label for="make">
-                Make
-                <input id="make" name="Make" type="text" required>
-            </label>
             
-            <label for="model">
-                Model
-                <input id="model" name="Model" type="text" required>
-            </label>
+            <form action="<?php echo $action?>" method="POST" name="create" enctype="multipart/form-data">
+                <label for="vin">
+                    VIN
+                    <input id="vin" name="VIN" type="text" required>
+                </label>
 
-            <label for="askingPrice">
-                Price
-                <input id="askingPrice" name="Asking_Price" type="text" required>
-            </label>
 
-            <fieldset name="imageUpload">
-                <legend>Image (Optional)</legend>
-                <label for="image">Upload Image</label>
-                <input type="file" name="image" id="image">
-                <button type="button" name="clearFile">Clear File</button>
-            </fieldset>
-	        
-            <fieldset name="formControl">
-                <input name="create" type="submit" value="Add Car">
-                <input type="reset" value="Clear">
-            </fieldset>
-	    </form>
+                <label for="make">
+                    Make
+                    <input id="make" name="Make" type="text" required>
+                </label>
+                
+                <label for="model">
+                    Model
+                    <input id="model" name="Model" type="text" required>
+                </label>
+
+                <label for="askingPrice">
+                    Price
+                    <input id="askingPrice" name="Asking_Price" type="text" required>
+                </label>
+
+                <fieldset name="imageUpload">
+                    <legend>Image (Optional)</legend>
+                    <label for="image">Upload Image</label>
+                    <input type="file" name="image" id="image">
+                    <button type="button" name="clearFile">Clear File</button>
+                </fieldset>
+                
+                <fieldset name="formControl">
+                    <input name="create" type="submit" value="Add Car">
+                    <input type="reset" value="Clear">
+                </fieldset>
+            </form>
+            <?php  } //end of login status check if ?>
     </section>    
-<?php
 
+<?php
+          
 // Display cars with images in table
 $query = "SELECT inventory.*, images.ImageFile 
           FROM inventory
-          LEFT JOIN images ON inventory.VIN = images.VIN";
+          LEFT JOIN images ON inventory.VIN = images.VIN
+          ORDER BY 
+            inventory.Make ASC,
+            inventory.Model ASC";
 
 /* Try to query the database */
 $result = $mysqli->query($query);
@@ -271,25 +359,30 @@ if (! $result)
 {
     echo "Error getting cars from the database: " . mysql_error()."<br>";
 }
+// START OF TABLE - Form wraps entire table (closed another echo after table gen)
+?>
 
-// START OF TABLE - Form wraps entire table (closed in echo)
-echo <<<TABLE_HEAD
-    <form action="$action" method="POST" name="edit" enctype="multipart/form-data">
-        <table>
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>VIN Number</th>
-                <th>Make</th>
-                <th>Model</th>
-                <th>Asking Price</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
+<form action="$action" method="POST" name="edit" enctype="multipart/form-data">
+    <table>
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>VIN Number</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Asking Price</th>
+            <?php
+            if (isset($_SESSION['isLoggedIn']))
+            {
+                echo '<th>Action</th>';
+            } 
+            ?>
+        </tr>
+    </thead>
+    <tbody>
 
-TABLE_HEAD;
 
+<?php
 // Loop through all the rows returned by the query, creating a table row for each
 $rowNumber = 0;
 while ($resultArray = mysqli_fetch_assoc($result))
@@ -305,7 +398,7 @@ while ($resultArray = mysqli_fetch_assoc($result))
             <tr id="$rowNumber">
                 <td>
                     <label>
-                        <input disabled type="file" name="displayedImage" value="displayedImage">
+                        <input disabled type="file" name="displayedImage">
                         <img src="$carImage" alt="image associated with the car in this row">
 
                     </label>
@@ -322,19 +415,24 @@ while ($resultArray = mysqli_fetch_assoc($result))
                 <td> 
                     <input disabled name="Asking_Price" type="text" value="$resultArray[ASKING_PRICE]">
                 </td>
-
-                <td>
-                    <button name="toggleEdit" type="button"><img src="images/editIcon.svg" alt="Edit Car Information"></button>
-                    <button name="cancelEdit" type="reset"><img src="images/cancelIcon.svg" alt="Cancel Edit"></button>
-
-
-                    <button formaction="?action=update&VIN=$resultArray[VIN]" name="update" type="submit"><img src="images/checkmarkIcon.svg" alt="Update Info"></button>
-
-                    <button formaction="?action=delete&VIN=$resultArray[VIN]" name="delete" type="submit"><img src="images/deleteIcon.svg" alt="Delete Car"></button>
-                </td>
-
-            </tr>
     HTML;
+    if (isset($_SESSION['isLoggedIn']))
+    {
+        $carForm .= <<<ACTION_BUTTONS
+                    <td>
+                        <button name="toggleEdit" type="button"><img src="images/editIcon.svg" alt="Edit Car Information"></button>
+                        <button name="cancelEdit" type="reset"><img src="images/cancelIcon.svg" alt="Cancel Edit"></button>
+
+
+                        <button formaction="?action=update&VIN=$resultArray[VIN]" name="update" type="submit"><img src="images/checkmarkIcon.svg" alt="Update Info"></button>
+
+                        <button formaction="?action=delete&VIN=$resultArray[VIN]" name="delete" type="submit"><img src="images/deleteIcon.svg" alt="Delete Car"></button>
+                    </td>
+
+        ACTION_BUTTONS;
+    }
+
+    $carForm .= '</tr>';
     $rowNumber++;
     echo $carForm;
 }
@@ -348,8 +446,6 @@ $mysqli->close(); // Close db object at end of PHP code
 
     <footer>
         <p>Site designed by Definetly A Real Company, &copy;2025</p>
-        <p><a href="dbScripts/setupCarsDatabase.php">Reset Database - USE WITH CAUTION</a></p>
-
     </footer>
 
 
@@ -408,13 +504,13 @@ $mysqli->close(); // Close db object at end of PHP code
             {
                 document.querySelector("input[name='image']").value = '';
                 document.querySelector("label[for=image]").innerHTML = 'Image (Optional)';
-            })
+            });
 
             // replace label text with selected filename when adding new car
             document.querySelector("#image").addEventListener('change', function(event)
             {
                 document.querySelector("label[for=image]").innerHTML = event.target.value.split('\\').pop();
-            })
+            });
 
 
 
