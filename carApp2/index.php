@@ -16,13 +16,12 @@
     {
         if (isset($_POST['create'])) 
         {   
-            // Capture the values posted to this php program from the text fields
-            $vin =  trim( $_REQUEST['VIN']) ;
-            $make = trim( $_REQUEST['Make']) ;
-            $model = trim( $_REQUEST['Model']) ;
-            $price =  $_REQUEST['Asking_Price'] ;
-
-            $vinExistQuery = "SELECT `VIN` FROM `inventory` WHERE `VIN` = '$vin'";
+            // Capture the values posted to this php program from the text fields            
+            $trimmedInputFields = array_map('trim', $_REQUEST);
+            unset($trimmedInputFields['create']); //used for request type - is NOT user input
+            
+            $vin = $trimmedInputFields['vin'];
+            $vinExistQuery = "SELECT `Vin` FROM `inventory` WHERE `Vin` = '$vin'";
             $result = $mysqli->query($vinExistQuery);
 
             if (! $result) 
@@ -55,7 +54,7 @@
                 {
                     echo "The file ".  basename( $_FILES['image']['name']). " has been uploaded<br>". "\n";
                     $fileName =  $_FILES["image"]["name"];
-                    $query = "INSERT INTO images (VIN, ImageFile) VALUES ('$vin', '$fileName')";
+                    $query = "INSERT INTO images (Vin, ImageFile) VALUES ('$vin', '$fileName')";
 
                     if (! $mysqli->query($query)) 
                     {
@@ -65,15 +64,16 @@
                 }   // end of file move if
         
                 //Build a SQL Query using the values from above
+                //surround each field in single quotes for query insertion
+                $formattedInputFields = array_map(fn($value) => "'" . addslashes($value) . "'", $trimmedInputFields);
                 $query = "INSERT INTO inventory
-                          (VIN, Make, Model, ASKING_PRICE)
+                            (Vin, Make, Model, Year, Asking_price, Purchase_price, Purchase_date, Ext_color,
+                             Trim, Int_color, Mileage, Transmission)
                           VALUES 
-                          (
-                            '$vin', 
-                            '$make', 
-                            '$model',
-                            $price
-                          )";
+                          (";
+                $query .= implode(', ', $formattedInputFields);
+                $query .= ")";
+
 
                 // DEBUG: Print the query to the browser so you can see it
                 //echo "<script>console.log('$query');</script>";
@@ -85,24 +85,22 @@
                     
                     // will be printed above add new car form
                     $statusMessage = 'You have Successfully added a new car!';
-                    
-                    // prevents form from resubmitting on page reload
-                    header("Location: " . $_SERVER['PHP_SELF']);
                 }
                 else
                 {
                     echo "Error entering $vin into database: " . $mysqli->error."<br>";
                 }
+
+                // prevents form from resubmitting on page reload
+                header("Location: " . $_SERVER['PHP_SELF']);
+                exit;
             } // end vinExist else
         } // end POST = create if 
         elseif (isset($_POST['update']))
         {
             //echo "YOU ARE UPDATING...";
-
-            $vin = $_REQUEST['VIN'] ;
-            $make = $_REQUEST['Make'] ;
-            $model = $_REQUEST['Model'] ;
-            $price = $_REQUEST['Asking_Price'] ;
+            //trim input fields and store in new array
+            $trimmedUpdateFields = array_map('trim', $_REQUEST);
 
             // only try to upload and update image if an image was selected in the edit form
             if ($_FILES['displayedImage']['size'])
@@ -128,7 +126,7 @@
                     
                     $fileName =  $_FILES["displayedImage"]["name"];
 
-                    $query = "INSERT INTO images (VIN, ImageFile)
+                    $query = "INSERT INTO images (Vin, ImageFile)
                               VALUES ('$vin', '$fileName')
                               ON DUPLICATE KEY UPDATE
                               ImageFile = '$fileName'";
@@ -144,15 +142,23 @@
                     }
                 }
             }
-        
+
             // Build SQL query for updating values for record with matching VIN number
             $query = "UPDATE inventory SET 
-                      VIN='$vin', 
-                      Make='$make', 
-                      Model='$model', 
-                      ASKING_PRICE='$price'
+                      Vin='{$trimmedUpdateFields['vin']}', 
+                      Make='{$trimmedUpdateFields['make']}',  
+                      Model='{$trimmedUpdateFields['model']}',
+                      Year='{$trimmedUpdateFields['year']}',   
+                      Asking_price='{$trimmedUpdateFields['askingPrice']}',
+                      Sale_price='{$trimmedUpdateFields['salePrice']}',
+                      Purchase_price='{$trimmedUpdateFields['purchasePrice']}',
+                      Ext_color='{$trimmedUpdateFields['exteriorColor']}',
+                      Trim='{$trimmedUpdateFields['trim']}',
+                      Int_color='{$trimmedUpdateFields['interiorColor']}',
+                      Mileage='{$trimmedUpdateFields['mileage']}',
+                      Transmission='{$trimmedUpdateFields['transmission']}'
                       WHERE
-                      VIN='$vin'"; 
+                      Vin='{$trimmedUpdateFields['vin']}'"; 
         
             // Print the query to the browser so you can see it
             //echo ($query. "<br>");
@@ -170,25 +176,28 @@
 
             //clear header so that update won't resubmit on page reload
             header("Location: " . $_SERVER['PHP_SELF']);
+            exit;
         } 
         elseif (isset($_POST['delete'])) 
         {
             
             print_r ($_REQUEST);
-            $vin = $_REQUEST['VIN'];
+            $vin = $_REQUEST['vin'];
             $query = "DELETE inventory.*, images.*  FROM inventory 
-                      LEFT JOIN images ON inventory.VIN = images.VIN
-                      WHERE inventory.VIN='$vin'";
+                      LEFT JOIN images ON inventory.Vin = images.Vin
+                      WHERE inventory.Vin='$vin'";
 
             /* Try to query the database */
             if ($result = $mysqli->query($query)) 
             {
-                echo "The vehicle with VIN $vin has been deleted.";
+                #echo "The vehicle with VIN $vin has been deleted.";
             }
             else
             {
                 echo "Sorry, a vehicle with VIN of $vin cannot be found " . mysql_error()."<br>";
             }
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit;
         }// end CRUD if
 
         //print_r ($_SESSION['isLoggedIn']);
@@ -214,6 +223,8 @@
                     $userInformationArray = mysqli_fetch_assoc($result);
                     [$_SESSION['firstName'], $_SESSION['lastName']] = [$userInformationArray['firstName'], $userInformationArray[ 'lastName']];
                 }
+                header("Location: " . $_SERVER['PHP_SELF']);
+                exit;
             } 
             catch (mysqli_sql_exception $e) 
             {
@@ -230,7 +241,7 @@
         }
         else
         {
-            echo nl2br ("\nINVALID POST REQUEST TYPE\n");
+            exit;
         } 
 
 
@@ -307,23 +318,70 @@
             <form action="<?php echo $action?>" method="POST" name="create" enctype="multipart/form-data">
                 <label for="vin">
                     VIN
-                    <input id="vin" name="VIN" type="text" required>
+                    <input id="vin" name="vin" type="text" placeholder="VIN Number" required>
                 </label>
-
 
                 <label for="make">
                     Make
-                    <input id="make" name="Make" type="text" required>
+                    <input id="make" name="make" type="text" placeholder="Car Make" required>
                 </label>
                 
                 <label for="model">
                     Model
-                    <input id="model" name="Model" type="text" required>
+                    <input id="model" name="model" type="text" placeholder="Car Model" required>
+                </label>
+
+                <label for="year">
+                    Year
+                    <input id="year" name="year" type="text" pattern="^(19|20)\d{2}$" placeholder="Year" required
+                        oninvalid="this.setCustomValidity('Please enter a valid year between 1900 and 2099')"
+                        oninput="this.setCustomValidity('')">
                 </label>
 
                 <label for="askingPrice">
-                    Price
-                    <input id="askingPrice" name="Asking_Price" type="text" required>
+                    Asking Price
+                    <input id="askingPrice" name="askingPrice" type="text" pattern="^\d*(\.\d{0,2})?$" placeholder="$$$" required
+                        oninvalid="this.setCustomValidity('Please enter a valid price.\nDo not include a currency sign\nDo not include more than 2 decimals')"
+                        oninput="this.setCustomValidity('')">
+                </label>
+
+                <label for="purchasePrice">
+                    Purchase Price
+                    <input id="purchasePrice" name="purchasePrice" type="text" pattern="^\d*(\.\d{0,2})?$" placeholder="$$$" required
+                        oninvalid="this.setCustomValidity('Please enter a valid price.\nDo not include a currency sign\nDo not include more than 2 decimals')"
+                        oninput="this.setCustomValidity('')">
+                </label>
+
+                <label for="purchaseDate">
+                    Purchase Date
+                    <input id="purchaseDate" name="purchaseDate" type="date" required>
+                </label>
+                
+                <label for="exteriorColor">
+                    Exterior Color
+                    <input id="exteriorColor" name="exteriorColor" type="text" placeholder="Exterior Color" required>
+                </label>
+                                
+                <label for="trim">
+                    Trim
+                    <input id="trim" name="trim" type="text" placeholder="Trim" required>
+                </label>
+
+                <label for="interiorColor">
+                    Interior Color
+                    <input id="interiorColor" name="interiorColor" type="text" placeholder="Interior Color" required>
+                </label>
+
+                <label for="mileage">
+                    Mileage
+                    <input id="mileage" name="mileage" type="text" pattern="^\d+$" placeholder="Mileage" required
+                        oninvalid="this.setCustomValidity('Please enter a positive whole number.')"
+                        oninput="this.setCustomValidity('')">
+                </label>
+                
+                <label for="transmission">
+                    Transmission
+                    <input id="transmission" name="transmission" type="text" placeholder="Transmission" required>
                 </label>
 
                 <fieldset name="imageUpload">
@@ -346,7 +404,7 @@
 // Display cars with images in table
 $query = "SELECT inventory.*, images.ImageFile 
           FROM inventory
-          LEFT JOIN images ON inventory.VIN = images.VIN
+          LEFT JOIN images ON inventory.Vin = images.Vin
           ORDER BY 
             inventory.Make ASC,
             inventory.Model ASC";
@@ -368,7 +426,17 @@ if (! $result)
             <th>VIN Number</th>
             <th>Make</th>
             <th>Model</th>
+            <th>Year</th>
             <th>Asking Price</th>
+            <th>Sale Price</th>
+            <th>Purchase Price</th>
+            <th>Exterior Color</th>
+            <th>Trim</th>
+            <th>Interior Color</th>
+            <th>Mileage</th>
+            <th>Transmission</th>
+            <th>Purchase Date</th>
+            <th>Sale Date</th>
             <?php
             if (isset($_SESSION['isLoggedIn']))
             {
@@ -392,6 +460,12 @@ while ($resultArray = mysqli_fetch_assoc($result))
         $carImage = "images/sandfish.jpg";
     }
     
+    //if sale price has been entered add a $ to start of string
+    if (preg_match('/^\d+\.?\d+?$/',  $resultArray['Sale_price']))
+    {
+        $resultArray['Sale_price'] = '$' . $resultArray['Sale_price'];
+    }
+
     $carForm = <<<HTML
             <tr id="$rowNumber">
                 <td>
@@ -402,17 +476,48 @@ while ($resultArray = mysqli_fetch_assoc($result))
                     </label>
                 </td>
                 <td>
-                    <input disabled name="VIN" value="$resultArray[VIN]">
+                    <input disabled name="vin" value="$resultArray[Vin]">
                 </td>
                 <td>
-                    <input disabled name="Make" type="text" value="$resultArray[Make]">
+                    <input disabled name="make" type="text" value="$resultArray[Make]">
                 </td>
                 <td> 
-                    <input disabled name="Model" type="text" value="$resultArray[Model]">
+                    <input disabled name="model" type="text" value="$resultArray[Model]">
                 </td>
                 <td> 
-                    <input disabled name="Asking_Price" type="text" value="$resultArray[ASKING_PRICE]">
+                    <input disabled name="year" type="text" value="$resultArray[Year]">
                 </td>
+                <td> 
+                    <input disabled name="askingPrice" type="text" value="\$$resultArray[Asking_price]">
+                </td>
+                <td> 
+                    <input disabled name="salePrice" type="text" value="$resultArray[Sale_price]" placeholder="Unsold">
+                </td>
+                <td> 
+                    <input disabled name="purchasePrice" type="text" value="\$$resultArray[Purchase_price]">
+                </td>
+                <td> 
+                    <input disabled name="exteriorColor" type="text" value="$resultArray[Ext_color]">
+                </td>
+                <td> 
+                    <input disabled name="trim" type="text" value="$resultArray[Trim]">
+                </td>
+                <td> 
+                    <input disabled name="interiorColor" type="text" value="$resultArray[Int_color]">
+                </td>
+                <td> 
+                    <input disabled name="mileage" type="text" value="$resultArray[Mileage]">
+                </td>
+                <td> 
+                    <input disabled name="transmission" type="text" value="$resultArray[Transmission]">
+                </td>
+                <td> 
+                    <input disabled name="purchaseDate" type="text" value="$resultArray[Purchase_date]">
+                </td>
+                <td> 
+                    <input disabled name="saleDate" type="text" value="$resultArray[Sale_date]">
+                </td>
+
     HTML;
     if (isset($_SESSION['isLoggedIn']))
     {
@@ -422,9 +527,9 @@ while ($resultArray = mysqli_fetch_assoc($result))
                         <button name="cancelEdit" type="reset"><img src="images/cancelIcon.svg" alt="Cancel Edit"></button>
 
 
-                        <button formaction="?action=update&VIN=$resultArray[VIN]" name="update" type="submit"><img src="images/checkmarkIcon.svg" alt="Update Info"></button>
+                        <button formaction="?action=update&vin=$resultArray[Vin]" name="update" type="submit"><img src="images/checkmarkIcon.svg" alt="Update Info"></button>
 
-                        <button formaction="?action=delete&VIN=$resultArray[VIN]" name="delete" type="submit"><img src="images/deleteIcon.svg" alt="Delete Car"></button>
+                        <button formaction="?action=delete&vin=$resultArray[Vin]" name="delete" type="submit"><img src="images/deleteIcon.svg" alt="Delete Car"></button>
                     </td>
 
         ACTION_BUTTONS;
