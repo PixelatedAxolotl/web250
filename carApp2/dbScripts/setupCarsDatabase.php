@@ -18,10 +18,22 @@ else
 }
 
 $query = "CREATE TABLE IF NOT EXISTS $inventory 
-(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, VIN varchar(17) UNIQUE, YEAR INT, Make varchar(50), Model varchar(100), 
-TRIM varchar(50), EXT_COLOR varchar (50), INT_COLOR varchar (50), ASKING_PRICE DECIMAL (10,2), 
-SALE_PRICE DECIMAL (10,2), PURCHASE_PRICE DECIMAL (10,2), MILEAGE int, TRANSMISSION varchar (50), 
-PURCHASE_DATE DATE, SALE_DATE DATE, Primary_Image VARCHAR(250) NULL)";
+            (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+            Vin varchar(17) UNIQUE, 
+            Make varchar(50), 
+            Model varchar(100), 
+            Year INT,
+            Trim varchar(50), 
+            Ext_color varchar (50), 
+            Int_color varchar (50), 
+            Asking_price DECIMAL (10,2), 
+            Sale_price DECIMAL (10,2) DEFAULT NULL, 
+            Purchase_price DECIMAL (10,2), 
+            Mileage int, 
+            Transmission varchar (50), 
+            Purchase_date DATE, 
+            Sale_date DATE DEFAULT NULL, 
+            Primary_image VARCHAR(250) NULL)";
 
 //echo "<p>***********</p>";
 //echo $query ;
@@ -37,7 +49,9 @@ else
 
 // Dates are stored in MySQL as 'YYYY-MM-DD' format
 // Insert 29 cars
-$query = "INSERT IGNORE INTO `inventory` (`VIN`, `YEAR`, `Make`, `Model`, `TRIM`, `EXT_COLOR`, `INT_COLOR`, `ASKING_PRICE`, `SALE_PRICE`, `PURCHASE_PRICE`, `MILEAGE`, `TRANSMISSION`, `PURCHASE_DATE`, `SALE_DATE`)
+$query = "INSERT IGNORE INTO `inventory` (`Vin`, `Year`, `Make`, `Model`, `Trim`, `Ext_color`, 
+                                          `Int_color`, `Asking_price`, `Sale_price`, `Purchase_price`, 
+                                          `Mileage`, `Transmission`, `Purchase_date`, `Sale_date`)
  VALUES
 ('5FNYF4H91CB054036', '2012', 'Honda', 'Pilot', 'Touring', 'White Diamond Pearl', 'Leather', '37807', NULL, '34250', '7076', 'Automatic', '2012-11-08', NULL),
 ('LAKSDFJ234LASKRF2', '2009', 'Dodge', 'Durango', 'SLT', 'Silver', 'Black', '2700', NULL, '2000', '144000', '4WD Automatic', '2012-12-05', NULL),
@@ -98,6 +112,36 @@ echo mysql_error();
 }
 
 
+$mockDataHandle = fopen('carAppMockData.csv', 'r');
+$head = fgetcsv($mockDataHandle);   //skip header
+$insertQueryTemplate = $mysqli->prepare("INSERT IGNORE INTO `inventory` 
+                                            (`Vin`, `Year`, `Make`, `Model`, `Trim`, `Ext_color`, 
+                                             `Int_color`, `Asking_price`, `Sale_price`, `Purchase_price`, 
+                                             `Mileage`, `Transmission`, `Purchase_date`, `Sale_date`, `Primary_image`)
+                                          VALUES
+                                            (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+//TO DO: figure out why Sale_date is not read correctly if it is the last field
+$primaryImage = null;   
+$insertQueryTemplate->bind_param('sisssssdddissss', 
+                                  $vin, $year, $make, $model, $trim, $extColor, 
+                                  $intColor, $askPrice, $salePrice, $purchasePrice,
+                                  $mileage, $transmission, $purchaseDate, $saleDate, $primaryImage);
+
+while (($record = fgetcsv($mockDataHandle)) !== false)
+{
+    [$vin, $year, $make, $model, $trim, $extColor, 
+     $intColor, $askPrice, $salePrice, $purchasePrice,
+     $mileage, $transmission, $purchaseDate, $saleDate] = array_map(function($v) 
+                                                                        {return strtoupper(trim($v)) === 'NULL' ? null : $v;}, 
+                                                                     $record);
+    $insertQueryTemplate->execute();
+}
+
+
+
+
+
 $dropQuery = "DROP TABLE IF EXISTS $images";
 
 if ($mysqli->query($dropQuery)) 
@@ -110,7 +154,9 @@ else
 }
 
 //Create image table - MOVED FROM OTHER FILE 
-$query = " CREATE TABLE IF NOT EXISTS $images (VIN varchar(17) PRIMARY KEY, ImageFile varchar(250))";
+$query = " CREATE TABLE IF NOT EXISTS $images 
+            (Vin varchar(17) PRIMARY KEY, 
+            ImageFile varchar(250))";
 if ($mysqli->query($query))
 {
     echo nl2br ("Database table [$images] created\n");
