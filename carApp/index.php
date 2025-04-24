@@ -7,6 +7,7 @@
 <?php
     //whatever message should be inserted as HTML about the status of inserting/updating records
     $statusMessage = null; 
+    $textColor = "unset";   //default status message text color
     //for form submission because I don't want to write it out every time
     $action = htmlspecialchars($_SERVER['PHP_SELF']);
 
@@ -20,7 +21,6 @@
             $make = trim( $_REQUEST['make']) ;
             $model = trim( $_REQUEST['model']) ;
             $price =  $_REQUEST['askingPrice'] ;
-            print_r($_REQUEST);
             $vinExistQuery = "SELECT `Vin` FROM `inventory` WHERE `Vin` = '$vin'";
             $result = $mysqli->query($vinExistQuery);
 
@@ -33,6 +33,7 @@
             {
                // will be printed above add new car form
                $statusMessage = "A car with the Vin [$vin] is already in the database";
+               $textColor = "Red";
             }
             else
             {
@@ -84,6 +85,7 @@
                     
                     // will be printed above add new car form
                     $statusMessage = 'You have Successfully added a new car!';
+                    $textColor = 'Green';
                     
                     // prevents form from resubmitting on page reload
                     header("Location: " . $_SERVER['PHP_SELF']);
@@ -161,10 +163,12 @@
             {
                 //echo "<p>You have successfully updated the information for $make $model in the database.</P>";
                 $statusMessage = "$make $model with the Vin $vin has been successfully updated";
+                $textColor = "Green";
             }
             else
             {
-                echo "Error entering $vin into database: " . mysql_error()."<br>";
+                $statusMessage = "Error Updating: $make $model with the Vin $vin";
+                $textColor = "Red";
             }
 
             //clear header so that update won't resubmit on page reload
@@ -172,21 +176,25 @@
         } 
         elseif (isset($_POST['delete'])) 
         {
-            
-            print_r ($_REQUEST);
-            $vin = $_REQUEST['Vin'];
+            $vin = $_REQUEST['vin'];
             $query = "DELETE inventory.*, images.*  FROM inventory 
                       LEFT JOIN images ON inventory.Vin = images.Vin
                       WHERE inventory.Vin='$vin'";
 
             /* Try to query the database */
-            if ($result = $mysqli->query($query)) 
+            $result =  $mysqli->query($query);
+
+            if ($result > 0)
             {
-                echo "The vehicle with Vin $vin has been deleted.";
+               
+                $statusMessage = "The vehicle with Vin $vin has been deleted.";
+                $textColor = "Blue";
             }
             else
             {
-                echo "Sorry, a vehicle with Vin of $vin cannot be found " . mysql_error()."<br>";
+
+                $statusMessage = "Sorry, a vehicle with Vin of $vin cannot be found.";
+                $textColor = "Red";
             }
         }
         else
@@ -219,7 +227,7 @@
         <?php
             if ($statusMessage)
             {
-                echo "<h3>$statusMessage</h3>";
+                echo "<h3 style=\"color:$textColor;\">$statusMessage</h3>";
             }
         ?>
         
