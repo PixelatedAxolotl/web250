@@ -17,10 +17,10 @@
         {   
             // Capture the values posted to this php program from the text fields
             $vin =  trim( $_REQUEST['vin']) ;
-            $make = trim( $_REQUEST['Make']) ;
-            $model = trim( $_REQUEST['Model']) ;
-            $price =  $_REQUEST['Asking_Price'] ;
-
+            $make = trim( $_REQUEST['make']) ;
+            $model = trim( $_REQUEST['model']) ;
+            $price =  $_REQUEST['askingPrice'] ;
+            print_r($_REQUEST);
             $vinExistQuery = "SELECT `Vin` FROM `inventory` WHERE `Vin` = '$vin'";
             $result = $mysqli->query($vinExistQuery);
 
@@ -99,9 +99,9 @@
             //echo "YOU ARE UPDATING...";
 
             $vin = $_REQUEST['vin'] ;
-            $make = $_REQUEST['Make'] ;
-            $model = $_REQUEST['Model'] ;
-            $price = $_REQUEST['Asking_Price'] ;
+            $make = $_REQUEST['make'] ;
+            $model = $_REQUEST['model'] ;
+            $price = $_REQUEST['askingPrice'] ;
 
             // only try to upload and update image if an image was selected in the edit form
             if ($_FILES['displayedImage']['size'])
@@ -232,17 +232,19 @@
 
             <label for="make">
                 Make
-                <input id="make" name="Make" type="text" required>
+                <input id="make" name="make" type="text" required>
             </label>
             
             <label for="model">
                 Model
-                <input id="model" name="Model" type="text" required>
+                <input id="model" name="model" type="text" required>
             </label>
 
             <label for="askingPrice">
                 Price
-                <input id="askingPrice" name="Asking_Price" type="text" required>
+                <input id="askingPrice" name="askingPrice" type="text" pattern="^\d*(\.\d{0,2})?$" required
+                        oninvalid="this.setCustomValidity('Please enter a valid price.\nDo not include a currency sign\nDo not include more than 2 decimals')"
+                        oninput="this.setCustomValidity('')">
             </label>
 
             <fieldset name="imageUpload">
@@ -314,16 +316,16 @@ while ($resultArray = mysqli_fetch_assoc($result))
                     </label>
                 </td>
                 <td>
-                    <input disabled name="Vin" value="$resultArray[Vin]">
+                    <input disabled name="vin" value="$resultArray[Vin]">
                 </td>
                 <td>
-                    <input disabled name="Make" type="text" value="$resultArray[Make]">
+                    <input disabled name="make" type="text" value="$resultArray[Make]">
                 </td>
                 <td> 
-                    <input disabled name="Model" type="text" value="$resultArray[Model]">
+                    <input disabled name="model" type="text" value="$resultArray[Model]">
                 </td>
                 <td> 
-                    <input disabled name="Asking_Price" type="text" value="$resultArray[Asking_price]">
+                    <input disabled name="askingPrice" type="text" value="$resultArray[Asking_price]">
                 </td>
 
                 <td>
@@ -331,9 +333,9 @@ while ($resultArray = mysqli_fetch_assoc($result))
                     <button name="cancelEdit" type="reset"><img src="images/cancelIcon.svg" alt="Cancel Edit"></button>
 
 
-                    <button formaction="?action=update&Vin=$resultArray[Vin]" name="update" type="submit"><img src="images/checkmarkIcon.svg" alt="Update Info"></button>
+                    <button formaction="?action=update&vin=$resultArray[Vin]" name="update" type="submit"><img src="images/checkmarkIcon.svg" alt="Update Info"></button>
 
-                    <button formaction="?action=delete&Vin=$resultArray[Vin]" name="delete" type="submit"><img src="images/deleteIcon.svg" alt="Delete Car"></button>
+                    <button formaction="?action=delete&vin=$resultArray[Vin]" name="delete" type="submit"><img src="images/deleteIcon.svg" alt="Delete Car"></button>
                 </td>
 
             </tr>
