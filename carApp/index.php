@@ -21,7 +21,7 @@
             $model = trim( $_REQUEST['Model']) ;
             $price =  $_REQUEST['Asking_Price'] ;
 
-            $vinExistQuery = "SELECT `Vin` FROM `inventory` WHERE `VIN` = '$vin'";
+            $vinExistQuery = "SELECT `Vin` FROM `inventory` WHERE `Vin` = '$vin'";
             $result = $mysqli->query($vinExistQuery);
 
             if (! $result) 
@@ -32,7 +32,7 @@
             if (mysqli_fetch_assoc($result) > 0) 
             {
                // will be printed above add new car form
-               $statusMessage = "A car with the VIN [$vin] is already in the database";
+               $statusMessage = "A car with the Vin [$vin] is already in the database";
             }
             else
             {
@@ -160,7 +160,7 @@
             if ($result = $mysqli->query($query)) 
             {
                 //echo "<p>You have successfully updated the information for $make $model in the database.</P>";
-                $statusMessage = "$make $model with the VIN $vin has been successfully updated";
+                $statusMessage = "$make $model with the Vin $vin has been successfully updated";
             }
             else
             {
@@ -225,7 +225,7 @@
         
         <form action="<?php echo $action?>" method="POST" name="create" enctype="multipart/form-data">
             <label for="vin">
-                VIN
+                Vin
                 <input id="vin" name="vin" type="text" required>
             </label>
 
@@ -263,7 +263,10 @@
 // Display cars with images in table
 $query = "SELECT inventory.*, images.ImageFile 
           FROM inventory
-          LEFT JOIN images ON inventory.Vin = images.Vin";
+          LEFT JOIN images ON inventory.Vin = images.Vin
+          ORDER BY 
+            inventory.Make ASC,
+            inventory.Model ASC";
 
 /* Try to query the database */
 $result = $mysqli->query($query);
@@ -279,7 +282,7 @@ echo <<<TABLE_HEAD
         <thead>
             <tr>
                 <th>Image</th>
-                <th>VIN Number</th>
+                <th>Vin Number</th>
                 <th>Make</th>
                 <th>Model</th>
                 <th>Asking Price</th>
