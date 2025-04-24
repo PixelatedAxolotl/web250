@@ -16,12 +16,12 @@
         if (isset($_POST['create'])) 
         {   
             // Capture the values posted to this php program from the text fields
-            $vin =  trim( $_REQUEST['VIN']) ;
+            $vin =  trim( $_REQUEST['vin']) ;
             $make = trim( $_REQUEST['Make']) ;
             $model = trim( $_REQUEST['Model']) ;
             $price =  $_REQUEST['Asking_Price'] ;
 
-            $vinExistQuery = "SELECT `VIN` FROM `inventory` WHERE `VIN` = '$vin'";
+            $vinExistQuery = "SELECT `Vin` FROM `inventory` WHERE `VIN` = '$vin'";
             $result = $mysqli->query($vinExistQuery);
 
             if (! $result) 
@@ -54,7 +54,7 @@
                 {
                     echo "The file ".  basename( $_FILES['image']['name']). " has been uploaded<br>". "\n";
                     $fileName =  $_FILES["image"]["name"];
-                    $query = "INSERT INTO images (VIN, ImageFile) VALUES ('$vin', '$fileName')";
+                    $query = "INSERT INTO images (Vin, ImageFile) VALUES ('$vin', '$fileName')";
 
                     if (! $mysqli->query($query)) 
                     {
@@ -65,7 +65,7 @@
         
                 //Build a SQL Query using the values from above
                 $query = "INSERT INTO inventory
-                          (VIN, Make, Model, ASKING_PRICE)
+                          (Vin, Make, Model, Asking_price)
                           VALUES 
                           (
                             '$vin', 
@@ -98,7 +98,7 @@
         {
             //echo "YOU ARE UPDATING...";
 
-            $vin = $_REQUEST['VIN'] ;
+            $vin = $_REQUEST['vin'] ;
             $make = $_REQUEST['Make'] ;
             $model = $_REQUEST['Model'] ;
             $price = $_REQUEST['Asking_Price'] ;
@@ -127,7 +127,7 @@
                     
                     $fileName =  $_FILES["displayedImage"]["name"];
 
-                    $query = "INSERT INTO images (VIN, ImageFile)
+                    $query = "INSERT INTO images (Vin, ImageFile)
                               VALUES ('$vin', '$fileName')
                               ON DUPLICATE KEY UPDATE
                               ImageFile = '$fileName'";
@@ -144,14 +144,14 @@
                 }
             }
         
-            // Build SQL query for updating values for record with matching VIN number
+            // Build SQL query for updating values for record with matching Vin number
             $query = "UPDATE inventory SET 
-                      VIN='$vin', 
+                      Vin='$vin', 
                       Make='$make', 
                       Model='$model', 
-                      ASKING_PRICE='$price'
+                      Asking_price='$price'
                       WHERE
-                      VIN='$vin'"; 
+                      Vin='$vin'"; 
         
             // Print the query to the browser so you can see it
             //echo ($query. "<br>");
@@ -174,19 +174,19 @@
         {
             
             print_r ($_REQUEST);
-            $vin = $_REQUEST['VIN'];
+            $vin = $_REQUEST['Vin'];
             $query = "DELETE inventory.*, images.*  FROM inventory 
-                      LEFT JOIN images ON inventory.VIN = images.VIN
-                      WHERE inventory.VIN='$vin'";
+                      LEFT JOIN images ON inventory.Vin = images.Vin
+                      WHERE inventory.Vin='$vin'";
 
             /* Try to query the database */
             if ($result = $mysqli->query($query)) 
             {
-                echo "The vehicle with VIN $vin has been deleted.";
+                echo "The vehicle with Vin $vin has been deleted.";
             }
             else
             {
-                echo "Sorry, a vehicle with VIN of $vin cannot be found " . mysql_error()."<br>";
+                echo "Sorry, a vehicle with Vin of $vin cannot be found " . mysql_error()."<br>";
             }
         }
         else
@@ -226,7 +226,7 @@
         <form action="<?php echo $action?>" method="POST" name="create" enctype="multipart/form-data">
             <label for="vin">
                 VIN
-                <input id="vin" name="VIN" type="text" required>
+                <input id="vin" name="vin" type="text" required>
             </label>
 
 
@@ -263,7 +263,7 @@
 // Display cars with images in table
 $query = "SELECT inventory.*, images.ImageFile 
           FROM inventory
-          LEFT JOIN images ON inventory.VIN = images.VIN";
+          LEFT JOIN images ON inventory.Vin = images.Vin";
 
 /* Try to query the database */
 $result = $mysqli->query($query);
@@ -311,7 +311,7 @@ while ($resultArray = mysqli_fetch_assoc($result))
                     </label>
                 </td>
                 <td>
-                    <input disabled name="VIN" value="$resultArray[VIN]">
+                    <input disabled name="Vin" value="$resultArray[Vin]">
                 </td>
                 <td>
                     <input disabled name="Make" type="text" value="$resultArray[Make]">
@@ -320,7 +320,7 @@ while ($resultArray = mysqli_fetch_assoc($result))
                     <input disabled name="Model" type="text" value="$resultArray[Model]">
                 </td>
                 <td> 
-                    <input disabled name="Asking_Price" type="text" value="$resultArray[ASKING_PRICE]">
+                    <input disabled name="Asking_Price" type="text" value="$resultArray[Asking_price]">
                 </td>
 
                 <td>
@@ -328,9 +328,9 @@ while ($resultArray = mysqli_fetch_assoc($result))
                     <button name="cancelEdit" type="reset"><img src="images/cancelIcon.svg" alt="Cancel Edit"></button>
 
 
-                    <button formaction="?action=update&VIN=$resultArray[VIN]" name="update" type="submit"><img src="images/checkmarkIcon.svg" alt="Update Info"></button>
+                    <button formaction="?action=update&Vin=$resultArray[Vin]" name="update" type="submit"><img src="images/checkmarkIcon.svg" alt="Update Info"></button>
 
-                    <button formaction="?action=delete&VIN=$resultArray[VIN]" name="delete" type="submit"><img src="images/deleteIcon.svg" alt="Delete Car"></button>
+                    <button formaction="?action=delete&Vin=$resultArray[Vin]" name="delete" type="submit"><img src="images/deleteIcon.svg" alt="Delete Car"></button>
                 </td>
 
             </tr>
