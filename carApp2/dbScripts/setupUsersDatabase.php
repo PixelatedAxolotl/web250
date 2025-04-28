@@ -42,9 +42,9 @@ try
     echo nl2br ("Inserted rows: " . $mysqli->affected_rows);
     
 } 
-catch (mysqli_sql_exception $e) 
+catch (mysqli_sql_exception $error) 
 {
-    echo "Query error: " . $e->getMessage();
+    echo "Query error: " . $error->getMessage();
 }
 
 
