@@ -277,12 +277,10 @@
 
     <header>
         <h1>Lucky Sandfish's Used Cars</h1>
+        <h2>Our cars are real and do run, we promise!</h2>
     </header>
 
 <main>
-
-
-    <h2>Welcome to Lucky Sandfish's Used Car Lot!</h2>
     <?php
         if (isset($_SESSION['isLoggedIn']))
         {

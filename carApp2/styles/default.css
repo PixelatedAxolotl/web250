@@ -25,12 +25,20 @@ body
     overscroll-behavior-x: contain; /*stops horizontal scrolling from causing browser swipe events*/
 }
 
-header
+header h1
 {
     font-family: 'Heavy Heap Rg';
-    font-size: 2rem;
+    font-size: 50px;
     letter-spacing: .3rem;
     text-align: center;
+    white-space: nowrap;
+    margin-bottom: 2px;
+}
+
+header h2
+{
+    margin-top: 0px;
+    font-size: 23px;
     white-space: nowrap;
 }
 
