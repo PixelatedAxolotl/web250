@@ -5,9 +5,67 @@
     session_start();
 ?> 
 
+
+<!-- PHP Function Zone -->
+<?php
+    function uploadImage($carData, $image, $mysqli)
+    {
+        $vin = $carData['vin'];
+        $make = $carData['make'];
+        $model = $carData['model'];
+
+        //infinityFree doesn't like getcwd()
+        if ($_SERVER['HTTP_HOST'] === 'localhost')
+        {
+            $currentFolder =  getcwd();
+            $targetPath = $currentFolder . "../uploads/";
+        }
+        else
+        {
+            $targetPath = "uploads/";
+        }
+
+
+        $targetPath = $targetPath . basename( $image['name']); 
+
+        if(move_uploaded_file($image['tmp_name'], $targetPath)) 
+        {
+            echo "The file ".  basename( $image['name']). " has been uploaded<br>". "\n";
+            $fileName =  $image["name"];
+            $query = "INSERT INTO images (Vin, ImageFile)
+                      VALUES ('$vin', '$fileName')
+                      ON DUPLICATE KEY UPDATE
+                      ImageFile = '$fileName'";
+            try
+            {
+                $mysqli->query($query);
+                if ($mysqli->affected_rows == 0)
+                {
+                    $_SESSION['statusMessage'][] = ['text'  => "Error entering image into the database for the $make $model vehicle with the VIN $vin",
+                    'color' => "Red"];
+                }
+                else
+                {
+                    $_SESSION['statusMessage'][] = ['text'  => "Successfully entered image into the database for the $make $model vehicle with the VIN $vin",
+                    'color' => "Green"];
+                    return 1;
+                }
+            }
+            catch (mysqli_sql_exception $error)
+            {
+                $_SESSION['statusMessage'][] = ['text'  => "Error entering image into the database for the {$trimmedUpdateFields['make']} {$trimmedUpdateFields['model']} vehicle with the VIN $vin",
+                'color' => "Red"];
+            } //end query try catch
+        }//end file upload if
+        return 0; //if you get here something went wrong with the file upload
+    }//end function
+?>
+
 <?php
     //whatever message should be inserted as HTML about the status of inserting/updating records
-    $statusMessage = null; 
+    $statusMessage = []; 
+    $textColor = [];  
+     
     //for form submission because I don't want to write it out every time
     $action = htmlspecialchars($_SERVER['PHP_SELF']);
 
@@ -18,7 +76,9 @@
         {   
             // Capture the values posted to this php program from the text fields            
             $trimmedInputFields = array_map('trim', $_REQUEST);
-            unset($trimmedInputFields['create']); //used for request type - is NOT user input
+
+            //remove everything after the 12 input fields (create elem + remote hosting adds others)
+            array_splice($trimmedInputFields, 12);
             
             $vin = $trimmedInputFields['vin'];
             $vinExistQuery = "SELECT `Vin` FROM `inventory` WHERE `Vin` = '$vin'";
@@ -36,32 +96,7 @@
             }
             else
             {
-                //infinityFree doesn't like getcwd()
-                if ($_SERVER['HTTP_HOST'] === 'localhost')
-                {
-                    $currentFolder =  getcwd();
-                    $targetPath = $currentFolder . "../uploads/";
-                }
-                else
-                {
-                    $targetPath = "uploads/";
-                }
-
-
-                $targetPath = $targetPath . basename( $_FILES['image']['name']); 
-
-                if(move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) 
-                {
-                    echo "The file ".  basename( $_FILES['image']['name']). " has been uploaded<br>". "\n";
-                    $fileName =  $_FILES["image"]["name"];
-                    $query = "INSERT INTO images (Vin, ImageFile) VALUES ('$vin', '$fileName')";
-
-                    if (! $mysqli->query($query)) 
-                    {
-                        echo "Error entering $targetPath into database: " . mysql_error()."<br>";
-                    
-                    }
-                }   // end of file move if
+                uploadImage($trimmedInputFields, $_FILES['image'], $mysqli);
         
                 //Build a SQL Query using the values from above
                 //surround each field in single quotes for query insertion
@@ -74,143 +109,124 @@
                 $query .= implode(', ', $formattedInputFields);
                 $query .= ")";
 
-
                 // DEBUG: Print the query to the browser so you can see it
-                //echo "<script>console.log('$query');</script>";
+                echo "</br>$query</br>";
 
                 /* Try to insert the new car into the database */
                 if ($result = $mysqli->query($query)) 
-                {
-                    //echo "<p>You have successfully entered $make $model into the database.</p>";
-                    
+                {                  
                     // will be printed above add new car form
-                    $statusMessage = 'You have Successfully added a new car!';
+                    $_SESSION['statusMessage'][] = ['text'  => "Successfully added {$trimmedInputFields['make']} {$trimmedInputFields['model']} with the VIN $vin",
+                    'color' => "Green"];
                 }
                 else
                 {
-                    echo "Error entering $vin into database: " . $mysqli->error."<br>";
+                    $_SESSION['statusMessage'][] = ['text'  => "Error adding {$trimmedInputFields['make']} {$trimmedInputFields['model']} with the VIN $vin",
+                    'color' => "Red"];
                 }
-
-                // prevents form from resubmitting on page reload
-                header("Location: " . $_SERVER['PHP_SELF']);
-                exit;
             } // end vinExist else
         } // end POST = create if 
         elseif (isset($_POST['update']))
         {
             //echo "YOU ARE UPDATING...";
+
             //trim input fields and store in new array
             $trimmedUpdateFields = array_map('trim', $_REQUEST);
+            $vin = $trimmedUpdateFields['vin'];
+            $updatedImageFlag = 0; //used so that correct status message displays when user changes image and nothing else
 
             // only try to upload and update image if an image was selected in the edit form
-            if ($_FILES['displayedImage']['size'])
+            if (isset($_FILES['displayedImage']['size']))
             {
-                
-                //infinityFree doesn't like getcwd()
-                if ($_SERVER['HTTP_HOST'] === 'localhost')
-                {
-                    $currentFolder =  getcwd();
-                    $targetPath = $currentFolder . "../uploads/";
-                }
-                else
-                {
-                    $targetPath = "uploads/";
-                }
-                
-                $targetPath = $targetPath . basename( $_FILES['displayedImage']['name']); 
-                $imagename = "uploads/". basename( $_FILES['displayedImage']['name']); 
-            
-                if(move_uploaded_file($_FILES['displayedImage']['tmp_name'], $targetPath)) 
-                {
-                    //echo "The file ".  basename( $_FILES['displayedImage']['name']). " has been uploaded<br>". "\n";
-                    
-                    $fileName =  $_FILES["displayedImage"]["name"];
-
-                    $query = "INSERT INTO images (Vin, ImageFile)
-                              VALUES ('$vin', '$fileName')
-                              ON DUPLICATE KEY UPDATE
-                              ImageFile = '$fileName'";
-                    
-                    if ($result = $mysqli->query($query)) 
-                    {
-                        //echo "<p>Query Result: $result</P>\n";
-                        //echo "<p>You have successfully entered $targetPath into the database.</P>\n";
-                    }
-                    else
-                    {
-                        echo "Error entering $vin into database: " . mysql_error()."<br>";
-                    }
-                }
+                $updatedImageFlag = uploadImage($vin, $_FILES['displayedImage'], $mysqli);
             }
 
             // Build SQL query for updating values for record with matching VIN number
+            // TO DO: Switch all CRUD queries to prepared queries??
             $query = "UPDATE inventory SET 
-                      Vin='{$trimmedUpdateFields['vin']}', 
-                      Make='{$trimmedUpdateFields['make']}',  
-                      Model='{$trimmedUpdateFields['model']}',
-                      Year='{$trimmedUpdateFields['year']}',   
-                      Asking_price='{$trimmedUpdateFields['askingPrice']}',
-                      Sale_price='{$trimmedUpdateFields['salePrice']}',
-                      Purchase_price='{$trimmedUpdateFields['purchasePrice']}',
-                      Ext_color='{$trimmedUpdateFields['exteriorColor']}',
-                      Trim='{$trimmedUpdateFields['trim']}',
-                      Int_color='{$trimmedUpdateFields['interiorColor']}',
-                      Mileage='{$trimmedUpdateFields['mileage']}',
-                      Transmission='{$trimmedUpdateFields['transmission']}'
-                      WHERE
-                      Vin='{$trimmedUpdateFields['vin']}'"; 
-        
+                        Make = ?,  
+                        Model = ?,
+                        Year = ?,   
+                        Asking_price = ?,
+                        Sale_price = ?,
+                        Purchase_price = ?,
+                        Ext_color = ?,
+                        Trim = ?,
+                        Int_color = ?,
+                        Mileage = ?,
+                        Transmission = ?
+                        WHERE Vin = ?";
+
+            $preparedQuery = $mysqli->prepare($query);
+            $preparedQuery->bind_param( "ssidddsssiss",
+                                        $trimmedUpdateFields['make'],
+                                        $trimmedUpdateFields['model'],
+                                        $trimmedUpdateFields['year'],
+                                        $trimmedUpdateFields['askingPrice'],
+                                        $trimmedUpdateFields['salePrice'],
+                                        $trimmedUpdateFields['purchasePrice'],
+                                        $trimmedUpdateFields['exteriorColor'],
+                                        $trimmedUpdateFields['trim'],
+                                        $trimmedUpdateFields['interiorColor'],
+                                        $trimmedUpdateFields['mileage'],
+                                        $trimmedUpdateFields['transmission'],
+                                        $trimmedUpdateFields['vin'] // for WHERE clause
+            );
             // Print the query to the browser so you can see it
             //echo ($query. "<br>");
         
-            /* Try to insert the new car into the database */
-            if ($result = $mysqli->query($query)) 
+            /* Try to insert the updated data into the database */
+            if ($preparedQuery->execute())
             {
-                //echo "<p>You have successfully updated the information for $make $model in the database.</P>";
-                $statusMessage = "$make $model with the VIN $vin has been successfully updated";
+                if ($mysqli->affected_rows > 0 || $updatedImageFlag == 1)
+                {
+                    $_SESSION['statusMessage'][] = ['text'  => "{$trimmedUpdateFields['make']} {$trimmedUpdateFields['model']} with the VIN $vin has been successfully updated",
+                                                    'color' => "Green"];
+                }
+                else
+                {
+                    $_SESSION['statusMessage'][] = ['text'  => "0 fields were updated for {$trimmedUpdateFields['make']} {$trimmedUpdateFields['model']} with the VIN $vin",
+                                                    'color' => "Light Blue"];
+                }
             }
             else
             {
-                echo "Error entering $vin into database: " . mysql_error()."<br>";
+                $_SESSION['statusMessage'][] = ['text'  => "Error Updating: {$trimmedUpdateFields['make']} {$trimmedUpdateFields['model']} with the VIN $vin",
+                'color' => "Red"];
             }
-
-            //clear header so that update won't resubmit on page reload
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit;
         } 
         elseif (isset($_POST['delete'])) 
         {
-            
-            print_r ($_REQUEST);
             $vin = $_REQUEST['vin'];
             $query = "DELETE inventory.*, images.*  FROM inventory 
                       LEFT JOIN images ON inventory.Vin = images.Vin
                       WHERE inventory.Vin='$vin'";
 
             /* Try to query the database */
-            if ($result = $mysqli->query($query)) 
+            $mysqli->query($query);
+            if ($mysqli->affected_rows > 0) 
             {
-                #echo "The vehicle with VIN $vin has been deleted.";
+                $_SESSION['statusMessage'][] = ['text'  => "The vehicle with Vin $vin has been deleted.",
+                                                'color' => "Blue"];
             }
             else
             {
-                echo "Sorry, a vehicle with VIN of $vin cannot be found " . mysql_error()."<br>";
+                $_SESSION['statusMessage'][] = ['text'  => "Sorry, a vehicle with Vin of $vin cannot be found",
+                                                'color' => "Red"];
             }
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit;
         }// end CRUD if
 
         //print_r ($_SESSION['isLoggedIn']);
+
         //handle user login
         if (isset($_POST['login']))
         {
             $username = $_REQUEST['username'];
             $password = $_REQUEST['password'];
 
-
             $userExistQuery = "SELECT `firstName`, `lastName` FROM `users` 
-            WHERE `username` = '$username'
-            AND `password` = '$password'";
+                               WHERE `username` = '$username'
+                               AND `password` = '$password'";
 
             try 
             {
@@ -223,8 +239,6 @@
                     $userInformationArray = mysqli_fetch_assoc($result);
                     [$_SESSION['firstName'], $_SESSION['lastName']] = [$userInformationArray['firstName'], $userInformationArray[ 'lastName']];
                 }
-                header("Location: " . $_SERVER['PHP_SELF']);
-                exit;
             } 
             catch (mysqli_sql_exception $e) 
             {
@@ -236,14 +250,16 @@
         {
             session_unset();
             session_destroy();
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit;
+            $statusMessage = "You are now logged out";
+            $textColor = "Blue";
         }
         else
         {
-            exit;
+
         } 
 
+        //clear header so that update won't resubmit on page reload
+       header("Location: " . $_SERVER['PHP_SELF']);
 
     } // end POST request if
 ?>
@@ -303,85 +319,79 @@
     ?>
 
     <section>
-        <h2>Add A Car:</h2>
         <?php
-            if ($statusMessage)
-            {
-                echo "<h3>$statusMessage</h3>";
-            }
-
             if (isset($_SESSION['isLoggedIn']))
             {
 
         ?>
-            
+            <h2>Add A Car:</h2>
             <form action="<?php echo $action?>" method="POST" name="create" enctype="multipart/form-data">
                 <label for="vin">
                     VIN
-                    <input id="vin" name="vin" type="text" placeholder="VIN Number" required>
+                    <input id="vin" name="vin" type="text" placeholder="VIN Number"  autocomplete="off" required>
                 </label>
 
                 <label for="make">
                     Make
-                    <input id="make" name="make" type="text" placeholder="Car Make" required>
+                    <input id="make" name="make" type="text" placeholder="Car Make" autocomplete="off" required>
                 </label>
                 
                 <label for="model">
                     Model
-                    <input id="model" name="model" type="text" placeholder="Car Model" required>
+                    <input id="model" name="model" type="text" placeholder="Car Model" autocomplete="off" required>
                 </label>
 
                 <label for="year">
                     Year
-                    <input id="year" name="year" type="text" pattern="^(19|20)\d{2}$" placeholder="Year" required
+                    <input id="year" name="year" type="text" pattern="^(19|20)\d{2}$" placeholder="Year" autocomplete="off" required
                         oninvalid="this.setCustomValidity('Please enter a valid year between 1900 and 2099')"
                         oninput="this.setCustomValidity('')">
                 </label>
 
                 <label for="askingPrice">
                     Asking Price
-                    <input id="askingPrice" name="askingPrice" type="text" pattern="^\d*(\.\d{0,2})?$" placeholder="$$$" required
+                    <input id="askingPrice" name="askingPrice" type="text" pattern="^\d*(\.\d{0,2})?$" autocomplete="off" placeholder="$$$" required
                         oninvalid="this.setCustomValidity('Please enter a valid price.\nDo not include a currency sign\nDo not include more than 2 decimals')"
                         oninput="this.setCustomValidity('')">
                 </label>
 
                 <label for="purchasePrice">
                     Purchase Price
-                    <input id="purchasePrice" name="purchasePrice" type="text" pattern="^\d*(\.\d{0,2})?$" placeholder="$$$" required
+                    <input id="purchasePrice" name="purchasePrice" type="text" pattern="^\d*(\.\d{0,2})?$" autocomplete="off" placeholder="$$$" required
                         oninvalid="this.setCustomValidity('Please enter a valid price.\nDo not include a currency sign\nDo not include more than 2 decimals')"
                         oninput="this.setCustomValidity('')">
                 </label>
 
                 <label for="purchaseDate">
                     Purchase Date
-                    <input id="purchaseDate" name="purchaseDate" type="date" required>
+                    <input id="purchaseDate" name="purchaseDate" type="date" autocomplete="off" required>
                 </label>
                 
                 <label for="exteriorColor">
                     Exterior Color
-                    <input id="exteriorColor" name="exteriorColor" type="text" placeholder="Exterior Color" required>
+                    <input id="exteriorColor" name="exteriorColor" type="text" placeholder="Exterior Color" autocomplete="off" required>
                 </label>
                                 
                 <label for="trim">
                     Trim
-                    <input id="trim" name="trim" type="text" placeholder="Trim" required>
+                    <input id="trim" name="trim" type="text" placeholder="Trim" autocomplete="off" required>
                 </label>
 
                 <label for="interiorColor">
                     Interior Color
-                    <input id="interiorColor" name="interiorColor" type="text" placeholder="Interior Color" required>
+                    <input id="interiorColor" name="interiorColor" type="text" placeholder="Interior Color" autocomplete="off" required>
                 </label>
 
                 <label for="mileage">
                     Mileage
-                    <input id="mileage" name="mileage" type="text" pattern="^\d+$" placeholder="Mileage" required
+                    <input id="mileage" name="mileage" type="text" pattern="^\d+$" placeholder="Mileage" autocomplete="off" required
                         oninvalid="this.setCustomValidity('Please enter a positive whole number.')"
                         oninput="this.setCustomValidity('')">
                 </label>
                 
                 <label for="transmission">
                     Transmission
-                    <input id="transmission" name="transmission" type="text" placeholder="Transmission" required>
+                    <input id="transmission" name="transmission" type="text" placeholder="Transmission" autocomplete="off" required>
                 </label>
 
                 <fieldset name="imageUpload">
@@ -397,9 +407,26 @@
                 </fieldset>
             </form>
             <?php  } //end of login status check if ?>
-    </section>    
+    </section>   
+    
+    <section name="statusMessages">
+            <?php
+
+                if (isset($_SESSION['statusMessage']))
+                {
+                    echo "<h3>Status Messages</h3>";
+                    foreach ($_SESSION['statusMessage'] as $message)
+                    {
+                        echo "<h3 style=\"color: {$message['color']};\">Status: {$message['text']}</h3>";
+                    }
+                    //$_SESSION['statusMessage'] = [];
+                }
+            ?>
+    </section>
 
 <?php
+
+
           
 // Display cars with images in table
 $query = "SELECT inventory.*, images.ImageFile 
@@ -440,7 +467,7 @@ if (! $result)
             <?php
             if (isset($_SESSION['isLoggedIn']))
             {
-                echo '<th>Action</th>';
+                echo '<th class="actionButtons">Action</th>';
             } 
             ?>
         </tr>
@@ -522,14 +549,14 @@ while ($resultArray = mysqli_fetch_assoc($result))
     if (isset($_SESSION['isLoggedIn']))
     {
         $carForm .= <<<ACTION_BUTTONS
-                    <td>
-                        <button name="toggleEdit" type="button"><img src="images/editIcon.svg" alt="Edit Car Information"></button>
-                        <button name="cancelEdit" type="reset"><img src="images/cancelIcon.svg" alt="Cancel Edit"></button>
+                    <td class="actionButtons">
+                        <button name="toggleEdit" tooltip="Edit" type="button"><img tooltip="Edit Car Data" src="images/editIcon.svg" alt="Edit Car Information"></button>
+                        <button name="cancelEdit" tooltip="Cancel Edit" type="reset"><img src="images/cancelIcon.svg" alt="Cancel Edit"></button>
 
 
-                        <button formaction="?action=update&vin=$resultArray[Vin]" name="update" type="submit"><img src="images/checkmarkIcon.svg" alt="Update Info"></button>
+                        <button formaction="?action=update&vin=$resultArray[Vin]" name="update" tooltip="Submit" type="submit"><img src="images/checkmarkIcon.svg" alt="Update Info"></button>
 
-                        <button formaction="?action=delete&vin=$resultArray[Vin]" name="delete" type="submit"><img src="images/deleteIcon.svg" alt="Delete Car"></button>
+                        <button formaction="?action=delete&vin=$resultArray[Vin]" name="delete" tooltip="Delete Car" type="submit"><img src="images/deleteIcon.svg" alt="Delete Car"></button>
                     </td>
 
         ACTION_BUTTONS;
@@ -615,6 +642,7 @@ $mysqli->close(); // Close db object at end of PHP code
                 document.querySelector("label[for=image]").innerHTML = event.target.value.split('\\').pop();
             });
 
+            document.querySelector("button[tooltip]").show();
 
 
     </script>
