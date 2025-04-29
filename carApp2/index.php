@@ -138,7 +138,7 @@
             // only try to upload and update image if an image was selected in the edit form
             if (isset($_FILES['displayedImage']['size']))
             {
-                $updatedImageFlag = uploadImage($vin, $_FILES['displayedImage'], $mysqli);
+                $updatedImageFlag = uploadImage($trimmedUpdateFields, $_FILES['displayedImage'], $mysqli);
             }
 
             // Build SQL query for updating values for record with matching VIN number
@@ -276,7 +276,7 @@
 <body>
 
     <header>
-        <h1>Lucky Sandfish's<br>Used Cars</h1>
+        <h1>Lucky Sandfish's Used Cars</h1>
     </header>
 
 <main>
@@ -417,9 +417,8 @@
                     echo "<h3>Status Messages</h3>";
                     foreach ($_SESSION['statusMessage'] as $message)
                     {
-                        echo "<h3 style=\"color: {$message['color']};\">Status: {$message['text']}</h3>";
+                        echo "<span style=\"color: {$message['color']};\">{$message['text']}</span>";
                     }
-                    //$_SESSION['statusMessage'] = [];
                 }
             ?>
     </section>

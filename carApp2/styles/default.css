@@ -22,15 +22,16 @@ body
     background-attachment: scroll;
     background-attachment: local;
     text-align: center;
+    overscroll-behavior-x: contain; /*stops horizontal scrolling from causing browser swipe events*/
 }
 
 header
 {
-    height: 200px;
     font-family: 'Heavy Heap Rg';
     font-size: 2rem;
     letter-spacing: .3rem;
     text-align: center;
+    white-space: nowrap;
 }
 
 h2, h3, footer
@@ -75,7 +76,7 @@ form[name="create"] fieldset legend
 }
 
 form[name="create"] > label,
-form[name="create"] fieldset
+form[name="create"] fieldset[name="imageUpload"]
 {
     display: flex;
     justify-content: flex-start;
@@ -92,8 +93,23 @@ form[name="create"] fieldset
     margin: auto 50px auto 70px;
 }
 
+form[name="create"] fieldset[name="formControl"]
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    white-space: nowrap;
+    text-align: initial;
+    padding: 0px;
+    margin: 0px;
+    align-content: flex-end;
+    flex-wrap: wrap;
+
+}
+
 form[name="create"] label input
 {
+    max-height: 40px;
     max-width: 220px;
 }
 
@@ -110,7 +126,7 @@ form[name="create"] input[type="file"]
 
 form[name="create"] label[for="image"]
 {
-    max-width: 200px;
+    max-width: 120px;
     display: inline-block;
     overflow: clip;
     text-overflow: ellipsis;
@@ -145,7 +161,7 @@ form[name="create"] fieldset[name="imageUpload"] label
 
 form[name="create"] fieldset[name="imageUpload"] button
 {
-    background-color: rgb(94, 135, 248);
+    background-color: rgb(154, 206, 246);
 }
 
 form[name="create"] fieldset[name="formControl"] input[type="reset"]
@@ -176,6 +192,10 @@ form[name="edit"]
     overflow-y: scroll;
     overflow-x: auto;
     white-space: nowrap;
+    padding: 0px;
+    margin-top: 22px;
+    margin-bottom: 22px;
+    border: 2px solid black;
 }
 
 form[name="edit"] thead
@@ -186,7 +206,7 @@ form[name="edit"] thead
 
 form[name="edit"] th
 {
-    background-color: #5949e1;
+    background-color: #a89ff6;
     font-size: 1.1rem;
 }
 
@@ -215,11 +235,39 @@ label img
 }
 /* end table image styles*/
 
+/* Makes action button column sticky */
+form[name="edit"] thead
+{
+    z-index: 3;
+}
+
+thead th.actionButtons
+{
+    position: sticky;
+    z-index: 2;
+    right: 0;
+    padding: 0px;
+    margin: 0px;
+}
+
+tr td.actionButtons
+{
+    position:sticky;
+    right: 0;
+    background: aliceblue;
+}
+
+
+/* End action button column sticky styles */
+
+
 form table
 {
     width: 100%;
     max-width: 1200px;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-style: hidden;
+    border-spacing: 0;
     margin: auto;
 }
 
@@ -229,11 +277,26 @@ form thead th:nth-child(1)
     min-width: 85px;
 }
 
+form table td:nth-child(even):not(:last-child), form table th:nth-child(even):not(:last-child)
+{
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+}
+
+/* make border show up correctly for sticky action button column */
+form table td:last-child, form table th:last-child
+{
+    border-left: 2px solid black;
+}
+
 form table td, form table th
 {
-    border-right: 2px solid black;
-    border-left: 2px solid black;
     border-bottom: 1px solid gray;
+}
+
+form table th
+{
+    border-bottom: 2px solid black;
 }
 
 form table th, form table tr
@@ -251,15 +314,45 @@ form table input
 }
 
 /* table action buttons styles */
-table tbody td:last-child
+table button
 {
-    white-space: nowrap;
+    padding-left: 10px;
 }
 
-table button
+button
 {
     background: none;
     border: none;
+}
+
+table button:hover
+{
+    position: relative; /*must be relative for tooltip to work*/
+}
+
+table button:hover::after
+{
+    content: attr(tooltip); /* pulls from your custom attribute */
+    position: absolute;
+    background-color: #333;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 16px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 1000;
+    opacity: 1;
+  }
+
+table tbody td:last-child
+{
+    white-space: nowrap;
 }
 
 input:disabled, label img 
@@ -285,7 +378,7 @@ button[name="update"] img:hover
 button[name="cancelEdit"] img:hover
 {
     cursor: pointer;
-    background: rgb(20, 87, 222);
+    background: rgb(99, 148, 246);
     border-radius: 4px;
     box-shadow: 0 0 3px 3px rgb(12, 49, 231);
     transform: scale(1.1);
@@ -324,3 +417,24 @@ form[name="login"] button, form[name="logout"] button, form[name="resetDatabase"
     border: solid black 2px;
     text-align: center;
 }
+
+/* Status message styles */
+section[name="statusMessages"]
+{
+    max-height: 150px;
+    overflow-y: scroll;
+    border: 2px solid purple;
+    margin: auto;
+    max-width: 1200px;
+    font-size: 20px;
+    margin: 40px auto;
+}
+
+section[name="statusMessages"] span
+{
+    display: block;
+    font-size: 20px;
+    padding-top: 10px;
+}
+
+/* End status message styles */
