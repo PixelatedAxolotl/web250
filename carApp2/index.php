@@ -285,18 +285,20 @@
         if (isset($_SESSION['isLoggedIn']))
         {
             echo <<<GREETING
-                        <h3>Hi {$_SESSION['firstName']} {$_SESSION['lastName']}!</h3>
+                        <section >
+                            <h3>Hi {$_SESSION['firstName']} {$_SESSION['lastName']}!</h3>
                     GREETING;
 
             echo <<<USER_LOGOUT
-                        <form action="$action" method="POST" name="logout">
-                            <button type="submit" name="logout">Logout</button>
-                        </form>
-                        
-                        <form action="dbScripts/setupCarsDatabase.php" method="POST" name="resetDatabase" 
-                            onsubmit="return confirm('You sure about this buddy?');">
-                            <button type="submit" name="resetDatabase">Reset Database</button>
-                        </form>
+                            <form action="$action" method="POST" name="logout">
+                                <button type="submit" name="logout">Logout</button>
+                            </form>
+                            
+                            <form action="dbScripts/setupCarsDatabase.php" method="POST" name="resetDatabase" 
+                                onsubmit="return confirm('You sure about this buddy?');">
+                                <button type="submit" name="resetDatabase">Reset Database</button>
+                            </form>
+                        </section>
                     USER_LOGOUT;
         }
     ?>

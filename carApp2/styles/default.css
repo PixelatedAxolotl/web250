@@ -37,7 +37,7 @@ header h1
 
 header h2
 {
-    margin-top: 0px;
+    margin: auto;
     font-size: 23px;
     white-space: nowrap;
 }
@@ -45,12 +45,18 @@ header h2
 h2, h3, footer
 {
     text-align: center;
+    margin: auto;
+}
+
+h3
+{
+    margin: 0px;
 }
 
 main
 {
     max-width: 1300px;
-    margin: 50px auto;
+    margin: 30px auto;
 }
 
 a, a:visited
@@ -65,12 +71,24 @@ a:hover
 
 
 /* Add car form styles*/
+main section:nth-child(2)
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: unset;
+}
+
 form[name="create"]
 {
-    max-width: 1000px;
-    margin: 50px auto;
+    border: 2px solid green;
+    padding: 10px;
+    padding-left: 80px;
+    padding-top: 20px;
+    
+    max-width: 950px;
+    margin: auto;
     display: grid;
-    gap: 20px;
+    grid-row-gap: 20px;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
@@ -97,8 +115,8 @@ form[name="create"] fieldset[name="imageUpload"]
 form[name="create"] > label, 
 form[name="create"] fieldset
 {
+    max-width: 230px;
 
-    margin: auto 50px auto 70px;
 }
 
 form[name="create"] fieldset[name="formControl"]
@@ -411,18 +429,33 @@ button[name="update"], button[name="cancelEdit"]
 /* end table action buttons styles */
 
 /*login form + logout button styles*/
+main section:first-child
+{
+    display: flex;
+    justify-content: space-evenly;
+    max-width: 400px;
+    margin: auto;
+}
+
+main section:nth-child(2) h2
+{
+    margin-top: 30px;
+}
+
 form[name="logout"], form[name="login"], form[name="resetDatabase"] 
 {
     text-align: center;
     display: inline-block;
 
 }
+
 form[name="login"] button, form[name="logout"] button, form[name="resetDatabase"] button
 {
-    background-color: rgb(222, 67, 67);
-    font-size: 0.8rem;
+    background-color: rgb(174, 158, 255);
+    font-size: 15px;
     height: fit-content;
     border: solid black 2px;
+    border-radius: 3px;
     text-align: center;
 }
 
