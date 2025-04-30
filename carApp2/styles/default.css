@@ -437,9 +437,11 @@ main section:first-child
     margin: auto;
 }
 
-main section:nth-child(2) h2
+main section:nth-child(2) h4
 {
+    margin: 0px;
     margin-top: 30px;
+    
 }
 
 form[name="logout"], form[name="login"], form[name="resetDatabase"] 

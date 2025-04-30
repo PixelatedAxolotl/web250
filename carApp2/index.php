@@ -324,7 +324,7 @@
             {
 
         ?>
-            <h2>Add A Car:</h2>
+            <h4>Add A Car:</h4>
             <form action="<?php echo $action?>" method="POST" name="create" enctype="multipart/form-data">
                 <label for="vin">
                     VIN
