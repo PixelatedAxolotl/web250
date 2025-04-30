@@ -192,7 +192,7 @@ form[name="create"] fieldset[name="imageUpload"] button
 
 form[name="create"] fieldset[name="formControl"] input[type="reset"]
 {
-    background-color: rgb(222, 67, 67);
+    background-color: rgb(255, 142, 142);
 }
 
 form[name="create"] fieldset[name="imageUpload"] label,
@@ -232,7 +232,7 @@ form[name="edit"] thead
 
 form[name="edit"] th
 {
-    background-color: #a89ff6;
+    background-color: #aac7ff;;
     font-size: 1.1rem;
 }
 
@@ -441,7 +441,7 @@ main section:nth-child(2) h4
 {
     margin: 0px;
     margin-top: 30px;
-    
+
 }
 
 form[name="logout"], form[name="login"], form[name="resetDatabase"] 
