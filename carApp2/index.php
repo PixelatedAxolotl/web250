@@ -311,7 +311,7 @@
                     <label for="username">Username:</label>
                     <input id="username" name="username" type="text" placeholder="Enter your Username" required>
                     <label for="password">Password:</label>
-                    <input id="password" name="password" type="text" placeholder="Enter your Password" required>
+                    <input id="password" name="password" type="password" placeholder="Enter your Password" required>
                     <button type="submit" name="login">Login</button>
                 </form>
             LOGIN_FORM;
