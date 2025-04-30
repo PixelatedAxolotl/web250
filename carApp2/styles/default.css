@@ -239,6 +239,7 @@ form[name="edit"] th
 form[name="edit"] input
 {
     text-align: center;
+    max-width: 170px;
 }
 
 /*table images*/
