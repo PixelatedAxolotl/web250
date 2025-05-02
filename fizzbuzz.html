@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="style/default.css">
+    <link rel="stylesheet" type="text/css" href="style/fizzbuzz.css">
+    <title>LK Stewart's Lucky Sandfish | WEB250 | HOME</title>
+
+    <!--     
+        Structure of HTML5 semantic layout swiped from PHP Fiddle and modified
+        to include validing code and validation buttons and some other tweaks
+
+        +===================================+
+        |               header              |
+        +===================================+
+        |                 nav               |
+        +=====================+=============+
+        |                     |             |
+        |       section       |    aside    |
+        |
+        +=====================+=============+    
+        |          footer/tagline           |
+        |         validation buttons        |
+        +===================================+
+        
+        The code from Internet
+        
+        http://phpfiddle.org        
+    -->
+
+    <!--Use JS to add header and footer fragments-->
+    <script src="scripts/load-head-n-foot.js"></script>
+    <script src="scripts/fizzbuzz.js"></script>
+
+    <!--Required validation script-->
+    <script src="https://lint.page/kit/880bd5.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header>
+        <!--Content loaded in with load-head-n-foot.js-->
+    </header>
+
+    <main>
+
+        <form method="POST">
+            <!-- Collect name -->
+            <fieldset>
+                <legend>Please enter your name</legend>
+                <label for="first-name">First Name
+                    <input id="first-name" placeholder="First Name" required>
+                </label>
+
+                <label for="middle-initial">Middle Initial
+                    <input id="middle-initial" placeholder="MI" maxlength="1">
+                </label>
+                <label for="last-name">Last Name
+                    <input id="last-name" placeholder="Last Name">
+                </label>
+            </fieldset>
+        
+            <!-- Fizz Buzz Input -->
+            <fieldset>
+                <legend>Please enter some words and a divisor for each word</legend>
+            
+                <label for="word1">First Word
+                    <input id="word1" type="text" value="Sand" required>
+                </label>
+
+                <label for="divisor1">First Number
+                    <input id="divisor1" type="number" value="2" required>
+                </label>
+
+                <label for="word2">Second Word
+                    <input id="word2" type="text" value="Lizard" required>
+                </label>
+
+                <label for="divisor2">Second Number
+                    <input id="divisor2" type="number" value="5" required>
+                </label>
+
+                <label for="word3">Third Word
+                    <input id="word3" type="text" value="Fish" required>
+                </label>
+
+                <label for="divisor3">Third Number
+                    <input id="divisor3" type="number" value="11" required>
+                </label>
+
+                <label for="main-word">Default Word
+                    <input id="main-word" type="text" value="Fizz">
+                </label>
+
+                <label for="count-limit">Total Word Limit
+                    <input id="count-limit" type="number" value="111" required>
+                </label>
+            </fieldset>
+            <button id="fizzbuzzSubmit" type="submit">Generate Results</button>
+            <button id="reset" type="reset">Reset</button>
+        </form>
+        
+        <section>
+            <ul>
+        
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <!--Content loaded in with load-head-n-foot.js-->
+    </footer>
+</body>
+
+</html>

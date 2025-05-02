@@ -1,0 +1,114 @@
+button, button:hover
+{
+    text-decoration: none;
+    background: none;
+    color: rgb(217, 255, 247);
+    box-shadow: 0px 1px 12px 2px #5949e1, 0px 6px 6px 0px #443a9c;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    padding: 10px;
+    margin: auto;
+    width: 200px;
+}
+
+form
+{
+    width: 90%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    column-gap: 80px;
+}
+
+form fieldset
+{
+    display: flex;
+    max-width: 900px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-between;
+    padding: 15px;
+    padding-top: 25px;
+    margin-bottom: 20px;
+    grid-column: 1 / -1;
+}
+
+form fieldset:first-of-type input
+{
+    width: 120px;
+}
+
+form fieldset:first-of-type #middle-initial
+{
+    width: 20px;
+}
+
+form fieldset:last-of-type
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    max-width: 850px;
+}
+
+form fieldset:last-of-type label
+{
+    display: flex;
+    justify-content: space-between;
+    white-space: nowrap;
+}
+
+form fieldset:last-of-type label:nth-child(2n)
+{
+    margin-right: 30px;
+}
+
+form fieldset:last-of-type label:nth-child(2n + 1)
+{
+    margin-left: 60px;
+}
+
+form fieldset:last-of-type input[type='number']
+{
+    width: 80px;
+}
+
+main section ul
+{
+    column-count: 3;
+    column-width: auto;
+    column-gap: 50px;
+    max-width: 800px;
+    min-height: 200px;
+    align-self: center;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    white-space: nowrap;
+    padding-left: 80px;
+    padding-bottom: 10px;
+    margin: 0;
+
+}
+
+main section ul li
+{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 0px;
+}
+
+section:last-child
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 950px;
+}
+
+h3
+{
+    align-self: center;
+    margin-top: 60px;
+}
