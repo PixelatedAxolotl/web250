@@ -65,7 +65,11 @@ document.addEventListener("DOMContentLoaded", function(event)
                 list.appendChild(listItem);
             } // End of for loop
         }
-
     }); // 
+
+    document.querySelector(`button[type="reset"]`).addEventListener('click', function(event)
+    {
+        document.querySelector('main section ul').innerHTML = "";
+    });
 
 }); // End of DOMContentLoaded event
