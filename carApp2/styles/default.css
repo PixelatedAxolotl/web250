@@ -15,7 +15,7 @@ body
 {
 
     font-family:Arial, Helvetica, sans-serif;
-    font-size: 25px;
+    font-size: 20px;
     color: #0F0E06;
     background-color: #D2C39D;
     background: linear-gradient(0deg, rgb(255, 253, 214) 72%, rgb(246, 237, 194) 82%, rgb(236, 220, 172) 87%, rgb(212, 172, 112) 92%, rgb(217, 185, 129) 95%);
@@ -232,7 +232,7 @@ form[name="edit"] thead
 
 form[name="edit"] th
 {
-    background-color: #aac7ff;;
+    background-color: #aac7ff;
     font-size: 1.1rem;
 }
 

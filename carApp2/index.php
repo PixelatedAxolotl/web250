@@ -99,31 +99,58 @@
                 uploadImage($trimmedInputFields, $_FILES['image'], $mysqli);
         
                 //Build a SQL Query using the values from above
-                //surround each field in single quotes for query insertion
-                $formattedInputFields = array_map(fn($value) => "'" . addslashes($value) . "'", $trimmedInputFields);
-                $query = "INSERT INTO inventory
-                            (Vin, Make, Model, Year, Asking_price, Purchase_price, Purchase_date, Ext_color,
-                             Trim, Int_color, Mileage, Transmission)
-                          VALUES 
-                          (";
-                $query .= implode(', ', $formattedInputFields);
-                $query .= ")";
+                $query = "INSERT INTO inventory SET
+                Vin = ?,
+                Make = ?,  
+                Model = ?,
+                Year = ?,   
+                Asking_price = ?,
+                Sale_price = ?,
+                Purchase_price = ?,
+                Ext_color = ?,
+                Trim = ?,
+                Int_color = ?,
+                Mileage = ?,
+                Transmission = ?";
+
+                $preparedQuery = $mysqli->prepare($query);
+                $preparedQuery->bind_param( "sssidddsssis",
+                                            $trimmedInputFields['vin'], 
+                                            $trimmedInputFields['make'],
+                                            $trimmedInputFields['model'],
+                                            $trimmedInputFields['year'],
+                                            $trimmedInputFields['askingPrice'],
+                                            $trimmedInputFields['salePrice'],
+                                            $trimmedInputFields['purchasePrice'],
+                                            $trimmedInputFields['exteriorColor'],
+                                            $trimmedInputFields['trim'],
+                                            $trimmedInputFields['interiorColor'],
+                                            $trimmedInputFields['mileage'],
+                                            $trimmedInputFields['transmission'],
+                );
+
+
+                /* Try to insert the updated data into the database */
+                if ($preparedQuery->execute())
+                {
+                    /* Try to insert the new car into the database */
+                    if ($mysqli->affected_rows > 0 ) 
+                    {                  
+                        // will be printed above add new car form
+                        $_SESSION['statusMessage'][] = ['text'  => "Successfully added {$trimmedInputFields['make']} {$trimmedInputFields['model']} with the VIN $vin",
+                        'color' => "Green"];
+                    }
+                    else
+                    {
+                        $_SESSION['statusMessage'][] = ['text'  => "Error adding {$trimmedInputFields['make']} {$trimmedInputFields['model']} with the VIN $vin",
+                        'color' => "Red"];
+                    }
+                }
 
                 // DEBUG: Print the query to the browser so you can see it
-                echo "</br>$query</br>";
+                //echo "</br>$query</br>";
 
-                /* Try to insert the new car into the database */
-                if ($result = $mysqli->query($query)) 
-                {                  
-                    // will be printed above add new car form
-                    $_SESSION['statusMessage'][] = ['text'  => "Successfully added {$trimmedInputFields['make']} {$trimmedInputFields['model']} with the VIN $vin",
-                    'color' => "Green"];
-                }
-                else
-                {
-                    $_SESSION['statusMessage'][] = ['text'  => "Error adding {$trimmedInputFields['make']} {$trimmedInputFields['model']} with the VIN $vin",
-                    'color' => "Red"];
-                }
+
             } // end vinExist else
         } // end POST = create if 
         elseif (isset($_POST['update']))
@@ -237,7 +264,13 @@
                 {
                     $_SESSION['isLoggedIn'] = true;
                     $userInformationArray = mysqli_fetch_assoc($result);
-                    [$_SESSION['firstName'], $_SESSION['lastName']] = [$userInformationArray['firstName'], $userInformationArray[ 'lastName']];
+                    $_SESSION['loginMessage'] = ['text' => "Welcome " . $userInformationArray['firstName'] . " " . $userInformationArray[ 'lastName'] . "!",
+                                                   'color' => "#2e74ff"];
+                }
+                else
+                {
+                    $_SESSION['loginMessage'] = ['text' => "Incorrect Username or Password",
+                                                   'color' => "Red"];
                 }
             } 
             catch (mysqli_sql_exception $e) 
@@ -281,27 +314,30 @@
     </header>
 
 <main>
-    <?php
-        if (isset($_SESSION['isLoggedIn']))
-        {
-            echo <<<GREETING
-                        <section >
-                            <h3>Hi {$_SESSION['firstName']} {$_SESSION['lastName']}!</h3>
-                    GREETING;
+    <section >
+        <?php
+            if (isset($_SESSION['loginMessage']))
+            {
+                echo <<<GREETING
 
-            echo <<<USER_LOGOUT
-                            <form action="$action" method="POST" name="logout">
-                                <button type="submit" name="logout">Logout</button>
-                            </form>
-                            
-                            <form action="dbScripts/setupCarsDatabase.php" method="POST" name="resetDatabase" 
-                                onsubmit="return confirm('You sure about this buddy?');">
-                                <button type="submit" name="resetDatabase">Reset Database</button>
-                            </form>
-                        </section>
-                    USER_LOGOUT;
-        }
-    ?>
+                                <h3 style="color: {$_SESSION['loginMessage']['color']};">{$_SESSION['loginMessage']['text']}</h3>
+                        GREETING;
+            }
+            if (isset($_SESSION['isLoggedIn']))
+            {
+                echo <<<USER_LOGOUT
+                                <form action="$action" method="POST" name="logout">
+                                    <button type="submit" name="logout">Logout</button>
+                                </form>
+                                
+                                <form action="dbScripts/setupCarsDatabase.php" method="POST" name="resetDatabase" 
+                                    onsubmit="return confirm('You sure about this buddy?');">
+                                    <button type="submit" name="resetDatabase">Reset Database</button>
+                                </form>
+                        USER_LOGOUT;
+            }
+        ?>
+    </section>
     
     <?php
       if (!isset($_SESSION['isLoggedIn']))
@@ -340,12 +376,39 @@
                     Model
                     <input id="model" name="model" type="text" placeholder="Car Model" autocomplete="off" required>
                 </label>
-
+                
                 <label for="year">
                     Year
                     <input id="year" name="year" type="text" pattern="^(19|20)\d{2}$" placeholder="Year" autocomplete="off" required
                         oninvalid="this.setCustomValidity('Please enter a valid year between 1900 and 2099')"
                         oninput="this.setCustomValidity('')">
+                </label>
+
+                <label for="transmission">
+                    Transmission
+                    <input id="transmission" name="transmission" type="text" placeholder="Transmission" autocomplete="off" required>
+                </label>
+
+                <label for="mileage">
+                    Mileage
+                    <input id="mileage" name="mileage" type="text" pattern="^\d+$" placeholder="Mileage" autocomplete="off" required
+                        oninvalid="this.setCustomValidity('Please enter a positive whole number.')"
+                        oninput="this.setCustomValidity('')">
+                </label>
+                
+                <label for="interiorColor">
+                    Interior Color
+                    <input id="interiorColor" name="interiorColor" type="text" placeholder="Interior Color" autocomplete="off" required>
+                </label>
+                                
+                <label for="exteriorColor">
+                    Exterior Color
+                    <input id="exteriorColor" name="exteriorColor" type="text" placeholder="Exterior Color" autocomplete="off" required>
+                </label>
+
+                <label for="trim">
+                    Trim
+                    <input id="trim" name="trim" type="text" placeholder="Trim" autocomplete="off" required>
                 </label>
 
                 <label for="askingPrice">
@@ -365,33 +428,6 @@
                 <label for="purchaseDate">
                     Purchase Date
                     <input id="purchaseDate" name="purchaseDate" type="date" autocomplete="off" required>
-                </label>
-                
-                <label for="exteriorColor">
-                    Exterior Color
-                    <input id="exteriorColor" name="exteriorColor" type="text" placeholder="Exterior Color" autocomplete="off" required>
-                </label>
-                                
-                <label for="trim">
-                    Trim
-                    <input id="trim" name="trim" type="text" placeholder="Trim" autocomplete="off" required>
-                </label>
-
-                <label for="interiorColor">
-                    Interior Color
-                    <input id="interiorColor" name="interiorColor" type="text" placeholder="Interior Color" autocomplete="off" required>
-                </label>
-
-                <label for="mileage">
-                    Mileage
-                    <input id="mileage" name="mileage" type="text" pattern="^\d+$" placeholder="Mileage" autocomplete="off" required
-                        oninvalid="this.setCustomValidity('Please enter a positive whole number.')"
-                        oninput="this.setCustomValidity('')">
-                </label>
-                
-                <label for="transmission">
-                    Transmission
-                    <input id="transmission" name="transmission" type="text" placeholder="Transmission" autocomplete="off" required>
                 </label>
 
                 <fieldset name="imageUpload">
