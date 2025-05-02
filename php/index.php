@@ -60,6 +60,7 @@
             <li><a href="?p=introduction">Introduction</a></li>
             <li><a href="?p=contract">Contract</a></li>
             <li><a href="https://pixelatedaxolotl.github.io/web250/">Static Version</a></li>
+            <li><a href="https://pixelatedaxolotl.github.io/web250/fizzbuzz.html">Fizz Buzz</a></li>
             <li>
                 <a href="#">Outside Sites</a>
                 <ul>
