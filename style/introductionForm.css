@@ -1,0 +1,167 @@
+h2
+{
+    margin-bottom: 50px;
+}
+
+button, 
+button:hover,
+form label[for="image"]
+{
+    cursor: pointer;
+    text-decoration: none;
+    background: none;
+    color: rgb(217, 255, 247);
+    box-shadow: 0px 1px 12px 2px #5949e1, 0px 6px 6px 0px #443a9c;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    margin: auto;
+    width: 200px;
+    height: 40px;
+}
+
+form
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px;
+    row-gap: 25px;
+    align-items: center;
+}
+
+textarea
+{
+    resize: vertical;
+    min-height: 80px;
+}
+
+form fieldset[name='imageUpload']
+{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+form button[name='clearFile']
+{
+    width: 100px;
+}
+
+form fieldset[name='imageUpload'] label:first-of-type
+{
+    margin-left: 35px;
+}
+
+form fieldset[name='imageUpload'] button:first-of-type
+{
+    margin-right: 50px;
+}
+
+form fieldset[name='imageUpload'],
+form fieldset[name='courseList'],
+form > label:last-of-type,
+form > button:last-of-type
+{
+    grid-column: 1 / -1;
+}
+
+form label
+{
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    justify-content: space-between;
+}
+
+form > label:first-of-type
+{
+    width: 250px;
+}
+
+form > label:last-of-type
+{
+    text-align: center;
+}
+
+form > label:last-of-type textarea
+{
+    width: 757px;
+    height: 100px;
+    max-width: 750px;
+    align-self: center;
+}
+
+form textarea:not([name="courses[][name]"])
+{
+    min-height: 60px;
+}
+
+form fieldset[name='courseList']
+{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+
+}
+
+/* restyle file upload*/
+form input[type="file"]
+{
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+form label[for="image"]
+{
+    max-width: 300px;
+    display: inline-block;
+    overflow: clip;
+    text-overflow: ellipsis;
+    align-content: center;
+    text-align: center;
+    width: unset;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+form #addCourseButton
+{
+    margin: auto;
+}
+
+form button[name='removeCourse']
+{
+    margin: unset;
+    width: 130px;
+    margin-top: 10px;
+}
+
+form fieldset[name='courseList'] div.course
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+}
+
+form fieldset[name='courseList'] div.course input
+{
+    width: 250px;
+    
+}
+
+form fieldset[name='courseList'] label
+{
+    align-self: flex-start;
+    width: min-content;
+}
+
+form textarea[name="courses[][name]"]
+{
+    resize: none;
+    min-height: 35px;
+}

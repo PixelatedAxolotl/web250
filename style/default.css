@@ -192,6 +192,7 @@ figure img
     box-shadow: 0px 1px 32px 2px #5949e1, 0px 6px 6px 0px #443a9c;
     border-radius: 5px;
     margin-bottom: 15px;
+    width: 320px;
 }
 
 figure > p

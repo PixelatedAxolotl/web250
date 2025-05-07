@@ -1,0 +1,61 @@
+<form action="index.php?ph=introductionTemplate" method="POST" enctype="multipart/form-data">
+    <label for="fullName">
+        Please Enter Your Name
+        <input id="fullName" name="fullName" type="text">
+    </label>
+
+    <fieldset name="imageUpload">
+        <legend>Add An Image For Your Introduction</legend>
+        <label for="image">Upload Image</label>
+        <input type="file" name="imageFile" id="image">
+        <button type="button" name="clearFile">Clear File</button>
+        <label for="imageCaption">
+            Caption (and source if necessary)
+            <textarea id="imageCaption" name="imageCaption" rows="5" cols="40"></textarea>
+        </label>
+    </fieldset>
+    <label for="personalBackground">
+        Personal Background
+        <textarea id="personalBackground" name="personalBackground" rows="5" cols="40"></textarea>
+    </label>
+    
+    <label for="professionalBackground">
+        Professional Background
+        <textarea id="professionalBackground" name="professionalBackground" rows="5" cols="40"></textarea>
+    </label>
+    
+    <label for="academicBackground">
+        Academic Background
+        <textarea id="academicBackground" name="academicBackground" rows="5" cols="40"></textarea>
+    </label>
+    
+    <label for="subjectBackground">
+        Subject Background
+        <textarea id="subjectBackground" name="subjectBackground" rows="5" cols="40"></textarea>
+    </label>
+    
+    <label for="platform">
+        Primary Computer Platform
+        <textarea id="platform" name="platform" rows="5" cols="40"></textarea>
+    </label>
+    
+    <label for="funFact">
+        Fun or Interesting Fact:
+        <textarea id="funFact" name="funFact" rows="5" cols="40"></textarea>
+    </label>
+
+    <fieldset name="courseList">
+        <legend>What Courses Are You Taking?</legend> 
+        <div id="courseList">
+            <!-- Dynamic course items will appear here -->
+        </div>
+        <button id="addCourseButton" type="button">Add Another Course</button>
+    </fieldset>
+    
+    <label for="extraInformation">
+        Share any additional information you would like:
+        <textarea id="extraInformation" name="extraInformation" rows="5" cols="40"></textarea>
+    </label>
+
+    <button id="submitForm" type="submit">Create Page</button>
+</form>
