@@ -1,0 +1,457 @@
+/* COLORS */
+:root
+{
+    --main-background-color: #05170e;
+    --main-font-color: #f3f6ec;
+    --link-accent-color:  #80a6ef;
+    --border-purple: #5949e1; 
+    --accent-color: #5c678a;
+}
+
+/*** General Styles ***/
+body
+{
+    font-family: 'lucida console';
+    font-size: 1.12em;
+    color: var(--main-font-color);
+    background-color: var(--main-background-color);
+    margin: auto;
+}
+
+main, header, footer
+{
+    max-width: 1100px;
+    margin: auto;
+}
+
+main
+{
+
+    margin: 40px auto;
+    padding: 40px;
+    box-shadow: 0px 1px 11px 1px #5949e1;
+    border-radius: 5px;
+}
+
+main p
+{
+    padding: 20px 40px;
+}
+
+h1, h2, h3, h4, footer
+{
+    text-align: center;
+}
+
+a, a:visited
+{
+    text-decoration: none;
+    color: var(--link-accent-color);
+}
+
+ul
+{
+    list-style: none;
+}
+
+nav > ul
+{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 5px auto;
+    list-style: none;
+    white-space: nowrap;
+    justify-content: center;
+    padding: 0;
+    max-height: 10px;
+    padding-bottom: 12px;
+}
+
+nav ul li
+{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+button,
+input[type="submit"],
+input[type="reset"],
+form label[for="image"]
+{
+    cursor: pointer;
+    color: var(--main-font-color);
+    background-color: var(--accent-color);
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    margin: auto;
+    width: 200px;
+    height: 40px;
+}
+
+
+/* Radio Button Styles */
+input[type="radio"] 
+{
+    -webkit-appearance: none;
+    /* Remove most all native input styles */
+    appearance: none;
+    background-color: var(--form-background);
+
+    margin: 0;
+    margin-right: 10px;
+    font: inherit;
+    color: currentColor;
+    width: 1.15em;
+    height: 1.15em;
+    border: 0.15em solid currentColor;
+    border-radius: 50%;
+    transform: translateY(-0.075em);
+    display: grid;
+    place-content: center;
+}
+
+input[type="radio"]::before 
+{
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--link-accent-color);
+}
+
+input[type="radio"]:checked::before 
+{
+    transform: scale(1);
+}
+/* End radio Button Styles */
+
+/*** End of General Styles ***/
+
+/*** Login Page Styles ***/
+
+form[name="login"],
+form[name="register"],
+form[name="toLoginPage"]
+{
+    text-align: center;
+    display: grid;
+    grid-template-columns: 300px;
+    row-gap: 15px;
+    padding: 20px 0px;
+    width: 300px;
+    margin: auto;
+}
+
+form[name="login"] label,
+form[name="register"] label,
+form[name="toLoginPage"] label
+{
+    margin-right: 20px;
+}
+
+
+/*** End of Login Page Styles ***/
+
+
+
+
+
+
+
+
+/*** collection page styles ***/
+
+    /** Create form styles **/
+    form[name="create"]
+    {
+        display: grid;
+        grid-template-columns: 190px 250px 220px 260px;
+        column-gap: 10px;
+        row-gap: 25px;
+        align-items: center;
+        margin: auto;
+        max-width: fit-content;
+    }
+
+    form[name="create"] fieldset
+    {
+        grid-column: 1 / -1;
+    }
+
+    form label
+    {
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+        white-space: nowrap;
+    }
+
+    form[name="create"] label[for="notes"]
+    {
+        flex-direction: column;
+    }
+
+    form[name="create"] label input
+    {
+        margin-left: 10px;
+        max-width: 100px;
+    }
+
+    input[name="year"],
+    input[name="quantity"],
+    input[name="perforation"],
+    input[name="scottNumber"]
+    {
+        width: 50px;
+    }
+
+    form fieldset[name="stampStatus"]
+    {
+        max-width: 200px;
+        justify-content: start;
+        grid-column: 4;
+        grid-row: 1 / 3;
+
+    }
+
+    fieldset[name="stampStatus"] legend
+    {
+        margin-bottom: 5px;
+    }
+
+    fieldset[name="stampStatus"] label
+    {
+        justify-content: start;
+        margin-left: 5px;
+    }
+
+
+    /* File upload restyle styles */
+
+    form input[type="file"]
+    {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+    }
+
+    form label[for="image"]
+    {
+        max-width: 300px;
+        display: inline-block;
+        overflow: clip;
+        text-overflow: ellipsis;
+        align-content: center;
+        text-align: center;
+        width: unset;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+
+    /* End file upload restyle styles */
+
+      
+
+    /** End create form styles **/
+
+    
+    /* Status message styles */
+    section[id="statusMessages"]
+    {
+        max-height: 150px;
+        overflow-y: scroll;
+        border: 2px solid purple;
+        margin: auto;
+        max-width: 1200px;
+        font-size: 20px;
+        margin: 40px auto;
+    }
+
+    section[id="statusMessages"] span
+    {
+        display: block;
+        font-size: 20px;
+        padding-top: 10px;
+        text-align: center;
+    }
+
+    /* End status message styles */
+
+
+    /* Outer form styles */
+    form[name="edit"]
+    {
+        max-width: 1200px;
+        text-align: center;
+        margin: auto;
+        max-height: 500px;
+        overflow-y: scroll;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 0px;
+        margin-top: 22px;
+        margin-bottom: 22px;
+        border: 2px solid black;
+    }
+
+    form[name="edit"] thead
+    {
+        position: sticky;
+        top: 0;
+    }
+
+    form[name="edit"] th
+    {
+        background-color: #aac7ff;
+        font-size: 1.1rem;
+    }
+
+    form[name="edit"] input
+    {
+        text-align: center;
+        max-width: 170px;
+    }
+
+/* Table styles */
+    form table
+    {
+        width: 100%;
+        max-width: 1200px;
+        border-collapse: separate;
+        border-style: hidden;
+        border-spacing: 0;
+        margin: auto;
+    }
+
+    form table td:nth-child(even):not(:last-child), form table th:nth-child(even):not(:last-child)
+    {
+        border-left: 2px solid var(--border-purple);
+        border-right: 2px solid var(--border-purple);
+    }
+
+    form table td, form table th
+    {
+        border-bottom: 1px solid gray;
+    }
+
+    form table th
+    {
+        border-bottom: 2px solid var(--border-purple);
+    }
+
+    form table th, form table tr
+    {
+        width: 20px;
+    }
+
+    form table tr label
+    {
+        justify-content: center;
+    }
+
+    /* Input field styles */
+    form table input
+    {
+        max-width: fit-content;
+        color: whitesmoke;
+        font-size: 1rem;
+        background: none;
+        border: solid blue 1.5px;
+    }
+
+    input:disabled, label img 
+    {
+        background-color: transparent;
+        border: none;
+        color: rgb(251, 237, 237);
+        cursor: not-allowed;
+    }
+    /* End input field styles */
+
+
+    /*table image styles*/
+        td:first-child img
+        {
+            height: 110px;
+            max-width: 140px;
+            vertical-align: bottom;
+        }
+
+        table label input[type="file"]
+        {
+            display: none;
+        }
+
+        label img
+        {
+            cursor:pointer;
+            object-fit: contain;
+        }
+    /* end table image styles*/
+
+    /* Action button styles */
+        form[name="edit"] button
+        {
+            padding-left: 10px;
+            width: unset;
+        }
+        form[name="edit"] button:hover
+        {
+           
+            box-shadow: 0 0 3px 3px rgb(0, 213, 153);
+            transform: scale(1.1);
+            transition: 0.25s;
+        }
+
+        /* visibility is toggled with js in actionButtons.js */
+        button[name="update"], button[name="cancelEdit"]
+        {
+            display: none;
+        }
+
+
+    /* End action button styles */
+
+
+
+/* Make action button column sticky */
+    form[name="edit"] thead
+    {
+        z-index: 3;
+    }
+
+    thead th.actionButtons
+    {
+        position: sticky;
+        z-index: 2;
+        right: 0;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    tr td.actionButtons
+    {
+        position:sticky;
+        right: 0;
+        background: aliceblue;
+    }
+
+    /* make border show up correctly for sticky action button column */
+        form table td:last-child, form table th:last-child
+        {
+            border-left: 2px solid var(--border-purple);
+        }
+
+/* End action button column sticky styles */
+
+
+
+
+/*** End collection table page styles ***/
