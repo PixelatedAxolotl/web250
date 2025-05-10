@@ -112,6 +112,11 @@ form[name="create"] fieldset[name="imageUpload"]
     margin: 0px;
 }
 
+fieldset[name="imageUpload"] button[name="clearFile"]
+{
+    display: none;
+}
+
 form[name="create"] > label, 
 form[name="create"] fieldset
 {

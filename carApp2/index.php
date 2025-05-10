@@ -665,16 +665,20 @@ $mysqli->close(); // Close db object at end of PHP code
                 }); // end cancel button listener
             }); // end edit button foreach
 
-            document.querySelector("button[name='clearFile']").addEventListener('click', function(event)
+            const clearFileButton = document.querySelector("button[name='clearFile']");
+            
+            clearFileButton.addEventListener('click', function(event)
             {
                 document.querySelector("input[name='image']").value = '';
                 document.querySelector("label[for=image]").innerHTML = 'Image (Optional)';
+                clearFileButton.setAttribute("style", "display: none");
             });
 
             // replace label text with selected filename when adding new car
             document.querySelector("#image").addEventListener('change', function(event)
             {
                 document.querySelector("label[for=image]").innerHTML = event.target.value.split('\\').pop();
+                clearFileButton.setAttribute("style", "display: inline-block;");
             });
 
             document.querySelector("button[tooltip]").show();
