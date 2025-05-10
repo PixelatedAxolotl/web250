@@ -136,8 +136,8 @@
                     
                     if ($result = $mysqli->query($query)) 
                     {
-                        //echo "<p>Query Result: $result</P>\n";
-                        //echo "<p>You have successfully entered $targetPath into the database.</P>\n";
+                        $statusMessage = "$make $model with the Vin $vin has been successfully updated";
+                        $textColor = "Green";
                     }
                     else
                     {
@@ -184,15 +184,13 @@
             /* Try to query the database */
             $result =  $mysqli->query($query);
 
-            if ($result > 0)
+            if ($mysqli->affected_rows > 0)
             {
-               
                 $statusMessage = "The vehicle with Vin $vin has been deleted.";
                 $textColor = "Blue";
             }
             else
             {
-
                 $statusMessage = "Sorry, a vehicle with Vin of $vin cannot be found.";
                 $textColor = "Red";
             }
@@ -223,17 +221,17 @@
 
     <h2>Welcome to Lucky Sandfish's Used Car Lot!</h2>
     <section>
-        <h2>Add A Car:</h2>
+        <h3>Add A Car:</h3>
         <?php
             if ($statusMessage)
             {
-                echo "<h3 style=\"color:$textColor;\">$statusMessage</h3>";
+                echo "<h4 style=\"color:$textColor;\">$statusMessage</h4>";
             }
         ?>
         
         <form action="<?php echo $action?>" method="POST" name="create" enctype="multipart/form-data">
             <label for="vin">
-                Vin
+                VIN
                 <input id="vin" name="vin" type="text" required>
             </label>
 
@@ -257,9 +255,9 @@
 
             <fieldset name="imageUpload">
                 <legend>Image (Optional)</legend>
-                <label for="image">Upload Image</label>
+                <label for="image">Upload</label>
                 <input type="file" name="image" id="image">
-                <button type="button" name="clearFile">Clear File</button>
+                <button type="button" name="clearFile">Cancel</button>
             </fieldset>
 	        
             <fieldset name="formControl">
@@ -337,13 +335,11 @@ while ($resultArray = mysqli_fetch_assoc($result))
                 </td>
 
                 <td>
-                    <button name="toggleEdit" type="button"><img src="images/editIcon.svg" alt="Edit Car Information"></button>
-                    <button name="cancelEdit" type="reset"><img src="images/cancelIcon.svg" alt="Cancel Edit"></button>
+                    <button name="toggleEdit" tooltip="Edit" type="button"><img tooltip="Edit Car Data" src="images/editIcon.svg" alt="Edit Car Information"></button>
+                    <button formaction="?action=update&vin=$resultArray[Vin]" name="update" tooltip="Submit" type="submit"><img src="images/checkmarkIcon.svg" alt="Update Info"></button>
 
-
-                    <button formaction="?action=update&vin=$resultArray[Vin]" name="update" type="submit"><img src="images/checkmarkIcon.svg" alt="Update Info"></button>
-
-                    <button formaction="?action=delete&vin=$resultArray[Vin]" name="delete" type="submit"><img src="images/deleteIcon.svg" alt="Delete Car"></button>
+                    <button name="cancelEdit" tooltip="Cancel Edit" type="reset"><img src="images/cancelIcon.svg" alt="Cancel Edit"></button>
+                    <button formaction="?action=delete&vin=$resultArray[Vin]" name="delete" tooltip="Delete Car" type="submit"><img src="images/deleteIcon.svg" alt="Delete Car"></button>
                 </td>
 
             </tr>

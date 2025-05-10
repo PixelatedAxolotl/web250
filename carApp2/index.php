@@ -432,9 +432,9 @@
 
                 <fieldset name="imageUpload">
                     <legend>Image (Optional)</legend>
-                    <label for="image">Upload Image</label>
+                    <label for="image">Upload</label>
                     <input type="file" name="image" id="image">
-                    <button type="button" name="clearFile">Clear File</button>
+                    <button type="button" name="clearFile">Cancel</button>
                 </fieldset>
                 
                 <fieldset name="formControl">
