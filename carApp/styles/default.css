@@ -86,7 +86,7 @@ form[name="create"] fieldset:not(fieldset[name="formControl"])
     align-content: baseline;
     white-space: nowrap;
     padding: 0px;
-    margin: 0px 30px;
+    margin: 0px;
 }
 
 form[name="create"] label input
@@ -94,6 +94,11 @@ form[name="create"] label input
     max-width: 220px;
     max-height: 40px;
     margin-left: 20px;
+}
+
+fieldset[name="imageUpload"] button[name="clearFile"]
+{
+    display: none;
 }
 
 /* restyle file upload*/
@@ -109,10 +114,11 @@ form[name="create"] input[type="file"]
 
 form[name="create"] label[for="image"]
 {
-    max-width: 120px;
+    max-width: 114.5px;
     display: inline-block;
     overflow: clip;
     text-overflow: ellipsis;
+    margin-right: 20px;
 }
 
 form[name="create"] label[for="image"], 
