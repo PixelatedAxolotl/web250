@@ -249,10 +249,16 @@ form[name="toLoginPage"] label
         text-overflow: ellipsis;
         align-content: center;
         text-align: center;
-        width: unset;
+        min-width: 200px;
         padding-left: 10px;
         padding-right: 10px;
     }
+
+    fieldset[name="imageUpload"] button[name="clearFile"]
+    {
+        display: none;
+    }
+
 
 
     /* End file upload restyle styles */

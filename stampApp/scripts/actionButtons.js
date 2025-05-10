@@ -45,4 +45,25 @@ document.addEventListener("DOMContentLoaded", function(event)
 
                 }); // end cancel button listener
             }); // end edit button foreach
+
+            const clearFileButton = document.querySelector("button[name='clearFile']");
+
+            clearFileButton.addEventListener('click', function(event)
+            {
+                document.querySelector("input[name='image']").value = '';
+                document.querySelector("label[for=image]").innerHTML = 'Upload';
+                clearFileButton.setAttribute("style", "display: none");
+                document.querySelector("label[for=image]").setAttribute("style", "display: inline-block;");
+
+            });
+
+            // replace label text with selected filename when adding new car
+            document.querySelector("#image").addEventListener('change', function(event)
+            {
+                document.querySelector("label[for=image]").innerHTML = event.target.value.split('\\').pop();
+                clearFileButton.setAttribute("style", "display: inline-block;");
+                document.querySelector("label[for=image]").setAttribute("style", "display: contents;");
+
+                
+            });
 });
