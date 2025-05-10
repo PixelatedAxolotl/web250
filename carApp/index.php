@@ -32,7 +32,7 @@
             if (mysqli_fetch_assoc($result) > 0) 
             {
                // will be printed above add new car form
-               $statusMessage = "A car with the Vin [$vin] is already in the database";
+               $statusMessage = "A car with the VIN [$vin] is already in the database";
                $textColor = "Red";
             }
             else
@@ -136,7 +136,7 @@
                     
                     if ($result = $mysqli->query($query)) 
                     {
-                        $statusMessage = "$make $model with the Vin $vin has been successfully updated";
+                        $statusMessage = "$make $model with the VIN $vin has been successfully updated";
                         $textColor = "Green";
                     }
                     else
@@ -162,12 +162,12 @@
             if ($result = $mysqli->query($query)) 
             {
                 //echo "<p>You have successfully updated the information for $make $model in the database.</P>";
-                $statusMessage = "$make $model with the Vin $vin has been successfully updated";
+                $statusMessage = "$make $model with the VIN $vin has been successfully updated";
                 $textColor = "Green";
             }
             else
             {
-                $statusMessage = "Error Updating: $make $model with the Vin $vin";
+                $statusMessage = "Error Updating: $make $model with the VIN $vin";
                 $textColor = "Red";
             }
 
@@ -186,7 +186,7 @@
 
             if ($mysqli->affected_rows > 0)
             {
-                $statusMessage = "The vehicle with Vin $vin has been deleted.";
+                $statusMessage = "The vehicle with VIN $vin has been deleted.";
                 $textColor = "Blue";
             }
             else

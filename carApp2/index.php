@@ -233,12 +233,12 @@
             $mysqli->query($query);
             if ($mysqli->affected_rows > 0) 
             {
-                $_SESSION['statusMessage'][] = ['text'  => "The vehicle with Vin $vin has been deleted.",
+                $_SESSION['statusMessage'][] = ['text'  => "The vehicle with VIN $vin has been deleted.",
                                                 'color' => "Blue"];
             }
             else
             {
-                $_SESSION['statusMessage'][] = ['text'  => "Sorry, a vehicle with Vin of $vin cannot be found",
+                $_SESSION['statusMessage'][] = ['text'  => "Sorry, a vehicle with VIN of $vin cannot be found",
                                                 'color' => "Red"];
             }
         }// end CRUD if
