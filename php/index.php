@@ -3,7 +3,16 @@
     if (isset( $_GET["p"])) 
     {
         $pageFileName = $_GET["p"] . ".html";
-        $pageTitle = ucfirst($_GET["p"]);
+        $pageTitle = $_GET["p"];
+        $pageTitle = preg_replace('/([A-Z])/', ' $1', $pageTitle);
+        $pageTitle = ucfirst($pageTitle);
+    }
+    elseif (isset($_GET['ph']))
+    {
+        $pageFileName = $_GET["ph"] . ".php";
+        $pageTitle = $_GET["ph"];
+        $pageTitle = preg_replace('/([A-Z])/', ' $1', $pageTitle);
+        $pageTitle = ucfirst($pageTitle);
     }
     else
     {
@@ -12,7 +21,6 @@
     }
     $pagePath = "contents/$pageFileName";
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,6 +54,14 @@
         http://phpfiddle.org        
     -->
 
+    <?php
+        if ($pageFileName == "introductionForm.html")
+        {
+            echo '<script src="scripts/introductionForm.js"></script>';
+            echo '    <link rel="stylesheet" type="text/css" href="../style/introductionForm.css">';
+        }
+    ?>
+
     <!--Required validation script-->
     <script src="https://lint.page/kit/880bd5.js" crossorigin="anonymous"></script>
 </head>
@@ -60,9 +76,8 @@
             <li><a href="?p=introduction">Introduction</a></li>
             <li><a href="?p=contract">Contract</a></li>
             <li><a href="https://pixelatedaxolotl.github.io/web250/">Static Version</a></li>
-            <li><a href="https://pixelatedaxolotl.github.io/web250/fizzbuzz.html">Fizz Buzz</a></li>
             <li>
-                <a href="#">Outside Sites</a>
+                <a href="#">Course Assignments</a>
                 <ul>
                     <li><a href="http://web250.great-site.net/multipage/superduper_php">Super Duper PHP</a></li>
                     <li><a href="http://web250.great-site.net/multipage/superduper_static">Super Duper Static</a></li>
@@ -70,6 +85,9 @@
                     <li><a href="http://web250.great-site.net/joyOriginal/samsusedcars.html">Sam's Used Cars</a></li>
                     <li><a href="http://web250.great-site.net/carApp">Car App A</a></li>
                     <li><a href="http://web250.great-site.net/carApp2">Car App B</a></li>
+                    <li><a href="https://pixelatedaxolotl.github.io/web250/fizzbuzz.html">Fizz Buzz</a></li>
+                    <li><a href="?p=introductionForm">IntroductionForm</a></li>
+                    <li><a href="../stampApp">Final Project</a></li>
                 </ul>
             </li>
         </ul>
