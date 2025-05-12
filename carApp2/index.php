@@ -586,11 +586,9 @@ while ($resultArray = mysqli_fetch_assoc($result))
         $carForm .= <<<ACTION_BUTTONS
                     <td class="actionButtons">
                         <button name="toggleEdit" tooltip="Edit" type="button"><img tooltip="Edit Car Data" src="images/editIcon.svg" alt="Edit Car Information"></button>
-                        <button name="cancelEdit" tooltip="Cancel Edit" type="reset"><img src="images/cancelIcon.svg" alt="Cancel Edit"></button>
-
-
                         <button formaction="?action=update&vin=$resultArray[Vin]" name="update" tooltip="Submit" type="submit"><img src="images/checkmarkIcon.svg" alt="Update Info"></button>
 
+                        <button name="cancelEdit" tooltip="Cancel Edit" type="reset"><img src="images/cancelIcon.svg" alt="Cancel Edit"></button>
                         <button formaction="?action=delete&vin=$resultArray[Vin]" name="delete" tooltip="Delete Car" type="submit"><img src="images/deleteIcon.svg" alt="Delete Car"></button>
                     </td>
 

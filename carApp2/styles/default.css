@@ -248,6 +248,11 @@ form[name="edit"] input
 }
 
 /*table images*/
+tbody tr td:first-of-type 
+{
+    max-width: 50px;
+}
+
 td:first-child img
 {
     height: 60px;
