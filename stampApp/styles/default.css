@@ -4,8 +4,10 @@
     --main-background-color: #05170e;
     --main-font-color: #f3f6ec;
     --link-accent-color:  #80a6ef;
-    --border-purple: #5949e1; 
     --accent-color: #5c678a;
+    --blue-accent-color: #1b4c69;
+    --red-accent-color: #983d2c;
+    --purple-accent-color: #8784a3;
 }
 
 /*** General Styles ***/
@@ -29,7 +31,7 @@ main
 
     margin: 40px auto;
     padding: 40px;
-    box-shadow: 0px 1px 11px 1px #5949e1;
+    box-shadow: 0px 0px 10px 4px #092819;
     border-radius: 5px;
 }
 
@@ -94,10 +96,11 @@ form label[for="image"]
 input[type="radio"] 
 {
     -webkit-appearance: none;
+    -moz-appearance: none;
     /* Remove most all native input styles */
     appearance: none;
     background-color: var(--form-background);
-
+    box-sizing: border-box;
     margin: 0;
     margin-right: 10px;
     font: inherit;
@@ -192,6 +195,7 @@ form[name="toLoginPage"] label
     form[name="create"] label[for="notes"]
     {
         flex-direction: column;
+        grid-column: 1 / 3;
     }
 
     form[name="create"] label input
@@ -228,7 +232,6 @@ form[name="toLoginPage"] label
         margin-left: 5px;
     }
 
-
     /* File upload restyle styles */
 
     form input[type="file"]
@@ -258,10 +261,13 @@ form[name="toLoginPage"] label
     {
         display: none;
     }
-
-
-
     /* End file upload restyle styles */
+
+    fieldset[name="formControl"]
+    {
+        text-align: center;
+        border: none;
+    }
 
       
 
@@ -273,7 +279,7 @@ form[name="toLoginPage"] label
     {
         max-height: 150px;
         overflow-y: scroll;
-        border: 2px solid purple;
+        border: 2px solid var(--blue-accent-color);
         margin: auto;
         max-width: 1200px;
         font-size: 20px;
@@ -303,8 +309,8 @@ form[name="toLoginPage"] label
         white-space: nowrap;
         padding: 0px;
         margin-top: 22px;
-        margin-bottom: 22px;
-        border: 2px solid black;
+        margin-bottom: 80px;
+        border: 2px solid var(--link-accent-color);
     }
 
     form[name="edit"] thead
@@ -315,7 +321,7 @@ form[name="toLoginPage"] label
 
     form[name="edit"] th
     {
-        background-color: #aac7ff;
+        background-color: var(--blue-accent-color);
         font-size: 1.1rem;
     }
 
@@ -338,8 +344,8 @@ form[name="toLoginPage"] label
 
     form table td:nth-child(even):not(:last-child), form table th:nth-child(even):not(:last-child)
     {
-        border-left: 2px solid var(--border-purple);
-        border-right: 2px solid var(--border-purple);
+        border-left: 2px solid var(--link-accent-color);
+        border-right: 2px solid var(--link-accent-color);
     }
 
     form table td, form table th
@@ -349,7 +355,7 @@ form[name="toLoginPage"] label
 
     form table th
     {
-        border-bottom: 2px solid var(--border-purple);
+        border-bottom: 2px solid var(--link-accent-color);
     }
 
     form table th, form table tr
@@ -383,9 +389,24 @@ form[name="toLoginPage"] label
 
 
     /*table image styles*/
+
+    .image-popup {
+        position: absolute;
+        z-index: 1000;
+        border: 1px solid #ccc;
+        background: #fff;
+        padding: 5px;
+        display: none; /* Initially hidden */
+      }
+      
+      .image-popup img {
+        max-width: 200px; /* Change this size to fit your needs */
+      }
+
+
         td:first-child img
         {
-            height: 110px;
+            height: 40px;
             max-width: 140px;
             vertical-align: bottom;
         }
@@ -405,15 +426,41 @@ form[name="toLoginPage"] label
     /* Action button styles */
         form[name="edit"] button
         {
-            padding-left: 10px;
+            /* padding-left: 10px; */
             width: unset;
+            border: none;
         }
         form[name="edit"] button:hover
         {
-           
-            box-shadow: 0 0 3px 3px rgb(0, 213, 153);
-            transform: scale(1.1);
-            transition: 0.25s;
+            position: relative; /*must be relative for tooltip to work*/
+
+        }
+
+        .actionButtons button
+        {
+            cursor: pointer;
+            background: unset;
+            border-radius: 4px;
+
+        }
+
+        .actionButtons button:hover
+        {
+            transform: scale(1.2);
+            transition: 0.30s;
+        }
+
+        .actionButtons button[name="toggleEdit"], 
+        form[name="edit"] button[name="update"]:hover
+        {
+            margin-left: 10px;
+        }
+
+        
+        button[name="delete"],
+        button[name="cancelEdit"]
+        {
+            margin-right: 10px;
         }
 
         /* visibility is toggled with js in actionButtons.js */
@@ -446,18 +493,15 @@ form[name="toLoginPage"] label
     {
         position:sticky;
         right: 0;
-        background: aliceblue;
+        background: var(--main-background-color);
     }
 
     /* make border show up correctly for sticky action button column */
         form table td:last-child, form table th:last-child
         {
-            border-left: 2px solid var(--border-purple);
+            border-left: 2px solid var(--link-accent-color);
         }
 
 /* End action button column sticky styles */
-
-
-
 
 /*** End collection table page styles ***/

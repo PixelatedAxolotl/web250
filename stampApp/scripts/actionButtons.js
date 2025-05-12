@@ -2,68 +2,135 @@ document.addEventListener("DOMContentLoaded", function(event)
 {
     const editButtons = document.querySelectorAll("button[name=\"toggleEdit\"]");
             
-            /* edit, submit/update, delete, and cancel events for buttons in car display table */
-            editButtons.forEach((button) => 
-            {
-                
-                const formRow = button.closest('tr');
-                const editableFields = formRow.querySelectorAll('input[type="text"], input[type="file"]');
-                const updateButton = formRow.querySelector('button[name="update"]');
-                const deleteButton = formRow.querySelector('button[name="delete"');
-                const cancelButton = formRow.querySelector('button[name="cancelEdit');
-                const displayedImage = formRow.querySelector('label img');
-                
+            
+    // Show popup when the label is hovered or focused
+    function showPopup(label) 
+    {
+        console.log(label.target);
+        image = label.target.querySelector("img");
+        // Create popup dynamically
+        const popup = document.createElement('div');
+        popup.className = 'image-popup';
+        const largeImg = document.createElement('img');
+        largeImg.src = image.src;  // You can change this to a larger version if needed
+        largeImg.alt = image.alt;
+        popup.appendChild(largeImg); 
 
-                button.addEventListener('click', function(event)
+        // Append popup to body
+        document.body.appendChild(popup);
+
+        // Position the popup near the image
+        const rect = image.getBoundingClientRect();
+        popup.style.left = `${rect.right + 10 + window.scrollX}px`;
+        popup.style.top = `${rect.top + window.scrollY}px`;
+
+        // Make the popup visible
+        popup.style.display = 'block';
+
+        // Store reference to the popup for removal later
+        image._popup = popup;
+    }
+
+    // Hide popup and remove it from DOM
+    function hidePopup(label) 
+    {
+        console.log("pop down");
+        image = label.target.querySelector("img");
+        if (image._popup) 
+        {
+            document.body.removeChild(image._popup);
+            image._popup = null;
+        }
+    }
+        
+    
+    
+        /* edit, submit/update, delete, and cancel events for buttons in car display table */
+        editButtons.forEach((button) => 
+        {
+            
+            const formRow = button.closest('tr');
+            const editableFields = formRow.querySelectorAll('input[type="text"], input[type="file"]');
+            const updateButton = formRow.querySelector('button[name="update"]');
+            const deleteButton = formRow.querySelector('button[name="delete"');
+            const cancelButton = formRow.querySelector('button[name="cancelEdit');
+            const displayedImage = formRow.querySelector('label img');
+            
+
+            button.addEventListener('click', function(event)
+            {
+                console.log(updateButton); 
+
+                updateButton.setAttribute("style", "display: inline-block;");
+                cancelButton.setAttribute("style", "display: inline-block");
+                displayedImage.setAttribute("style", "cursor: pointer");
+
+                button.setAttribute("style", "display: none");
+                deleteButton.setAttribute("style", "display: none;");
+                editableFields.forEach((field) =>
                 {
-                    console.log(updateButton); 
+                    field.removeAttribute('disabled');
+                }); // end editableFields foreach
+            }); // end edit button listener
 
-                    updateButton.setAttribute("style", "display: inline-block;");
-                    cancelButton.setAttribute("style", "display: inline-block");
-                    displayedImage.setAttribute("style", "cursor: pointer");
-
-                    button.setAttribute("style", "display: none");
-                    deleteButton.setAttribute("style", "display: none;");
-                    editableFields.forEach((field) =>
-                    {
-                        field.removeAttribute('disabled');
-                    }); // end editableFields foreach
-                }); // end edit button listener
-
-                formRow.querySelector("button[name=\"cancelEdit\"]").addEventListener('click', function(event)
-                {
-                    
-                    updateButton.setAttribute("style", "display: none;");
-                    cancelButton.setAttribute("style", "display: none;");
-                    button.setAttribute("style", "display: inline-block");
-                    deleteButton.setAttribute("style", "display: inline-block;");
-
-                    editableFields.forEach((field) =>
-                    {
-                        field.setAttribute('disabled', "");
-                    }); // end editableFields foreach
-
-                }); // end cancel button listener
-            }); // end edit button foreach
-
-            const clearFileButton = document.querySelector("button[name='clearFile']");
-
-            clearFileButton.addEventListener('click', function(event)
+            formRow.querySelector("button[name=\"cancelEdit\"]").addEventListener('click', function(event)
             {
-                document.querySelector("input[name='image']").value = '';
-                document.querySelector("label[for=image]").innerHTML = 'Upload';
-                clearFileButton.setAttribute("style", "display: none");
-                document.querySelector("label[for=image]").setAttribute("style", "display: inline-block;");
-
-            });
-
-            // replace label text with selected filename when adding new car
-            document.querySelector("#image").addEventListener('change', function(event)
-            {
-                document.querySelector("label[for=image]").innerHTML = event.target.value.split('\\').pop();
-                clearFileButton.setAttribute("style", "display: inline-block;");
-                document.querySelector("label[for=image]").setAttribute("style", "display: contents;");
-
                 
+                updateButton.setAttribute("style", "display: none;");
+                cancelButton.setAttribute("style", "display: none;");
+                button.setAttribute("style", "display: inline-block");
+                deleteButton.setAttribute("style", "display: inline-block;");
+
+                editableFields.forEach((field) =>
+                {
+                    field.setAttribute('disabled', "");
+                }); // end editableFields foreach
+
+            }); // end cancel button listener
+
+            // add image popup event listener
+            label = formRow.querySelector("label");
+
+            // Add event listeners for mouse and keyboard
+            label.addEventListener('mouseenter', showPopup);
+            label.addEventListener('mouseleave', hidePopup);
+            label.addEventListener('focus', showPopup, true);
+            label.addEventListener('blur', hidePopup, true);
+            
+
+        }); // end edit button foreach
+
+        const clearFileButton = document.querySelector("button[name='clearFile']");
+
+        clearFileButton.addEventListener('click', function(event)
+        {
+            document.querySelector("input[name='image']").value = '';
+            document.querySelector("label[for=image]").innerHTML = 'Upload';
+            clearFileButton.setAttribute("style", "display: none");
+            document.querySelector("label[for=image]").setAttribute("style", "display: inline-block;");
+
+        });
+
+        // replace label text with selected filename when adding new car
+        document.querySelector("#image").addEventListener('change', function(event)
+        {
+            document.querySelector("label[for=image]").innerHTML = event.target.value.split('\\').pop();
+            clearFileButton.setAttribute("style", "display: inline-block;");
+            document.querySelector("label[for=image]").setAttribute("style", "display: contents;");
+
+            
+        });
+
+        // dynamically size input width in display table
+        const tableCells = document.querySelectorAll('form[name="edit"] tbody tr input');
+        tableCells.forEach((cell) =>
+        {
+            cell.addEventListener('onkeyup', function(event)
+            {
+                console.log("Resizing...");
+                cell.setAttribute("style", "width: " + (cell.value.length + 1 * 8) + "px;");
             });
+        });
+
+
 });

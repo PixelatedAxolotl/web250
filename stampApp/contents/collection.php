@@ -103,7 +103,7 @@
 
             <label for="notes">
                 Include Any Additional Notes Here
-                <textarea id="notes" name="notes" rows="5" cols="40"></textarea>
+                <textarea id="notes" name="notes" rows="5" cols="80"></textarea>
             </label>
             
             <fieldset name="formControl">
@@ -213,10 +213,7 @@ while ($resultArray = mysqli_fetch_assoc($result))
                     <td class="actionButtons">
                         <button name="toggleEdit" type="button"><img src="images/editIcon.svg" alt="Edit Stamp Information"></button>
                         <button name="cancelEdit" type="reset"><img src="images/cancelIcon.svg" alt="Cancel Edit"></button>
-
-
                         <button formaction="handlers/crudHandler.php?action=update&stampId=$resultArray[id]" name="update" type="submit"><img src="images/checkmarkIcon.svg" alt="Update"></button>
-
                         <button formaction="handlers/crudHandler.php?action=delete&stampId=$resultArray[id]" name="delete" type="submit"><img src="images/deleteIcon.svg" alt="Delete"></button>
                     </td>
 
