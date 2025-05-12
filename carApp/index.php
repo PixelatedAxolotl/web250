@@ -222,12 +222,6 @@
     <h2>Welcome to Lucky Sandfish's Used Car Lot!</h2>
     <section>
         <h3>Add A Car:</h3>
-        <?php
-            if ($statusMessage)
-            {
-                echo "<h4 style=\"color:$textColor;\">$statusMessage</h4>";
-            }
-        ?>
         
         <form action="<?php echo $action?>" method="POST" name="create" enctype="multipart/form-data">
             <label for="vin">
@@ -265,7 +259,13 @@
                 <input type="reset" value="Clear">
             </fieldset>
 	    </form>
-    </section>    
+    </section>   
+    <?php
+            if ($statusMessage)
+            {
+                echo "<h4 style=\"color:$textColor;\">$statusMessage</h4>";
+            }
+        ?> 
 <?php
 
 // Display cars with images in table
