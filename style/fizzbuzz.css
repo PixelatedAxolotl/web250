@@ -84,7 +84,7 @@ main section ul
     min-height: 200px;
     align-self: center;
     overflow-y: hidden;
-    overflow-x: scroll;
+    overflow-x: hidden;
     white-space: nowrap;
     padding-left: 80px;
     padding-bottom: 10px;
