@@ -409,6 +409,7 @@ form[name="toLoginPage"] label
 
         td:first-child img
         {
+            box-sizing: border-box;
             height: 40px;
             max-width: 140px;
             vertical-align: bottom;

@@ -47,7 +47,7 @@
     <link rel="stylesheet" type="text/css" href="styles/default.css">
     <link rel="icon" href="images/wizard.ico">
 
-    <title>Lucky S.T.A.M.P.S<?php echo $pageTitle ?></title>
+    <title>Lucky S.T.A.M.P.S.</title>
 
     <!--     
         Structure of HTML5 semantic layout swiped from PHP Fiddle and modified
