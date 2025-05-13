@@ -56,6 +56,8 @@ switch ($action) {
         if ($result->num_rows > 0) 
         {
             $_SESSION['loginMessage'] = ['text' => 'Username already taken.', 'color' => 'Red'];
+            header("Location: ../index.php?p=login&register=1");
+            break;
         } 
         else 
         {

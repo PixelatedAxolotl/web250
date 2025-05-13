@@ -36,6 +36,14 @@
         $pageFileName = "collection.php";
         $pageTitle = "Stamp Collection";
     }
+
+    if ($pageFileName == "home.php")
+    {
+        $_SESSION['loginMessage'] = ['text'  => "Please login to view your stamp collection",
+        'color' => "#b5c7ff;"];
+    }
+
+
     $pagePath = "contents/$pageFileName";
 ?>
 <!DOCTYPE html>

@@ -275,7 +275,7 @@ form[name="toLoginPage"] label
 
     
     /* Status message styles */
-    section[id="statusMessages"]
+    div[id="statusMessages"]
     {
         max-height: 150px;
         overflow-y: scroll;
@@ -286,7 +286,7 @@ form[name="toLoginPage"] label
         margin: 40px auto;
     }
 
-    section[id="statusMessages"] span
+    div[id="statusMessages"] span
     {
         display: block;
         font-size: 20px;
@@ -304,13 +304,14 @@ form[name="toLoginPage"] label
         text-align: center;
         margin: auto;
         max-height: 500px;
-        overflow-y: scroll;
+        overflow-y: hidden;
         overflow-x: auto;
         white-space: nowrap;
         padding: 0px;
         margin-top: 22px;
         margin-bottom: 80px;
         border: 2px solid var(--link-accent-color);
+        scrollbar-width: thin;
     }
 
     form[name="edit"] thead
@@ -455,7 +456,8 @@ form[name="toLoginPage"] label
             transition: 0.30s;
         }
 
-        .actionButtons button[name="toggleEdit"], 
+        .actionButtons button[name="toggleEdit"],
+        .actionButtons button[name="update"], 
         form[name="edit"] button[name="update"]:hover
         {
             margin-left: 10px;

@@ -22,7 +22,7 @@ if (isset($_SESSION['loginMessage']))
             <label>Password: <input type="password" name="password" required></label>
             <button type="submit">Register</button>
         </form>
-        <form action="index.php?p=login&login=1" method="POST" name="toLoginPage">
+        <form action="index.php?p=login" method="POST" name="toLoginPage">
             <button type="submit">Back to Login</button>
         </form>
         REGISTER;
