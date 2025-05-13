@@ -30,7 +30,7 @@ $introductionInformation =
 
 
 
-<h3><?php echo $introductionInformation['fullName'] ?></h3>
+<h3>&nbsp;<?php echo $introductionInformation['fullName'] ?>&nbsp;</h3>
 
 <figure>
     <img src="<?php echo htmlspecialchars($introductionInformation['imagePath']); ?>" alt="Introduction image">
