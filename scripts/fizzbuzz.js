@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function(event)
             if (lastName) welcomeMessage += " " + lastName;
 
             const messageHeader = document.querySelector('main section:last-child h3');
-            welcomeMessage += "! Here are your results.";
+            welcomeMessage += "!";
             messageHeader.innerHTML = welcomeMessage;
 
             // Fizz Buzz word/number pairs
