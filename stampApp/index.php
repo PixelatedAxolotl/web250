@@ -47,7 +47,7 @@
     <link rel="stylesheet" type="text/css" href="styles/default.css">
     <link rel="icon" href="images/wizard.ico">
 
-    <title>LK Stewart's Lucky Sandfish | WEB250 | <?php echo $pageTitle ?></title>
+    <title>Lucky S.T.A.M.P.S<?php echo $pageTitle ?></title>
 
     <!--     
         Structure of HTML5 semantic layout swiped from PHP Fiddle and modified
@@ -85,8 +85,8 @@
 <body>
 
 <header>
-    <h1>Lucky Sandfish's Superb Stamp Storage</h1>
-    <h2>Postage Stamps, we got 'em!</h2>
+    <h1>Lucky Sandfish's S.T.A.M.P.S</h1>
+    <h2><em>Simple Tools for Archiving, Managing, and Preserving Stamps</em></h2>
     <nav>
         <ul>
             <li><a href="?p=home">Home</a></li>
@@ -99,6 +99,7 @@
                 else
                 {
                     echo '<li><a href="?p=login&login=1">Login</a></li>';
+                    echo '<li><a href="?p=login&login=1&register=1">Create Account</a></li>';
                 } 
             ?>
            
