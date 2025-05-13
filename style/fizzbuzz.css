@@ -40,7 +40,7 @@ form fieldset:first-of-type input
     width: 120px;
 }
 
-form fieldset:first-of-type #middle-initial
+form fieldset:first-of-type #middleInitial
 {
     width: 20px;
 }

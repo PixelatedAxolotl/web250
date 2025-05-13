@@ -10,9 +10,9 @@ document.addEventListener("DOMContentLoaded", function(event)
             event.preventDefault(); // Prevent form submission
 
             // Name fields
-            var firstName = document.getElementById('first-name').value;
-            const middleInitial = document.getElementById('middle-initial').value;
-            const lastName = document.getElementById('last-name').value;
+            var firstName = document.getElementById('firstName').value;
+            var middleInitial = document.getElementById('middleInitial').value;
+            const lastName = document.getElementById('lastName').value;
 
             // Assemble Welcome message
             // Correct capitalization if needed
