@@ -6,25 +6,24 @@ document.addEventListener("DOMContentLoaded", function(event)
     // Show popup when the label is hovered or focused
     function showPopup(label) 
     {
-        console.log(label.target);
         image = label.target.querySelector("img");
-        // Create popup dynamically
+        
+        // Create popup 
         const popup = document.createElement('div');
         popup.className = 'image-popup';
         const largeImg = document.createElement('img');
-        largeImg.src = image.src;  // You can change this to a larger version if needed
+        largeImg.src = image.src;  
         largeImg.alt = image.alt;
         popup.appendChild(largeImg); 
 
-        // Append popup to body
+        // Append popup
         document.body.appendChild(popup);
 
-        // Position the popup near the image
+        // Position the popup near image
         const rect = image.getBoundingClientRect();
         popup.style.left = `${rect.right + 10 + window.scrollX}px`;
-        popup.style.top = `${rect.top + window.scrollY}px`;
+        popup.style.top = `${rect.bottom + window.scrollY - (rect.height * 2)}px`;
 
-        // Make the popup visible
         popup.style.display = 'block';
 
         // Store reference to the popup for removal later
@@ -34,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function(event)
     // Hide popup and remove it from DOM
     function hidePopup(label) 
     {
-        console.log("pop down");
         image = label.target.querySelector("img");
         if (image._popup) 
         {
@@ -42,8 +40,6 @@ document.addEventListener("DOMContentLoaded", function(event)
             image._popup = null;
         }
     }
-        
-    
     
         /* edit, submit/update, delete, and cancel events for buttons in car display table */
         editButtons.forEach((button) => 
@@ -122,15 +118,30 @@ document.addEventListener("DOMContentLoaded", function(event)
         });
 
         // dynamically size input width in display table
-        const tableCells = document.querySelectorAll('form[name="edit"] tbody tr input');
-        tableCells.forEach((cell) =>
+        function inputResize(event)
         {
-            cell.addEventListener('onkeyup', function(event)
+/*             console.log("Resizing...");
+            console.log(event.target.value.length);
+            console.log("width: " + ((event.target.value.length + 1)) + "ch;"); */
+            event.target.setAttribute("style", "width: " + (event.target.value.length + 2) + "ch;");
+        }
+
+        // set table col widths + attatch listener to resize on new input
+        document.querySelectorAll('form[name="edit"] thead tr th').forEach((headerCell, i) =>
+        {
+            selector = 'form[name="edit"] tbody tr td:nth-of-type(' + (i + 1) + '):not(.actionButtons) input';
+            document.querySelectorAll(selector).forEach((cell) =>
             {
-                console.log("Resizing...");
-                cell.setAttribute("style", "width: " + (cell.value.length + 1 * 8) + "px;");
+                //adjust width if content of cell is longer than header text
+                if (cell.value.length >= headerCell.innerHTML.length)
+                {
+                    cell.setAttribute("style", "width: " + (cell.value.length + 2) + "ch;");
+                }
+                else
+                {
+                    cell.setAttribute("style", "width: " + (headerCell.innerHTML.length + 4) + "ch;");
+                }
+                cell.addEventListener('change',inputResize);
             });
         });
-
-
 });

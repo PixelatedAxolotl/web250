@@ -328,7 +328,7 @@ form[name="toLoginPage"] label
     form[name="edit"] input
     {
         text-align: center;
-        max-width: 170px;
+        /* max-width: 170px; */
     }
 
 /* Table styles */
@@ -360,7 +360,7 @@ form[name="toLoginPage"] label
 
     form table th, form table tr
     {
-        width: 20px;
+/*         width: 20px;  */
     }
 
     form table tr label
@@ -371,7 +371,7 @@ form[name="toLoginPage"] label
     /* Input field styles */
     form table input
     {
-        max-width: fit-content;
+/*         max-width: fit-content; */
         color: whitesmoke;
         font-size: 1rem;
         background: none;
@@ -390,18 +390,21 @@ form[name="toLoginPage"] label
 
     /*table image styles*/
 
-    .image-popup {
+    .image-popup 
+    {
         position: absolute;
         z-index: 1000;
-        border: 1px solid #ccc;
-        background: #fff;
+        box-shadow: 0px 0px 5px 4px var(--blue-accent-color);
+        background: var(--main-background-color);
         padding: 5px;
-        display: none; /* Initially hidden */
-      }
+        margin-bottom: 50px;
+        display: none; 
+    }
       
-      .image-popup img {
-        max-width: 200px; /* Change this size to fit your needs */
-      }
+    .image-popup img 
+    {
+        max-width: 200px; 
+    }
 
 
         td:first-child img
@@ -409,6 +412,7 @@ form[name="toLoginPage"] label
             height: 40px;
             max-width: 140px;
             vertical-align: bottom;
+            padding: 5px 0px;
         }
 
         table label input[type="file"]

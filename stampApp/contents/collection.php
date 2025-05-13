@@ -164,7 +164,7 @@ while ($resultArray = mysqli_fetch_assoc($result))
     if (!$resultArray['file_name'])
     {
         //set a default image
-        $stampImage = "images/sandfish.jpg";
+        $stampImage = "images/stampPlaceholder.png";
     }
 
     $editForm = <<<HTML
